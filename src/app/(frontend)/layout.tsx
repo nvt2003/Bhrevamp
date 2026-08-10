@@ -1,4 +1,5 @@
 import React from 'react'
+import Header from '@/app/(frontend)/components/Header'
 import './styles.css'
 
 export const metadata = {
@@ -11,7 +12,8 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
 
   return (
     <html lang="en">
-      <body>
+      <body className="bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 min-h-screen">
+        <Header />
         <main>{children}</main>
       </body>
     </html>
