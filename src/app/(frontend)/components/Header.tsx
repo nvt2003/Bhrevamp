@@ -86,10 +86,7 @@ export default function Header() {
 
           <div className="flex flex-col">
             <div className="flex items-center gap-2">
-              <span className="bg-red-600 text-white font-black text-xl px-2 py-0.5 tracking-tighter uppercase rounded-sm">
-                BH
-              </span>
-              <span className="font-serif font-black text-xl md:text-2xl tracking-tight text-gray-900 dark:text-white uppercase">
+              <span className="font-sans font-black text-xl md:text-2xl dark:text-white uppercase tracking-tight text-[#D81B50]">
                 MEDIA RUJUKAN MASSA
               </span>
             </div>

@@ -14,3 +14,7 @@ svg {
   display: inline-block;
   vertical-align: middle;
 }
+
+@theme {
+  --color-brand-media: #d81b50;
+}
