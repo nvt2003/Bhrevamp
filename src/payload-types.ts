@@ -72,6 +72,7 @@ export interface Config {
     categories: Category;
     posts: Post;
     sliders: Slider;
+    trending: Trending;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -84,6 +85,7 @@ export interface Config {
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
     sliders: SlidersSelect<false> | SlidersSelect<true>;
+    trending: TrendingSelect<false> | TrendingSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -216,6 +218,17 @@ export interface Slider {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "trending".
+ */
+export interface Trending {
+  id: number;
+  keyword: string;
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -257,6 +270,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'sliders';
         value: number | Slider;
+      } | null)
+    | ({
+        relationTo: 'trending';
+        value: number | Trending;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -374,6 +391,16 @@ export interface SlidersSelect<T extends boolean = true> {
   category?: T;
   slug?: T;
   image?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "trending_select".
+ */
+export interface TrendingSelect<T extends boolean = true> {
+  keyword?: T;
   order?: T;
   updatedAt?: T;
   createdAt?: T;
