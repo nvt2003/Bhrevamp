@@ -49,7 +49,11 @@ const samplePosts = [
   },
 ]
 
-export default function NewsSlider({ posts = samplePosts }) {
+export default function NewsSlider({ posts = [] }: { posts?: any[] }) {
+  // Nếu chưa tạo slide nào trong Admin, ẩn hoặc hiện thông báo nhẹ
+  if (!posts || posts.length === 0) {
+    return null // Hoặc render khung trống tạm thời
+  }
   const prevRef = useRef<HTMLButtonElement>(null)
   const nextRef = useRef<HTMLButtonElement>(null)
 

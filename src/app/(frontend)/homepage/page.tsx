@@ -6,28 +6,22 @@ import NewsSlider from '../components/NewsSlider'
 
 export default async function HomePage() {
   const payload = await getPayload({ config: configPromise })
-
-  // 1. Lấy bài viết nổi bật chính (Featured Main)
-  const featuredPosts = await payload.find({
-    collection: 'posts',
-    where: {
-      isFeatured: { equals: true },
-    },
-    limit: 1,
-  })
-  const mainFeatured = featuredPosts.docs[0]
-
-  // 2. Lấy danh sách tin mới nhất (bỏ qua bài nổi bật chính nếu cần)
-  const latestPosts = await payload.find({
-    collection: 'posts',
-    sort: '-publishedAt', // Sắp xếp mới nhất lên đầu
-    limit: 6,
+  // Truy vấn lấy các item trong collection Sliders, sắp xếp theo thứ tự (order)
+  const sliderRes = await payload.find({
+    collection: 'sliders',
+    sort: 'order', // Sắp xếp theo trường order tăng dần
+    depth: 1, // Để lấy thông tin chi tiết của ảnh Upload
   })
 
-  // 3. Lấy danh sách chuyên mục
-  const categories = await payload.find({
-    collection: 'categories',
-  })
+  // Format lại dữ liệu cho gọn gàng
+  const slides = sliderRes.docs.map((doc: any) => ({
+    id: doc.id,
+    title: doc.title,
+    category: doc.category,
+    slug: doc.slug,
+    // Lấy URL ảnh từ quan hệ media
+    imageUrl: typeof doc.image === 'object' && doc.image?.url ? doc.image.url : '/placeholder.jpg',
+  }))
 
   return (
     <div className="min-h-screen">
