@@ -10,45 +10,6 @@ import { Navigation, Autoplay } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/navigation'
 
-// Dữ liệu mẫu (sau này bạn truyền props từ PayloadCMS vào)
-const samplePosts = [
-  {
-    id: '1',
-    category: 'Hiburan',
-    title: "Stacy 'terbang' di Sabah",
-    slug: 'stacy-terbang-di-sabah',
-    imageUrl: 'https://picsum.photos/seed/1/200/150',
-  },
-  {
-    id: '2',
-    category: 'Bisnes',
-    title: 'Komputer riba serba pintar permudah sambungan iPhone, Windows',
-    slug: 'komputer-riba-serba-pintar',
-    imageUrl: 'https://picsum.photos/seed/2/200/150',
-  },
-  {
-    id: '3',
-    category: 'Sukan',
-    title: 'Khelif perlu pulangkan pingat - Kremlev',
-    slug: 'khelif-perlu-pulangkan-pingat',
-    imageUrl: 'https://picsum.photos/seed/3/200/150',
-  },
-  {
-    id: '4',
-    category: 'Nasional',
-    title: 'Perang Israel-Iran tidak mengubah nasib Gaza',
-    slug: 'perang-israel-iran',
-    imageUrl: 'https://picsum.photos/seed/4/200/150',
-  },
-  {
-    id: '5',
-    category: 'Thế Giới',
-    title: 'Cập nhật diễn biến kinh tế thế giới mới nhất hôm nay',
-    slug: 'dien-bien-kinh-te',
-    imageUrl: 'https://picsum.photos/seed/5/200/150',
-  },
-]
-
 export default function NewsSlider({ posts = [] }: { posts?: any[] }) {
   // Nếu chưa tạo slide nào trong Admin, ẩn hoặc hiện thông báo nhẹ
   if (!posts || posts.length === 0) {
@@ -58,23 +19,26 @@ export default function NewsSlider({ posts = [] }: { posts?: any[] }) {
   const nextRef = useRef<HTMLButtonElement>(null)
 
   return (
-    <section className="w-full bg-gray-100 dark:bg-gray-800/60 py-3 my-2 border-y border-gray-200 dark:border-gray-800">
+    <section className="w-full bg-gray-100 dark:bg-gray-800/60 py-3 my-2">
       <div className="max-w-7xl mx-auto px-4 relative flex items-center">
         {/* NÚT MŨI TÊN TRÁI */}
-        <button
-          ref={prevRef}
-          aria-label="Previous slide"
-          className="z-10 shrink-0 mr-2 w-8 h-8 md:w-9 md:h-9 rounded-md border-2 border-red-500/80 bg-white dark:bg-gray-900 text-red-600 flex items-center justify-center hover:bg-red-600 hover:text-white transition-colors shadow-sm disabled:opacity-30 disabled:cursor-not-allowed"
-        >
-          <ChevronLeft className="w-5 h-5 stroke-[2.5]" />
-        </button>
+        <div className="absolute left-0 top-0 z-10 flex h-full w-24 p-4 items-center justify-start bg-gradient-to-r from-gray-200 to-transparent">
+          <button
+            ref={prevRef}
+            aria-label="Previous slide"
+            className="z-10 shrink-0 mr-2 w-5 h-5 md:w-9 md:h-9 rounded-md border-2 border-red-500/80 bg-white dark:bg-gray-900 text-red-600 flex items-center justify-center hover:bg-red-600 hover:text-white transition-colors shadow-sm disabled:opacity-30 disabled:cursor-not-allowed"
+          >
+            <ChevronLeft className="w-full h-full p-[1px] stroke-[2.5]" />
+          </button>
+        </div>
 
         {/* SWIPER CAROUSEL */}
-        <div className="w-full overflow-hidden">
+        <div className="relative w-full overflow-hidden">
           <Swiper
             modules={[Navigation, Autoplay]}
             spaceBetween={16}
             slidesPerView={1}
+            loop={true}
             autoplay={{ delay: 4000, disableOnInteraction: false }}
             onInit={(swiper) => {
               // Gắn ref nút bấm tùy chỉnh cho Swiper
@@ -96,10 +60,10 @@ export default function NewsSlider({ posts = [] }: { posts?: any[] }) {
               <SwiperSlide key={post.id}>
                 <Link
                   href={`/posts/${post.slug}`}
-                  className="group flex items-center gap-3 bg-white dark:bg-gray-900 p-2 rounded-lg border border-gray-200/80 dark:border-gray-700/60 shadow-sm hover:shadow-md transition-all h-20"
+                  className="group flex items-center gap-3 bg-transparent dark:bg-gray-900 p-2 hover:shadow-md transition-all h-20 border-r border-gray-200"
                 >
                   {/* Ảnh Thumbnail */}
-                  <div className="w-20 h-16 shrink-0 rounded-md overflow-hidden bg-gray-200 dark:bg-gray-700">
+                  <div className="w-20 h-16 shrink-0 rounded-md overflow-hidden dark:bg-gray-700">
                     <img
                       src={post.imageUrl}
                       alt={post.title}
@@ -123,13 +87,16 @@ export default function NewsSlider({ posts = [] }: { posts?: any[] }) {
         </div>
 
         {/* NÚT MŨI TÊN PHẢI */}
-        <button
-          ref={nextRef}
-          aria-label="Next slide"
-          className="z-10 shrink-0 ml-2 w-8 h-8 md:w-9 md:h-9 rounded-md border-2 border-red-500/80 bg-white dark:bg-gray-900 text-red-600 flex items-center justify-center hover:bg-red-600 hover:text-white transition-colors shadow-sm disabled:opacity-30 disabled:cursor-not-allowed"
-        >
-          <ChevronRight className="w-5 h-5 stroke-[2.5]" />
-        </button>
+
+        <div className="absolute right-0 top-0 z-10 flex h-full w-24 p-4 items-center justify-end bg-gradient-to-l from-gray-200 to-transparent">
+          <button
+            ref={nextRef}
+            aria-label="Next slide"
+            className="z-10 shrink-0 ml-2 w-5 h-5 md:w-9 md:h-9 rounded-md border-2 border-red-500/80 bg-white dark:bg-gray-900 text-red-600 flex items-center justify-center hover:bg-red-600 hover:text-white transition-colors shadow-sm disabled:opacity-30 disabled:cursor-not-allowed"
+          >
+            <ChevronRight className="w-full h-full p-[1px] stroke-[2.5]" />
+          </button>
+        </div>
       </div>
     </section>
   )
