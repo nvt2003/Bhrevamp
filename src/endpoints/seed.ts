@@ -87,7 +87,7 @@ export const seedPosts = async (payload: Payload) => {
     } else {
       const createdCat = await payload.create({
         collection: 'categories',
-        data: cat,
+        data: { name: String(cat.name).trim(), slug: String(cat.slug).trim().toLowerCase() },
         overrideAccess: true,
       })
       categoryMap[cat.slug] = Number(createdCat.id)
@@ -185,6 +185,7 @@ export const seedPosts = async (payload: Payload) => {
         category: categoryMap['nasional'],
         position: 'featured_side',
         featuredImage: imgId,
+        slug: makeSlug(item.title),
       },
       draft: true,
       overrideAccess: true,
@@ -259,6 +260,7 @@ export const seedPosts = async (payload: Payload) => {
         category: categoryMap[item.catSlug],
         position: 'grid',
         featuredImage: imgId,
+        slug: makeSlug(item.title),
       },
       draft: true,
       overrideAccess: true,
