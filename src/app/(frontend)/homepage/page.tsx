@@ -39,13 +39,53 @@ export default async function HomePage() {
     keyword: doc.keyword,
     slug: doc.slug || doc.keyword.toLowerCase().replace(/\s+/g, '-'),
   }))
-  const utamaList = await payload.find({ collection: 'utama', depth: 2 })
+  // Query song song 4 truy vấn riêng biệt theo từng position
+  const [mainDocs, sideDocs, bulletDocs, gridDocs] = await Promise.all([
+    // 1. Chỉ lấy 1 bài tin chính nổi bật nhất
+    payload.find({
+      collection: 'utama',
+      where: { position: { equals: 'featured_main' } },
+      limit: 1,
+      depth: 2,
+      sort: '-publishedAt', // Lấy bài mới nhất
+    }),
+
+    // 2. Chỉ lấy đúng 4 tin sidebar
+    payload.find({
+      collection: 'utama',
+      where: { position: { equals: 'featured_side' } },
+      limit: 4,
+      depth: 2,
+      sort: '-publishedAt',
+    }),
+
+    // 3. Chỉ lấy đúng 3 tin bullet
+    payload.find({
+      collection: 'utama',
+      where: { position: { equals: 'featured_bullet' } },
+      limit: 3,
+      depth: 2,
+      sort: '-publishedAt',
+    }),
+
+    // 4. Lấy 9 bài cho lưới tin bên dưới
+    payload.find({
+      collection: 'utama',
+      where: { position: { equals: 'grid' } },
+      limit: 9,
+      depth: 2,
+      sort: '-publishedAt',
+    }),
+  ])
+
+  // Format dữ liệu gọn gàng
   const formattedUtama = {
-    featuredMain: utamaList.docs.find((p) => p.position === 'featured_main') || null,
-    featuredSide: utamaList.docs.filter((p) => p.position === 'featured_side'),
-    featuredBullet: utamaList.docs.filter((p) => p.position === 'featured_bullet'),
-    gridPosts: utamaList.docs.filter((p) => p.position === 'grid'),
+    featuredMain: mainDocs.docs[0] || null,
+    featuredSide: sideDocs.docs,
+    featuredBullet: bulletDocs.docs,
+    gridPosts: gridDocs.docs,
   }
+
   return (
     <div className="min-h-screen">
       {/* Slide bài viết trượt ngang */}
