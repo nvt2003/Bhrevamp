@@ -8,6 +8,7 @@ import TrendingBar from '../components/TrendingBar'
 import FloatingWidget from '../components/FloatingWidget'
 import UtamaSection from './UtamaSection'
 import SidebarTop from './SidebarTop'
+import DisyorkanSection from './DisyorkanSection'
 
 export default async function HomePage() {
   const payload = await getPayload({ config: configPromise })
@@ -110,6 +111,7 @@ export default async function HomePage() {
     sort: '-publishedAt',
     limit: utamaSection?.trendingLimit || 5,
   })
+  const disyorkanData = homeData?.disyorkanSection
   return (
     <div className="min-h-screen">
       {/* Slide bài viết trượt ngang */}
@@ -134,12 +136,7 @@ export default async function HomePage() {
         </div>
         {/* Disyorkan */}
         <div className="flex mt-8">
-          <div className="flex-[2] min-w-0 bg-blue-100">
-            <div className="text-xl font-semibold">Disyorkan</div>
-          </div>
-          <div className="flex-[3] flex min-w-0 bg-blue-100 justify-end">
-            <div>Lagi Disyorkan</div>
-          </div>
+          <DisyorkanSection data={disyorkanData} />
         </div>
       </div>
     </div>
