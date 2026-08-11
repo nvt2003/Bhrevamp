@@ -12,6 +12,7 @@ import { Utama } from './collections/Utama'
 import { Sliders } from './collections/Sliders'
 import { Trending } from './collections/Trending'
 import { Posts } from './collections/Posts'
+import { HomePage } from './globals/HomePage'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -23,6 +24,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
+  globals: [HomePage],
   collections: [Users, Media, Categories, Utama, Sliders, Trending, Posts],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',

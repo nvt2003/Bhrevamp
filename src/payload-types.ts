@@ -97,8 +97,12 @@ export interface Config {
     defaultIDType: number;
   };
   fallbackLocale: null;
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    'home-page': HomePage;
+  };
+  globalsSelect: {
+    'home-page': HomePageSelect<false> | HomePageSelect<true>;
+  };
   locale: null;
   widgets: {
     collections: CollectionsWidget;
@@ -517,6 +521,85 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home-page".
+ */
+export interface HomePage {
+  id: number;
+  sections?:
+    | (
+        | {
+            title: string;
+            category: number | Category;
+            limit?: number | null;
+            displayStyle?: ('grid' | 'list' | 'featured-left') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'categorySection';
+          }
+        | {
+            title?: string | null;
+            type?: ('auto' | 'manual') | null;
+            manualPosts?: (number | Post)[] | null;
+            limit?: number | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'featuredSection';
+          }
+        | {
+            title?: string | null;
+            limit?: number | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'latestSection';
+          }
+      )[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home-page_select".
+ */
+export interface HomePageSelect<T extends boolean = true> {
+  sections?:
+    | T
+    | {
+        categorySection?:
+          | T
+          | {
+              title?: T;
+              category?: T;
+              limit?: T;
+              displayStyle?: T;
+              id?: T;
+              blockName?: T;
+            };
+        featuredSection?:
+          | T
+          | {
+              title?: T;
+              type?: T;
+              manualPosts?: T;
+              limit?: T;
+              id?: T;
+              blockName?: T;
+            };
+        latestSection?:
+          | T
+          | {
+              title?: T;
+              limit?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
