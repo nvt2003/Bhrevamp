@@ -34,7 +34,36 @@ const createMediaFromUrl = async (
     return null
   }
 }
-
+// Helper tạo cấu trúc content chuẩn cho Payload Lexical / RichText
+const createDummyContent = (text: string) => ({
+  root: {
+    children: [
+      {
+        children: [
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: text,
+            type: 'text',
+            version: 1,
+          },
+        ],
+        direction: 'ltr' as const,
+        format: '',
+        indent: 0,
+        type: 'paragraph',
+        version: 1,
+      },
+    ],
+    direction: 'ltr' as const,
+    format: '' as const,
+    indent: 0,
+    type: 'root',
+    version: 1,
+  },
+})
 export const seedPosts = async (payload: Payload) => {
   // 1. Kiểm tra xem posts đã tồn tại chưa
   const existingPosts = await payload.find({
@@ -105,6 +134,9 @@ export const seedPosts = async (payload: Payload) => {
       category: categoryMap['nasional'],
       status: 'published',
       publishedAt: new Date().toISOString(),
+      content: createDummyContent(
+        "Laporan nahas Air India: Juruterbang 'keliru' cara guna suis enjin",
+      ),
     },
     draft: true,
     overrideAccess: true,
@@ -118,6 +150,9 @@ export const seedPosts = async (payload: Payload) => {
       category: categoryMap['nasional'],
       status: 'published',
       publishedAt: new Date().toISOString(),
+      content: createDummyContent(
+        'Persatuan juruterbang tolak dakwaan kesilapan manusia punca nahas Air India',
+      ),
     },
     draft: true,
     overrideAccess: true,
@@ -131,6 +166,7 @@ export const seedPosts = async (payload: Payload) => {
       category: categoryMap['nasional'],
       status: 'published',
       publishedAt: new Date().toISOString(),
+      content: createDummyContent('Remaja dituduh rogol pelajar dalam stor sekolah'),
     },
     draft: true,
     overrideAccess: true,
@@ -155,6 +191,9 @@ export const seedPosts = async (payload: Payload) => {
       featuredImage: mainImageId,
       status: 'published',
       publishedAt: new Date().toISOString(),
+      content: createDummyContent(
+        'Kapten pesawat Air India matikan suis kawal aliran bahan api ke enjin - WSJ',
+      ),
     },
     draft: true,
     overrideAccess: true,
@@ -190,6 +229,7 @@ export const seedPosts = async (payload: Payload) => {
         status: 'published',
         publishedAt: new Date().toISOString(),
         slug: makeSlug(item.title),
+        content: createDummyContent(item.title),
       },
       draft: true,
       overrideAccess: true,
@@ -266,6 +306,7 @@ export const seedPosts = async (payload: Payload) => {
         publishedAt: new Date().toISOString(),
         featuredImage: imgId,
         slug: makeSlug(item.title),
+        content: createDummyContent(item.title),
       },
       draft: true,
       overrideAccess: true,
@@ -326,7 +367,9 @@ export const seedPosts = async (payload: Payload) => {
         status: 'published',
         publishedAt: new Date(Date.now() - i * 9 * 60 * 1000).toISOString(), // Giả lập cách nhau 9 phút
         isTrending: item.isTrending,
+        content: createDummyContent(item.title),
       },
+      draft: true,
       overrideAccess: true,
     })
   }
