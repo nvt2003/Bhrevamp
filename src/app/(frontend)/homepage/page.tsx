@@ -17,7 +17,6 @@ export const sampleTrending = [
 ]
 export default async function HomePage() {
   const payload = await getPayload({ config: configPromise })
-  await seedPosts(payload)
   // Truy vấn lấy các item trong collection Sliders, sắp xếp theo thứ tự (order)
   const sliderRes = await payload.find({
     collection: 'sliders',
@@ -62,7 +61,7 @@ export default async function HomePage() {
         </div>
         {/* Utama */}
         <div className="w-full flex gap-4 mt-6">
-          <div className="flex-[2] min-w-0 bg-blue-100">
+          <div className="flex-[2] min-w-0">
             {/* <div className="flex gap-2 mb-2">
               <div className="flex-[1] min-w-0 bg-green-100">1</div>
               <div className="flex-[2] min-w-0 bg-green-100">2</div>
