@@ -67,6 +67,7 @@ export const seedPosts = async (payload: Payload) => {
     { name: 'NASIONAL', slug: 'nasional' },
     { name: 'WILAYAH', slug: 'wilayah' },
     { name: 'KES', slug: 'kes' },
+    { name: 'SUKAN', slug: 'sukan' },
   ]
 
   const categoryMap: Record<string, number> = {}
@@ -97,38 +98,41 @@ export const seedPosts = async (payload: Payload) => {
   // 3. Tạo các bài viết dạng Bullet List trước (cho phần tin nhanh không ảnh)
   console.log('Đang tạo các tin Bullet List...')
   const bullet1 = await payload.create({
-    collection: 'utama',
+    collection: 'posts',
     data: {
       title: "Laporan nahas Air India: Juruterbang 'keliru' cara guna suis enjin",
       slug: makeSlug('Laporan nahas Air India Juruterbang keliru cara guna suis enjin'),
       category: categoryMap['nasional'],
-      position: 'featured_bullet',
+      status: 'published',
+      publishedAt: new Date().toISOString(),
     },
-    draft: false,
+    draft: true,
     overrideAccess: true,
   })
 
   const bullet2 = await payload.create({
-    collection: 'utama',
+    collection: 'posts',
     data: {
       title: 'Persatuan juruterbang tolak dakwaan kesilapan manusia punca nahas Air India',
       slug: makeSlug('persatuan-juruterbang-tolak-dakwaan-kesilapan-manusia-punca-nahas-air-india'),
       category: categoryMap['nasional'],
-      position: 'featured_bullet',
+      status: 'published',
+      publishedAt: new Date().toISOString(),
     },
-    draft: false,
+    draft: true,
     overrideAccess: true,
   })
 
   const bullet3 = await payload.create({
-    collection: 'utama',
+    collection: 'posts',
     data: {
       title: 'Remaja dituduh rogol pelajar dalam stor sekolah',
       slug: makeSlug('remaja-dituduh-rogol-pelajar-dalam-stor-sekolah'),
       category: categoryMap['nasional'],
-      position: 'featured_bullet',
+      status: 'published',
+      publishedAt: new Date().toISOString(),
     },
-    draft: false,
+    draft: true,
     overrideAccess: true,
   })
 
@@ -140,18 +144,17 @@ export const seedPosts = async (payload: Payload) => {
     'airindia-crash.jpg',
     'Kapten pesawat Air India',
   )
-
-  await payload.create({
-    collection: 'utama',
+  const mainPost = await payload.create({
+    collection: 'posts',
     data: {
       title: 'Kapten pesawat Air India matikan suis kawal aliran bahan api ke enjin - WSJ',
       slug: makeSlug('Kapten pesawat Air India matikan suis kawal aliran bahan api ke enjin WSJ'),
       excerpt:
         'KUALA LUMPUR: Kerajaan akan tetap melaksanakan rasionalisasi subsidi RON95 seperti yang dirancang pada..',
       category: categoryMap['nasional'],
-      position: 'featured_main',
       featuredImage: mainImageId,
-      relatedPosts: [bullet1.id, bullet2.id, bullet3.id] as number[],
+      status: 'published',
+      publishedAt: new Date().toISOString(),
     },
     draft: true,
     overrideAccess: true,
@@ -168,7 +171,7 @@ export const seedPosts = async (payload: Payload) => {
       imgSeed: 'visa',
     },
   ]
-
+  const createdSidePosts: number[] = []
   for (let i = 0; i < sidePosts.length; i++) {
     const item = sidePosts[i]
     const imgId = await createMediaFromUrl(
@@ -179,12 +182,13 @@ export const seedPosts = async (payload: Payload) => {
     )
 
     await payload.create({
-      collection: 'utama',
+      collection: 'posts',
       data: {
         title: item.title,
         category: categoryMap['nasional'],
-        position: 'featured_side',
         featuredImage: imgId,
+        status: 'published',
+        publishedAt: new Date().toISOString(),
         slug: makeSlug(item.title),
       },
       draft: true,
@@ -243,7 +247,7 @@ export const seedPosts = async (payload: Payload) => {
       imgSeed: 'declaration',
     },
   ]
-
+  const createdGridPosts: number[] = []
   for (let i = 0; i < gridPosts.length; i++) {
     const item = gridPosts[i]
     const imgId = await createMediaFromUrl(
@@ -254,11 +258,12 @@ export const seedPosts = async (payload: Payload) => {
     )
 
     await payload.create({
-      collection: 'utama',
+      collection: 'posts',
       data: {
         title: item.title,
         category: categoryMap[item.catSlug],
-        position: 'grid',
+        status: 'published',
+        publishedAt: new Date().toISOString(),
         featuredImage: imgId,
         slug: makeSlug(item.title),
       },
@@ -266,6 +271,81 @@ export const seedPosts = async (payload: Payload) => {
       overrideAccess: true,
     })
   }
+  console.log('Đang tạo dữ liệu Terkini và Trending...')
 
+  const terkiniAndTrendingItems = [
+    {
+      title: 'Mahkamah sahkan pernikahan Marissa-Aslam, perkahwinan perlu didaftar segera',
+      catSlug: 'kes',
+      imgSeed: 'police-car',
+      isTrending: true,
+    },
+    {
+      title: "Sarawak mahu 'timba ilmu' Sukan SEA Thailand",
+      catSlug: 'sukan',
+      imgSeed: 'sea-games',
+      isTrending: true,
+    },
+    {
+      title: 'Isu perselisihan antara Orang Asli, polis di Pekan, Sabtu lalu selesai',
+      catSlug: 'kes',
+      imgSeed: 'meeting-signing',
+      isTrending: true,
+    },
+    {
+      title:
+        'Mahkamah sahkan pernikahan Marissa-Aslam, perkahwinan perlu didaftaChina sedia perkukuh...',
+      catSlug: 'nasional',
+      imgSeed: 'press-conference',
+      isTrending: true,
+    },
+    {
+      title: 'Dana pelaburan RM150 juta rombak landskap hartanah tempatan',
+      catSlug: 'nasional',
+      imgSeed: 'investment-handshake',
+      isTrending: true,
+    },
+  ]
+
+  for (let i = 0; i < terkiniAndTrendingItems.length; i++) {
+    const item = terkiniAndTrendingItems[i]
+    const imgId = await createMediaFromUrl(
+      payload,
+      `https://picsum.photos/seed/${item.imgSeed}/300/200`,
+      `terkini-${i + 1}.jpg`,
+      item.title,
+    )
+
+    await payload.create({
+      collection: 'posts',
+      data: {
+        title: item.title,
+        slug: makeSlug(item.title),
+        category: categoryMap[item.catSlug],
+        featuredImage: imgId,
+        status: 'published',
+        publishedAt: new Date(Date.now() - i * 9 * 60 * 1000).toISOString(), // Giả lập cách nhau 9 phút
+        isTrending: item.isTrending,
+      },
+      overrideAccess: true,
+    })
+  }
+  console.log('Đang liên kết dữ liệu vào Global HomePage...')
+
+  await payload.updateGlobal({
+    slug: 'home-page',
+    data: {
+      sections: [
+        {
+          blockType: 'categorySection',
+          title: 'Utama',
+          featuredMain: mainPost.id,
+          featuredSide: createdSidePosts,
+          featuredBullet: [bullet1.id, bullet2.id, bullet3.id],
+          gridPosts: createdGridPosts,
+        },
+      ],
+    } as any,
+  })
   console.log('Khởi tạo toàn bộ dữ liệu Posts thành công!')
 }
