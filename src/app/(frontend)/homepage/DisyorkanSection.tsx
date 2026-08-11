@@ -19,7 +19,7 @@ export default function DisyorkanSection({ data }: { data: any }) {
       </div>
 
       {/* Grid Content */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-2">
         {/* Bên trái: 1 Bài chính to */}
         {mainPost && typeof mainPost === 'object' && (
           <div className="lg:col-span-5 flex flex-col">
@@ -42,13 +42,13 @@ export default function DisyorkanSection({ data }: { data: any }) {
         )}
 
         {/* Bên phải: Grid 2 hàng 3 cột (6 bài nhỏ) */}
-        <div className="lg:col-span-7 grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="lg:col-span-7 grid grid-cols-1 md:grid-cols-3 gap-8">
           {subPosts.map((post: any) => {
             if (typeof post !== 'object') return null
             return (
               <div key={post.id} className="flex flex-col">
                 <Link href={`/posts/${post.slug}`} className="group block">
-                  <div className="relative aspect-[16/10] w-full bg-slate-100 overflow-hidden mb-2">
+                  <div className="relative aspect-[16/9] w-full bg-slate-100 overflow-hidden mb-2">
                     {post.featuredImage?.url && (
                       <Image
                         src={post.featuredImage.url}
