@@ -1,6 +1,6 @@
 import type { CollectionConfig } from 'payload'
 
-export const Posts: CollectionConfig = {
+export const Utama: CollectionConfig = {
   slug: 'posts',
   admin: {
     useAsTitle: 'title',

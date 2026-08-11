@@ -8,7 +8,7 @@ import sharp from 'sharp'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Categories } from './collections/Categories'
-import { Posts } from './collections/Posts'
+import { Utama } from './collections/Utama'
 import { Sliders } from './collections/Sliders'
 import { Trending } from './collections/Trending'
 
@@ -22,7 +22,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Categories, Posts, Sliders, Trending],
+  collections: [Users, Media, Categories, Utama, Sliders, Trending],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
