@@ -196,7 +196,38 @@ export interface Utama {
   isFeatured?: boolean | null;
   publishedAt?: string | null;
   position?: ('featured_main' | 'featured_side' | 'featured_bullet' | 'grid') | null;
-  relatedPosts?: (number | Post)[] | null;
+  relatedPosts?: (number | Utama)[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sliders".
+ */
+export interface Slider {
+  id: number;
+  title: string;
+  category: string;
+  /**
+   * Link when click on
+   */
+  slug: string;
+  image: number | Media;
+  /**
+   * Ascending
+   */
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "trending".
+ */
+export interface Trending {
+  id: number;
+  keyword: string;
+  order?: number | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -235,37 +266,6 @@ export interface Post {
     image?: (number | null) | Media;
     relatedPosts?: (number | Post)[] | null;
   };
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "sliders".
- */
-export interface Slider {
-  id: number;
-  title: string;
-  category: string;
-  /**
-   * Link when click on
-   */
-  slug: string;
-  image: number | Media;
-  /**
-   * Ascending
-   */
-  order?: number | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "trending".
- */
-export interface Trending {
-  id: number;
-  keyword: string;
-  order?: number | null;
   updatedAt: string;
   createdAt: string;
 }

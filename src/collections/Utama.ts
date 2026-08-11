@@ -57,7 +57,7 @@ export const Utama: CollectionConfig = {
     {
       name: 'relatedPosts',
       type: 'relationship',
-      relationTo: 'posts',
+      relationTo: 'utama',
       hasMany: true,
     },
   ],
