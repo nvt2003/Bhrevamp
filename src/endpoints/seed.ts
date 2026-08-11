@@ -1,118 +1,238 @@
 import { Payload } from 'payload'
 
-type SliderSeed = {
-  title: string
-  category: string
-  slug: string
-  order: number
-  imageUrl: string
-  imageName: string
-}
-
-export const seedSliders = async (payload: Payload) => {
-  // 1. Kiểm tra slider đã tồn tại chưa
-  const existingSliders = await payload.find({
-    collection: 'sliders',
-    limit: 1,
-  })
-
-  if (existingSliders.totalDocs > 0) {
-    console.log('Dữ liệu Sliders đã tồn tại, bỏ qua Seed.')
-    return
-  }
-
-  console.log('Đang tạo dữ liệu mẫu cho Sliders...')
-
-  // 2. Danh sách slider mẫu
-  const sampleSliders: SliderSeed[] = [
-    {
-      title: "Stacy 'terbang' di Sabah",
-      category: 'Hiburan',
-      slug: 'stacy-terbang-di-sabah',
-      order: 1,
-      imageUrl: 'https://picsum.photos/seed/stacy/1200/600',
-      imageName: 'stacy.jpg',
-    },
-    {
-      title: 'Komputer riba serba pintar permudah sambungan iPhone, Windows',
-      category: 'Bisnes',
-      slug: 'komputer-riba-serba-pintar',
-      order: 2,
-      imageUrl: 'https://picsum.photos/seed/computer/1200/600',
-      imageName: 'computer.jpg',
-    },
-    {
-      title: 'Khelif perlu pulangkan pingat - Kremlev',
-      category: 'Sukan',
-      slug: 'khelif-perlu-pulangkan-pingat',
-      order: 3,
-      imageUrl: 'https://picsum.photos/seed/sports/1200/600',
-      imageName: 'sports.jpg',
-    },
-    {
-      title: 'Perang Israel-Iran tidak mengubah nasib Gaza',
-      category: 'Nasional',
-      slug: 'perang-israel-iran',
-      order: 4,
-      imageUrl: 'https://picsum.photos/seed/world/1200/600',
-      imageName: 'world.jpg',
-    },
-    {
-      title: 'Cập nhật diễn biến kinh tế thế giới mới nhất hôm nay',
-      category: 'Thế Giới',
-      slug: 'dien-bien-kinh-te',
-      order: 5,
-      imageUrl: 'https://picsum.photos/seed/economy/1200/600',
-      imageName: 'economy.jpg',
-    },
-  ]
-
-  // 3. Tạo từng slider
-  for (const slider of sampleSliders) {
-    console.log(`Đang tạo ảnh cho: ${slider.title}`)
-
-    // Tải ảnh từ URL
-    const response = await fetch(slider.imageUrl)
-
-    if (!response.ok) {
-      console.error(`Không thể tải ảnh: ${slider.imageUrl}`)
-      continue
-    }
+// Helper function tải ảnh từ URL ngoài và tạo record trong collection 'media'
+const createMediaFromUrl = async (
+  payload: Payload,
+  imageUrl: string,
+  imageName: string,
+  altText: string,
+) => {
+  try {
+    const response = await fetch(imageUrl)
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`)
 
     const arrayBuffer = await response.arrayBuffer()
     const buffer = Buffer.from(arrayBuffer)
 
-    // 4. Tạo Media
     const media = await payload.create({
       collection: 'media',
       data: {
-        alt: slider.title,
+        alt: altText,
       },
       file: {
         data: buffer,
         mimetype: response.headers.get('content-type') || 'image/jpeg',
-        name: slider.imageName,
+        name: imageName,
         size: buffer.length,
-      },
-    })
-
-    console.log(`Media created: ${media.id}`)
-
-    // 5. Tạo Slider và liên kết với Media
-    await payload.create({
-      collection: 'sliders',
-      data: {
-        title: slider.title,
-        category: slider.category,
-        slug: slider.slug,
-        image: media.id,
-        order: slider.order,
       },
       overrideAccess: true,
     })
 
-    console.log(`Slider created: ${slider.title}`)
+    return media.id
+  } catch (error) {
+    console.error(`Không thể tải ảnh (${imageUrl}):`, error)
+    return null
+  }
+}
+
+export const seedPosts = async (payload: Payload) => {
+  // 1. Kiểm tra xem posts đã tồn tại chưa
+  const existingPosts = await payload.find({
+    collection: 'posts',
+    limit: 1,
+  })
+
+  if (existingPosts.totalDocs > 0) {
+    console.log('Dữ liệu Posts đã tồn tại, bỏ qua Seed.')
+    return
   }
 
-  console.log('Đã khởi tạo thành công 5 sliders mẫu!')
+  console.log('Đang khởi tạo dữ liệu mẫu cho Categories và Posts...')
+
+  // 2. Tạo hoặc lấy Categories
+  const categoriesToSeed = [
+    { name: 'NASIONAL', slug: 'nasional' },
+    { name: 'WILAYAH', slug: 'wilayah' },
+    { name: 'KES', slug: 'kes' },
+  ]
+
+  const categoryMap: Record<string, number> = {}
+
+  for (const cat of categoriesToSeed) {
+    const createdCat = await payload.create({
+      collection: 'categories',
+      data: cat,
+      overrideAccess: true,
+    })
+    categoryMap[cat.slug] = Number(createdCat.id)
+  }
+
+  // 3. Tạo các bài viết dạng Bullet List trước (cho phần tin nhanh không ảnh)
+  console.log('Đang tạo các tin Bullet List...')
+  const bullet1 = await payload.create({
+    collection: 'utama',
+    data: {
+      title: "Laporan nahas Air India: Juruterbang 'keliru' cara guna suis enjin",
+      slug: 'laporan-nahas-air-india-juruterbang-keliru-cara-guna-suis-enjin',
+      category: categoryMap['nasional'],
+      position: 'featured_bullet',
+    },
+    overrideAccess: true,
+  })
+
+  const bullet2 = await payload.create({
+    collection: 'utama',
+    data: {
+      title: 'Persatuan juruterbang tolak dakwaan kesilapan manusia punca nahas Air India',
+      slug: 'persatuan-juruterbang-tolak-dakwaan-kesilapan-manusia-punca-nahas-air-india',
+      category: categoryMap['nasional'],
+      position: 'featured_bullet',
+    },
+    overrideAccess: true,
+  })
+
+  const bullet3 = await payload.create({
+    collection: 'utama',
+    data: {
+      title: 'Remaja dituduh rogol pelajar dalam stor sekolah',
+      slug: 'remaja-dituduh-rogol-pelajar-dalam-stor-sekolah',
+      category: categoryMap['nasional'],
+      position: 'featured_bullet',
+    },
+    overrideAccess: true,
+  })
+
+  // 4. Tạo bài viết Featured Main (Tin lớn nổi bật bên phải)
+  console.log('Đang tạo bài viết Featured Main...')
+  const mainImageId = await createMediaFromUrl(
+    payload,
+    'https://picsum.photos/seed/airindia/800/500',
+    'airindia-crash.jpg',
+    'Kapten pesawat Air India',
+  )
+
+  await payload.create({
+    collection: 'utama',
+    data: {
+      title: 'Kapten pesawat Air India matikan suis kawal aliran bahan api ke enjin - WSJ',
+      excerpt:
+        'KUALA LUMPUR: Kerajaan akan tetap melaksanakan rasionalisasi subsidi RON95 seperti yang dirancang pada..',
+      category: categoryMap['nasional'],
+      position: 'featured_main',
+      featuredImage: mainImageId,
+      relatedPosts: [bullet1.id, bullet2.id, bullet3.id] as number[],
+    },
+    draft: true,
+    overrideAccess: true,
+  })
+
+  // 5. Tạo danh sách tin Sidebar bên trái (Dạng ảnh nhỏ xếp dọc)
+  console.log('Đang tạo tin Sidebar bên trái...')
+  const sidePosts = [
+    { title: 'Perang Israel-Iran tidak mengubah nasib Gaza', imgSeed: 'gaza' },
+    { title: 'Azam Baki mohon maaf kepada keluarga Teoh Beng Hock', imgSeed: 'azam' },
+    { title: 'Projek LRT Laluan Mutiara dijangka beri manfaat 1.8 juta orang', imgSeed: 'lrt' },
+    {
+      title: 'Aplikasi Saudi Visa Bio, pencapaian dasar luar negara tumpuan Dewan...',
+      imgSeed: 'visa',
+    },
+  ]
+
+  for (let i = 0; i < sidePosts.length; i++) {
+    const item = sidePosts[i]
+    const imgId = await createMediaFromUrl(
+      payload,
+      `https://picsum.photos/seed/${item.imgSeed}/400/250`,
+      `side-${i}.jpg`,
+      item.title,
+    )
+
+    await payload.create({
+      collection: 'utama',
+      data: {
+        title: item.title,
+        category: categoryMap['nasional'],
+        position: 'featured_side',
+        featuredImage: imgId,
+      },
+      draft: true,
+      overrideAccess: true,
+    })
+  }
+
+  // 6. Tạo danh sách tin ở lưới phía dưới (Grid 3 cột)
+  console.log('Đang tạo các bài viết dạng Grid...')
+  const gridPosts = [
+    {
+      title:
+        'Penyertaan media ASEAN pada program HAWANA buka peluang wartawan tukar pengalaman, kepakaran',
+      catSlug: 'nasional',
+      imgSeed: 'asean1',
+    },
+    {
+      title: 'Dedikasi media ASEAN demi liputan terbaik di sidang kemuncak',
+      catSlug: 'nasional',
+      imgSeed: 'asean2',
+    },
+    {
+      title: 'Kepusatan, persaudaraan ASEAN penting hadapi cabaran global - PM Anwar',
+      catSlug: 'nasional',
+      imgSeed: 'asean3',
+    },
+    {
+      title: 'Pelajar cedera terjatuh di tengah jalan raya selepas dikejar tiga anjing liar',
+      catSlug: 'wilayah',
+      imgSeed: 'accident',
+    },
+    {
+      title: 'Polis tahan 2 lelaki terbabit kes samun',
+      catSlug: 'kes',
+      imgSeed: 'police1',
+    },
+    {
+      title:
+        "'Dua tahun pemilik kedai emas terpaksa bayar duit perlindungan sebelum diculik' - Polis",
+      catSlug: 'nasional',
+      imgSeed: 'police2',
+    },
+    {
+      title: 'Kerjasama kukuh mantapkan pertumbuhan negara BIMP-EAGA - Presiden Marcos Jr',
+      catSlug: 'nasional',
+      imgSeed: 'summit',
+    },
+    {
+      title: 'Lipas di dapur, medan selera diarah tutup 14 hari',
+      catSlug: 'kes',
+      imgSeed: 'food',
+    },
+    {
+      title: 'Deklarasi Kuala Lumpur 2045 visi strategik pacu komuniti ASEAN',
+      catSlug: 'nasional',
+      imgSeed: 'declaration',
+    },
+  ]
+
+  for (let i = 0; i < gridPosts.length; i++) {
+    const item = gridPosts[i]
+    const imgId = await createMediaFromUrl(
+      payload,
+      `https://picsum.photos/seed/${item.imgSeed}/500/300`,
+      `grid-${i}.jpg`,
+      item.title,
+    )
+
+    await payload.create({
+      collection: 'utama',
+      data: {
+        title: item.title,
+        category: categoryMap[item.catSlug],
+        position: 'grid',
+        featuredImage: imgId,
+      },
+      draft: true,
+      overrideAccess: true,
+    })
+  }
+
+  console.log('Khởi tạo toàn bộ dữ liệu Posts thành công!')
 }

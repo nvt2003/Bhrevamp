@@ -70,9 +70,10 @@ export interface Config {
     users: User;
     media: Media;
     categories: Category;
-    posts: Post;
+    utama: Utama;
     sliders: Slider;
     trending: Trending;
+    posts: Post;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -83,9 +84,10 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
-    posts: PostsSelect<false> | PostsSelect<true>;
+    utama: UtamaSelect<false> | UtamaSelect<true>;
     sliders: SlidersSelect<false> | SlidersSelect<true>;
     trending: TrendingSelect<false> | TrendingSelect<true>;
+    posts: PostsSelect<false> | PostsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -182,9 +184,9 @@ export interface Category {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "posts".
+ * via the `definition` "utama".
  */
-export interface Post {
+export interface Utama {
   id: number;
   title: string;
   slug: string;
@@ -193,6 +195,46 @@ export interface Post {
   category: number | Category;
   isFeatured?: boolean | null;
   publishedAt?: string | null;
+  position?: ('featured_main' | 'featured_side' | 'featured_bullet' | 'grid') | null;
+  relatedPosts?: (number | Post)[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "posts".
+ */
+export interface Post {
+  id: number;
+  title: string;
+  slug: string;
+  excerpt?: string | null;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  featuredImage?: (number | null) | Media;
+  category: number | Category;
+  status: 'draft' | 'published';
+  publishedAt?: string | null;
+  isFeatured?: boolean | null;
+  seo?: {
+    title?: string | null;
+    description?: string | null;
+    image?: (number | null) | Media;
+    relatedPosts?: (number | Post)[] | null;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -264,8 +306,8 @@ export interface PayloadLockedDocument {
         value: number | Category;
       } | null)
     | ({
-        relationTo: 'posts';
-        value: number | Post;
+        relationTo: 'utama';
+        value: number | Utama;
       } | null)
     | ({
         relationTo: 'sliders';
@@ -274,6 +316,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'trending';
         value: number | Trending;
+      } | null)
+    | ({
+        relationTo: 'posts';
+        value: number | Post;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -369,9 +415,9 @@ export interface CategoriesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "posts_select".
+ * via the `definition` "utama_select".
  */
-export interface PostsSelect<T extends boolean = true> {
+export interface UtamaSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
   excerpt?: T;
@@ -379,6 +425,8 @@ export interface PostsSelect<T extends boolean = true> {
   category?: T;
   isFeatured?: T;
   publishedAt?: T;
+  position?: T;
+  relatedPosts?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -402,6 +450,31 @@ export interface SlidersSelect<T extends boolean = true> {
 export interface TrendingSelect<T extends boolean = true> {
   keyword?: T;
   order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "posts_select".
+ */
+export interface PostsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  excerpt?: T;
+  content?: T;
+  featuredImage?: T;
+  category?: T;
+  status?: T;
+  publishedAt?: T;
+  isFeatured?: T;
+  seo?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+        relatedPosts?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }

@@ -1,7 +1,7 @@
 import type { CollectionConfig } from 'payload'
 
 export const Utama: CollectionConfig = {
-  slug: 'posts',
+  slug: 'utama',
   admin: {
     useAsTitle: 'title',
   },
@@ -53,6 +53,12 @@ export const Utama: CollectionConfig = {
         { label: 'Featured Bullet (list, no image)', value: 'featured_bullet' },
         { label: 'Grid Standard (grid in bottom)', value: 'grid' },
       ],
+    },
+    {
+      name: 'relatedPosts',
+      type: 'relationship',
+      relationTo: 'posts',
+      hasMany: true,
     },
   ],
 }
