@@ -46,7 +46,20 @@ export const seedPosts = async (payload: Payload) => {
     console.log('Dữ liệu Posts đã tồn tại, bỏ qua Seed.')
     return
   }
+  // Helper tạo slug không bao giờ trùng
+  const makeSlug = (text: string) => {
+    const baseSlug = text
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9 -]/g, '')
+      .trim()
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
 
+    // Thêm suffix ngắn để đảm bảo unique tuyệt đối khi Seed
+    return `${baseSlug}-${Math.floor(1000 + Math.random() * 9000)}`
+  }
   console.log('Đang khởi tạo dữ liệu mẫu cho Categories và Posts...')
 
   // 2. Tạo hoặc lấy Categories
@@ -59,12 +72,26 @@ export const seedPosts = async (payload: Payload) => {
   const categoryMap: Record<string, number> = {}
 
   for (const cat of categoriesToSeed) {
-    const createdCat = await payload.create({
+    const existing = await payload.find({
       collection: 'categories',
-      data: cat,
-      overrideAccess: true,
+      where: {
+        slug: {
+          equals: cat.slug,
+        },
+      },
     })
-    categoryMap[cat.slug] = Number(createdCat.id)
+
+    if (existing.docs.length > 0) {
+      // Nếu đã có thì lấy luôn ID
+      categoryMap[cat.slug] = existing.docs[0].id as number
+    } else {
+      const createdCat = await payload.create({
+        collection: 'categories',
+        data: cat,
+        overrideAccess: true,
+      })
+      categoryMap[cat.slug] = Number(createdCat.id)
+    }
   }
 
   // 3. Tạo các bài viết dạng Bullet List trước (cho phần tin nhanh không ảnh)
@@ -73,10 +100,11 @@ export const seedPosts = async (payload: Payload) => {
     collection: 'utama',
     data: {
       title: "Laporan nahas Air India: Juruterbang 'keliru' cara guna suis enjin",
-      slug: 'laporan-nahas-air-india-juruterbang-keliru-cara-guna-suis-enjin',
+      slug: makeSlug('Laporan nahas Air India Juruterbang keliru cara guna suis enjin'),
       category: categoryMap['nasional'],
       position: 'featured_bullet',
     },
+    draft: false,
     overrideAccess: true,
   })
 
@@ -84,10 +112,11 @@ export const seedPosts = async (payload: Payload) => {
     collection: 'utama',
     data: {
       title: 'Persatuan juruterbang tolak dakwaan kesilapan manusia punca nahas Air India',
-      slug: 'persatuan-juruterbang-tolak-dakwaan-kesilapan-manusia-punca-nahas-air-india',
+      slug: makeSlug('persatuan-juruterbang-tolak-dakwaan-kesilapan-manusia-punca-nahas-air-india'),
       category: categoryMap['nasional'],
       position: 'featured_bullet',
     },
+    draft: false,
     overrideAccess: true,
   })
 
@@ -95,10 +124,11 @@ export const seedPosts = async (payload: Payload) => {
     collection: 'utama',
     data: {
       title: 'Remaja dituduh rogol pelajar dalam stor sekolah',
-      slug: 'remaja-dituduh-rogol-pelajar-dalam-stor-sekolah',
+      slug: makeSlug('remaja-dituduh-rogol-pelajar-dalam-stor-sekolah'),
       category: categoryMap['nasional'],
       position: 'featured_bullet',
     },
+    draft: false,
     overrideAccess: true,
   })
 
@@ -115,6 +145,7 @@ export const seedPosts = async (payload: Payload) => {
     collection: 'utama',
     data: {
       title: 'Kapten pesawat Air India matikan suis kawal aliran bahan api ke enjin - WSJ',
+      slug: makeSlug('Kapten pesawat Air India matikan suis kawal aliran bahan api ke enjin WSJ'),
       excerpt:
         'KUALA LUMPUR: Kerajaan akan tetap melaksanakan rasionalisasi subsidi RON95 seperti yang dirancang pada..',
       category: categoryMap['nasional'],
