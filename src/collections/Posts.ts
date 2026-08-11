@@ -108,6 +108,15 @@ export const Posts: CollectionConfig = {
       type: 'checkbox',
       defaultValue: false,
     },
+    {
+      name: 'isTrending',
+      type: 'checkbox',
+      label: 'Bài viết Trending',
+      defaultValue: false,
+      admin: {
+        position: 'sidebar',
+      },
+    },
 
     // =========================
     // SEO
