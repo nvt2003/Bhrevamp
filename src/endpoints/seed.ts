@@ -220,7 +220,7 @@ export const seedPosts = async (payload: Payload) => {
       item.title,
     )
 
-    await payload.create({
+    const post = await payload.create({
       collection: 'posts',
       data: {
         title: item.title,
@@ -234,6 +234,7 @@ export const seedPosts = async (payload: Payload) => {
       draft: true,
       overrideAccess: true,
     })
+    createdSidePosts.push(Number(post.id))
   }
 
   // 6. Tạo danh sách tin ở lưới phía dưới (Grid 3 cột)
@@ -297,7 +298,7 @@ export const seedPosts = async (payload: Payload) => {
       item.title,
     )
 
-    await payload.create({
+    const post = await payload.create({
       collection: 'posts',
       data: {
         title: item.title,
@@ -311,6 +312,7 @@ export const seedPosts = async (payload: Payload) => {
       draft: true,
       overrideAccess: true,
     })
+    createdGridPosts.push(Number(post.id))
   }
   console.log('Đang tạo dữ liệu Terkini và Trending...')
 
@@ -373,22 +375,94 @@ export const seedPosts = async (payload: Payload) => {
       overrideAccess: true,
     })
   }
+  // --- TẠO BÀI DÙNG CHO DISYORKAN ---
+  console.log('Đang tạo tin cho khối Disyorkan...')
+
+  // Bài chính
+  const mainDisyorkanImg = await createMediaFromUrl(
+    payload,
+    'https://picsum.photos/seed/es-sunlogy/800/450',
+    'disyorkan-main.jpg',
+    'ES Sunlogy Energy Solution',
+  )
+  const disyorkanMain = await payload.create({
+    collection: 'posts',
+    data: {
+      title: 'Gugur janin guna ubat beli di TikTok, pekerja kafe dipenjara 9 bulan',
+      category: categoryMap['nasional'],
+      featuredImage: mainDisyorkanImg,
+      status: 'published',
+      publishedAt: new Date().toISOString(),
+      slug: makeSlug('Gugur janin guna ubat beli di TikTok pekerja kafe dipenjara 9 bulan'),
+      content: createDummyContent('Gugur janin...'),
+    },
+    draft: true,
+    overrideAccess: true,
+  })
+
+  // 6 bài nhỏ
+  const disyorkanItems = [
+    { title: 'Suspek kes simbah asid pengusaha spa disambung reman 4 hari', seed: 'acid1' },
+    { title: "'Geng Bob' curi sarung meter air tumpas diserbu polis", seed: 'gengbob' },
+    {
+      title:
+        "'Saya jerit panggil nama mak su, tapi yang kedengaran hanya suara kesakitan' - Anak saudara",
+      seed: 'diplomat',
+    },
+    { title: 'MPV terbabas, langgar pembahagi konkrit, 2 maut', seed: 'caraccident' },
+    { title: 'Suspek kedua kes simbah asid pengusaha spa direman tujuh hari', seed: 'acid2' },
+    {
+      title: 'Gugur janin guna ubat beli di TikTok, pekerja kafe dipenjara 9 bulan',
+      seed: 'citaglobal',
+    },
+  ]
+
+  const createdDisyorkanSubIds: number[] = []
+  for (let i = 0; i < disyorkanItems.length; i++) {
+    const item = disyorkanItems[i]
+    const imgId = await createMediaFromUrl(
+      payload,
+      `https://picsum.photos/seed/${item.seed}/400/250`,
+      `disyorkan-sub-${i}.jpg`,
+      item.title,
+    )
+    const post = await payload.create({
+      collection: 'posts',
+      data: {
+        title: item.title,
+        category: categoryMap['kes'] || categoryMap['nasional'],
+        featuredImage: imgId,
+        status: 'published',
+        publishedAt: new Date().toISOString(),
+        slug: makeSlug(item.title),
+        content: createDummyContent(item.title),
+      },
+      draft: true,
+      overrideAccess: true,
+    })
+    createdDisyorkanSubIds.push(Number(post.id))
+  }
+
   console.log('Đang liên kết dữ liệu vào Global HomePage...')
 
   await payload.updateGlobal({
     slug: 'home-page',
     data: {
-      sections: [
-        {
-          blockType: 'categorySection',
-          title: 'Utama',
-          featuredMain: mainPost.id,
-          featuredSide: createdSidePosts,
-          featuredBullet: [bullet1.id, bullet2.id, bullet3.id],
-          gridPosts: createdGridPosts,
-        },
-      ],
-    } as any,
+      utamaSection: {
+        title: 'Utama',
+        featuredMain: mainPost.id,
+        featuredSide: createdSidePosts,
+        featuredBullet: [bullet1.id, bullet2.id, bullet3.id],
+        gridPosts: createdGridPosts,
+        terkiniLimit: 5,
+        trendingLimit: 5,
+      },
+      disyorkanSection: {
+        title: 'Disyorkan',
+        mainPost: disyorkanMain.id,
+        subPosts: createdDisyorkanSubIds,
+      },
+    },
   })
   console.log('Khởi tạo toàn bộ dữ liệu Posts thành công!')
 }
