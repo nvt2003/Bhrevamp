@@ -1,6 +1,4 @@
-// src/globals/HomePage.ts
 import type { GlobalConfig } from 'payload'
-
 export const HomePage: GlobalConfig = {
   slug: 'home-page',
   label: 'Trang Chủ',

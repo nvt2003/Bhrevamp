@@ -264,6 +264,7 @@ export interface Post {
   status: 'draft' | 'published';
   publishedAt?: string | null;
   isFeatured?: boolean | null;
+  isTrending?: boolean | null;
   seo?: {
     title?: string | null;
     description?: string | null;
@@ -471,6 +472,7 @@ export interface PostsSelect<T extends boolean = true> {
   status?: T;
   publishedAt?: T;
   isFeatured?: T;
+  isTrending?: T;
   seo?:
     | T
     | {
@@ -528,35 +530,20 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface HomePage {
   id: number;
-  sections?:
-    | (
-        | {
-            title: string;
-            category: number | Category;
-            limit?: number | null;
-            displayStyle?: ('grid' | 'list' | 'featured-left') | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'categorySection';
-          }
-        | {
-            title?: string | null;
-            type?: ('auto' | 'manual') | null;
-            manualPosts?: (number | Post)[] | null;
-            limit?: number | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'featuredSection';
-          }
-        | {
-            title?: string | null;
-            limit?: number | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'latestSection';
-          }
-      )[]
-    | null;
+  utamaSection?: {
+    title?: string | null;
+    featuredMain?: (number | null) | Post;
+    featuredSide?: (number | Post)[] | null;
+    featuredBullet?: (number | Post)[] | null;
+    gridPosts?: (number | Post)[] | null;
+    terkiniLimit?: number | null;
+    trendingLimit?: number | null;
+  };
+  disyorkanSection?: {
+    title?: string | null;
+    mainPost?: (number | null) | Post;
+    subPosts?: (number | Post)[] | null;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -565,37 +552,23 @@ export interface HomePage {
  * via the `definition` "home-page_select".
  */
 export interface HomePageSelect<T extends boolean = true> {
-  sections?:
+  utamaSection?:
     | T
     | {
-        categorySection?:
-          | T
-          | {
-              title?: T;
-              category?: T;
-              limit?: T;
-              displayStyle?: T;
-              id?: T;
-              blockName?: T;
-            };
-        featuredSection?:
-          | T
-          | {
-              title?: T;
-              type?: T;
-              manualPosts?: T;
-              limit?: T;
-              id?: T;
-              blockName?: T;
-            };
-        latestSection?:
-          | T
-          | {
-              title?: T;
-              limit?: T;
-              id?: T;
-              blockName?: T;
-            };
+        title?: T;
+        featuredMain?: T;
+        featuredSide?: T;
+        featuredBullet?: T;
+        gridPosts?: T;
+        terkiniLimit?: T;
+        trendingLimit?: T;
+      };
+  disyorkanSection?:
+    | T
+    | {
+        title?: T;
+        mainPost?: T;
+        subPosts?: T;
       };
   updatedAt?: T;
   createdAt?: T;

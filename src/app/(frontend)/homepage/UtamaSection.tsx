@@ -1,17 +1,23 @@
-export default function UtamaSection({ formattedUtama }: { formattedUtama: any }) {
-  const { featuredMain, featuredSide, featuredBullet } = formattedUtama
+'use client'
+import React from 'react'
+import { formatRelativeTime } from '@/utilities/formatTime'
+export default function UtamaSection({ data }: { data: any }) {
+  if (!data) return null
+  const { featuredMain, featuredSide, featuredBullet, gridPosts, title } = data
 
   return (
     <section className="max-w-6xl mx-auto p-4 font-sans text-gray-900">
       {/* Header */}
       <div className="mb-6">
-        <div className="text-xl md:text-2xl font-semibold tracking-tight text-gray-900">Utama</div>
+        <div className="text-xl md:text-2xl font-semibold tracking-tight text-gray-900">
+          {title || 'Utama'}
+        </div>
         <div className="w-10 h-1 bg-rose-600 mt-1"></div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
         {/* Left Column: Side News Grid (4 items) */}
-        <div className="md:col-span-5 grid grid-cols-1 gap-4">
+        <div className="md:col-span-4 grid grid-cols-1 gap-4">
           {featuredSide?.map((item: any) => (
             <div
               key={item.id}
@@ -27,7 +33,7 @@ export default function UtamaSection({ formattedUtama }: { formattedUtama: any }
                   <span className="text-[#D81B50] font-bold uppercase tracking-wide">
                     {item.category?.name}
                   </span>
-                  <span className="text-gray-300">18 minit lepas</span>
+                  <span className="text-gray-300">{formatRelativeTime(item.publishedAt)}</span>
                 </div>
                 <h3 className="text-white text-sm font-semibold leading-snug line-clamp-2">
                   {item.title}
@@ -38,7 +44,7 @@ export default function UtamaSection({ formattedUtama }: { formattedUtama: any }
         </div>
 
         {/* Right Column: Main Feature & Bullets */}
-        <div className="md:col-span-7 flex flex-col gap-4">
+        <div className="md:col-span-8 flex flex-col gap-4">
           {/* Main Featured Item */}
           {featuredMain && (
             <div>
@@ -52,7 +58,9 @@ export default function UtamaSection({ formattedUtama }: { formattedUtama: any }
 
               <div className="flex items-center gap-2 text-sm mb-2">
                 <span className="text-[#D81B50] font-bold">{featuredMain.category?.name}</span>
-                <span className="text-gray-500 text-xs">18 minit lepas</span>
+                <span className="text-gray-500 text-xs">
+                  {formatRelativeTime(featuredMain.publishedAt)}
+                </span>
               </div>
 
               <h1 className="text-xl md:text-2xl font-bold leading-tight mb-2 hover:text-[#D81B50] cursor-pointer">
@@ -75,6 +83,34 @@ export default function UtamaSection({ formattedUtama }: { formattedUtama: any }
             ))}
           </div>
         </div>
+        {/* Grid Posts Section - Có Fallback xử lý lỗi ảnh */}
+        {gridPosts && gridPosts.length > 0 && (
+          <div className="w-full md:col-span-12 mt-10 pt-6 border-t border-gray-200">
+            <div className="w-full grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-8">
+              {gridPosts.map((item: any) => (
+                <div key={item.id} className="w-full">
+                  <img
+                    src={item.featuredImage?.url}
+                    alt={item.featuredImage?.alt || item.title}
+                    className="w-full aspect-[5/3] object-cover"
+                  />
+
+                  <div className="flex gap-2 text-xs">
+                    <div className="text-[#D81B50] font-bold uppercase tracking-wide">
+                      {item.category?.name}
+                    </div>
+                    <div className="text-gray-300">
+                      {formatRelativeTime(featuredMain.publishedAt)}
+                    </div>
+                  </div>
+                  <p className=" font-semibold text-gray-800 group-hover:text-[#D81B50] transition-colors leading-snug">
+                    {item.title}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </section>
   )
