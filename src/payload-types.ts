@@ -554,6 +554,77 @@ export interface HomePage {
     featuredPosts?: (number | Post)[] | null;
     sidePosts?: (number | Post)[] | null;
   };
+  duniaSection?: {
+    title?: string | null;
+    featuredPosts?: (number | Post)[] | null;
+    sidePosts?: (number | Post)[] | null;
+  };
+  bisnesSection?: {
+    title?: string | null;
+    featuredPosts?: (number | Post)[] | null;
+    subPosts?: (number | Post)[] | null;
+  };
+  hiburanSection?: {
+    title?: string | null;
+    featuredPosts?: (number | Post)[] | null;
+    subPosts?: (number | Post)[] | null;
+  };
+  gayaHidupSection?: {
+    title?: string | null;
+    featuredPost?: (number | null) | Post;
+    subPosts?: (number | Post)[] | null;
+  };
+  bhPlusSection?: {
+    title?: string | null;
+    featuredPosts?: (number | Post)[] | null;
+    infografikSection?: {
+      title?: string | null;
+      featuredImage?: (number | null) | Media;
+      linkUrl?: string | null;
+    };
+    galeriFotoSection?: {
+      title?: string | null;
+      galleryImages?:
+        | {
+            image: number | Media;
+            caption?: string | null;
+            id?: string | null;
+          }[]
+        | null;
+    };
+    subPosts?: (number | Post)[] | null;
+  };
+  infografikSection?: {
+    title?: string | null;
+    featuredImage?: (number | null) | Media;
+    linkUrl?: string | null;
+  };
+  galeriFotoSection?: {
+    title?: string | null;
+    galleryImages?:
+      | {
+          image: number | Media;
+          caption?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  podcastSection?: {
+    title?: string | null;
+    channelLogo?: (number | null) | Media;
+    videos?: (number | Post)[] | null;
+  };
+  bhTvSection?: {
+    title?: string | null;
+    channelLogo?: (number | null) | Media;
+    mainVideo?: (number | null) | Post;
+    subVideos?: (number | Post)[] | null;
+  };
+  videoTerkiniSection?: {
+    title?: string | null;
+    channelLogo?: (number | null) | Media;
+    videos?: (number | Post)[] | null;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -593,6 +664,101 @@ export interface HomePageSelect<T extends boolean = true> {
         title?: T;
         featuredPosts?: T;
         sidePosts?: T;
+      };
+  duniaSection?:
+    | T
+    | {
+        title?: T;
+        featuredPosts?: T;
+        sidePosts?: T;
+      };
+  bisnesSection?:
+    | T
+    | {
+        title?: T;
+        featuredPosts?: T;
+        subPosts?: T;
+      };
+  hiburanSection?:
+    | T
+    | {
+        title?: T;
+        featuredPosts?: T;
+        subPosts?: T;
+      };
+  gayaHidupSection?:
+    | T
+    | {
+        title?: T;
+        featuredPost?: T;
+        subPosts?: T;
+      };
+  bhPlusSection?:
+    | T
+    | {
+        title?: T;
+        featuredPosts?: T;
+        infografikSection?:
+          | T
+          | {
+              title?: T;
+              featuredImage?: T;
+              linkUrl?: T;
+            };
+        galeriFotoSection?:
+          | T
+          | {
+              title?: T;
+              galleryImages?:
+                | T
+                | {
+                    image?: T;
+                    caption?: T;
+                    id?: T;
+                  };
+            };
+        subPosts?: T;
+      };
+  infografikSection?:
+    | T
+    | {
+        title?: T;
+        featuredImage?: T;
+        linkUrl?: T;
+      };
+  galeriFotoSection?:
+    | T
+    | {
+        title?: T;
+        galleryImages?:
+          | T
+          | {
+              image?: T;
+              caption?: T;
+              id?: T;
+            };
+      };
+  podcastSection?:
+    | T
+    | {
+        title?: T;
+        channelLogo?: T;
+        videos?: T;
+      };
+  bhTvSection?:
+    | T
+    | {
+        title?: T;
+        channelLogo?: T;
+        mainVideo?: T;
+        subVideos?: T;
+      };
+  videoTerkiniSection?:
+    | T
+    | {
+        title?: T;
+        channelLogo?: T;
+        videos?: T;
       };
   updatedAt?: T;
   createdAt?: T;

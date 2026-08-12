@@ -24,6 +24,7 @@ export default async function HomePage() {
       <p className="mt-2 text-blue-100">
         Nếu thẻ này có nền màu xanh và chữ trắng là Tailwind đã nhận!
       </p>
+      <h1>File sinh dữ liệu ở đây</h1>
     </div>
   )
 }
