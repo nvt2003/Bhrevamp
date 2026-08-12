@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import { formatRelativeTime } from '@/utilities/formatTime'
 
 export default function BhTvSection({ data }: { data: any }) {
   if (!data) return null
@@ -108,7 +109,9 @@ export default function BhTvSection({ data }: { data: any }) {
                   {/* Category & Time */}
                   <div className="text-[11px] text-red-600 font-bold uppercase mb-0.5 flex items-center gap-1.5">
                     {post.category?.title || 'KES'}
-                    <span className="text-gray-400 font-normal lowercase">18 minit lepas</span>
+                    <span className="text-gray-400 font-normal lowercase">
+                      {formatRelativeTime(post.publishedAt)}
+                    </span>
                   </div>
 
                   {/* Title */}

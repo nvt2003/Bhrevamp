@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import { formatRelativeTime } from '@/utilities/formatTime'
 
 export default function DisyorkanSection({ data }: { data: any }) {
   if (!data) return null
@@ -62,7 +63,9 @@ export default function DisyorkanSection({ data }: { data: any }) {
                   </div>
                   <div className="text-xs text-red-600 font-semibold mb-1">
                     {post.category?.title || 'Kes'}{' '}
-                    <span className="text-gray-400 font-normal">18 minit lepas</span>
+                    <span className="text-gray-400 font-normal">
+                      {formatRelativeTime(post.publishedAt)}
+                    </span>
                   </div>
                   <h4 className="text-sm font-bold line-clamp-3 group-hover:text-red-600 leading-snug">
                     {post.title}

@@ -625,6 +625,19 @@ export interface HomePage {
     channelLogo?: (number | null) | Media;
     videos?: (number | Post)[] | null;
   };
+  sihatSection: {
+    title: string;
+    moreText?: string | null;
+    moreLink?: string | null;
+    /**
+     * Chọn 1 bài viết chính hiển thị ảnh lớn ở trên cùng
+     */
+    featuredPost?: (number | null) | Post;
+    /**
+     * Chọn danh sách các bài viết nhỏ hiển thị bên dưới (thường là 4 bài)
+     */
+    posts?: (number | Post)[] | null;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -759,6 +772,15 @@ export interface HomePageSelect<T extends boolean = true> {
         title?: T;
         channelLogo?: T;
         videos?: T;
+      };
+  sihatSection?:
+    | T
+    | {
+        title?: T;
+        moreText?: T;
+        moreLink?: T;
+        featuredPost?: T;
+        posts?: T;
       };
   updatedAt?: T;
   createdAt?: T;
