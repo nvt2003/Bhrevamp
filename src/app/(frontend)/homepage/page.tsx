@@ -1,4 +1,3 @@
-export const dynamic = 'force-dynamic'
 import React from 'react'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
