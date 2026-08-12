@@ -636,7 +636,7 @@ export interface HomePage {
     /**
      * Chọn danh sách các bài viết nhỏ hiển thị bên dưới (thường là 4 bài)
      */
-    posts?: (number | Post)[] | null;
+    subPosts?: (number | Post)[] | null;
   };
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -780,7 +780,7 @@ export interface HomePageSelect<T extends boolean = true> {
         moreText?: T;
         moreLink?: T;
         featuredPost?: T;
-        posts?: T;
+        subPosts?: T;
       };
   updatedAt?: T;
   createdAt?: T;

@@ -1052,10 +1052,12 @@ export const seedPosts = async (payload: Payload) => {
       `galeri-photo-${i}.jpg`,
       `Foto Galeri ${i}`,
     )
-    galleryItems.push({
-      image: imgId,
-      caption: `Gambar galeri ${i}`,
-    })
+    if (imgId) {
+      galleryItems.push({
+        image: imgId,
+        caption: `Gambar galeri ${i}`,
+      })
+    }
   }
   // --- TẠO DỮ LIỆU CHO KHỐI PODCAST ---
   console.log('Đang tạo tin cho khối Podcast...')
