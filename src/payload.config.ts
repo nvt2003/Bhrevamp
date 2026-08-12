@@ -13,6 +13,7 @@ import { Sliders } from './collections/Sliders'
 import { Trending } from './collections/Trending'
 import { Posts } from './collections/Posts'
 import { HomePage } from './globals/HomePage'
+import { Footer } from './globals/Footer'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -24,7 +25,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  globals: [HomePage],
+  globals: [HomePage, Footer],
   collections: [Users, Media, Categories, Utama, Sliders, Trending, Posts],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
