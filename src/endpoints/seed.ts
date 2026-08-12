@@ -1425,20 +1425,13 @@ export async function seedFooter(payload: Payload) {
   console.log('Khởi tạo toàn bộ dữ liệu footer!')
   payload.logger.info('— Seeding Footer...')
 
-  // 1. Upload Logo mẫu (nếu chưa có media)
-  // Lưu ý: Đảm bảo bạn đã có collection 'media' trong project
-
-  const logoMedia = await payload.create({
-    collection: 'media',
-    filePath: 'path/to/logo.png',
-    data: { alt: 'BH Online Logo' },
-  })
-
+  const logoUrl = 'https://picsum.photos/200/80'
+  const logoId = await createMediaFromUrl(payload, logoUrl, 'bh-online-logo.jpg', 'BH Online Logo')
   // 2. Cập nhật dữ liệu cho Global 'footer'
   await payload.updateGlobal({
     slug: 'footer',
     data: {
-      // logo: logoMedia.id, // Bật lại dòng này nếu dùng upload media ở trên
+      ...(logoId ? { logo: logoId } : {}),
       socialLinks: [
         { platform: 'facebook', url: 'https://facebook.com' },
         { platform: 'twitter', url: 'https://x.com' },
