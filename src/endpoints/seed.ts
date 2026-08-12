@@ -99,6 +99,7 @@ export const seedPosts = async (payload: Payload) => {
     { name: 'SUKAN', slug: 'sukan' },
     { name: 'Rias', slug: 'rias' },
     { name: 'Wanita', slug: 'wanita' },
+    { name: 'Hiburan', slug: 'hiburan' },
   ]
 
   const categoryMap: Record<string, number> = {}

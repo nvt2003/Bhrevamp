@@ -3,6 +3,7 @@
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { formatRelativeTime } from '@/utilities/formatTime'
 
 export default function SihatSection({ data }: { data: any }) {
   if (!data) return null
@@ -20,7 +21,7 @@ export default function SihatSection({ data }: { data: any }) {
 
   return (
     <section className="my-8 w-full font-sans">
-      {/* 1. Header giống hệt Gaya Hidup / Sukan / Dunia */}
+      {/* 1. Header */}
       <div className="flex items-center justify-between border-b pb-2 mb-4">
         <h2 className="text-2xl font-bold border-b-2 border-red-600 -mb-2 pb-2 inline-block text-gray-900">
           {title}
@@ -52,10 +53,12 @@ export default function SihatSection({ data }: { data: any }) {
             {/* Tag Danh mục & Thời gian */}
             <div className="flex items-center gap-2 text-xs mb-1">
               {featuredPost.category && (
-                <span className="text-red-600 font-semibold">{featuredPost.category}</span>
+                <span className="text-red-600 font-semibold">{featuredPost.category.title}</span>
               )}
               {featuredPost.publishedAt && (
-                <span className="text-gray-400 font-normal">{featuredPost.publishedAt}</span>
+                <span className="text-gray-400 font-normal">
+                  {formatRelativeTime(featuredPost.publishedAt)}
+                </span>
               )}
             </div>
 
