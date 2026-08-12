@@ -872,6 +872,76 @@ export const seedPosts = async (payload: Payload) => {
     })
     createdHiburanSubIds.push(Number(post.id))
   }
+  // --- TẠO BÀI DÙNG CHO GAYA HIDUP ---
+  console.log('Đang tạo tin cho khối Gaya Hidup...')
+
+  // 1. Bài chính nổi bật phía trên
+  const gayaHidupMainImg = await createMediaFromUrl(
+    payload,
+    'https://picsum.photos/seed/skincare-girl/600/400',
+    'gaya-hidup-main.jpg',
+    'Gaya Hidup Main',
+  )
+  const gayaHidupMain = await payload.create({
+    collection: 'posts',
+    data: {
+      title: 'Paduan suara anak penyanyi legenda',
+      category: categoryMap['gaya-hidup'] || categoryMap['nasional'],
+      featuredImage: gayaHidupMainImg,
+      status: 'published',
+      publishedAt: new Date().toISOString(),
+      slug: makeSlug('Paduan suara anak penyanyi legenda gaya hidup'),
+      content: createDummyContent('Paduan suara anak penyanyi legenda...'),
+    },
+    draft: true,
+    overrideAccess: true,
+  })
+
+  // 2. 4 Bài danh sách phía dưới
+  const gayaHidupSubItems = [
+    {
+      title: 'Cipta kenangan indah di Lexis Hibiscus Port Dickson',
+      seed: 'lexis-resort',
+    },
+    {
+      title: 'Tiram Sungai Merbok',
+      seed: 'merbok-oyster',
+    },
+    {
+      title: '5 cara jadikan susu lebih menyeronokkan untuk kanak-kanak',
+      seed: 'child-drinking-milk',
+    },
+    {
+      title: 'Sabar dan ikhlas laksana tugas jaga warga emas',
+      seed: 'caregiver-elderly',
+    },
+  ]
+
+  const createdGayaHidupSubIds: number[] = []
+  for (let i = 0; i < gayaHidupSubItems.length; i++) {
+    const item = gayaHidupSubItems[i]
+    const imgId = await createMediaFromUrl(
+      payload,
+      `https://picsum.photos/seed/${item.seed}/300/200`,
+      `gaya-hidup-sub-${i}.jpg`,
+      item.title,
+    )
+    const post = await payload.create({
+      collection: 'posts',
+      data: {
+        title: item.title,
+        category: categoryMap['gaya-hidup'] || categoryMap['nasional'],
+        featuredImage: imgId,
+        status: 'published',
+        publishedAt: new Date().toISOString(),
+        slug: makeSlug(item.title),
+        content: createDummyContent(item.title),
+      },
+      draft: true,
+      overrideAccess: true,
+    })
+    createdGayaHidupSubIds.push(Number(post.id))
+  }
 
   console.log('Đang liên kết dữ liệu vào Global HomePage...')
 
@@ -916,6 +986,11 @@ export const seedPosts = async (payload: Payload) => {
         title: 'Hiburan',
         featuredPosts: createdHiburanFeaturedIds,
         subPosts: createdHiburanSubIds,
+      },
+      gayaHidupSection: {
+        title: 'Gaya Hidup',
+        featuredPost: gayaHidupMain.id,
+        subPosts: createdGayaHidupSubIds,
       },
     },
   })

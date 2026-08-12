@@ -245,5 +245,34 @@ export const HomePage: GlobalConfig = {
         },
       ],
     },
+    // -------------------------------------------------------------
+    // KHỐI: GAYA HIDUP (1 BÀI LỚN PHÍA TRÊN + 4 BÀI DỌC PHÍA DƯỚI)
+    // -------------------------------------------------------------
+    {
+      name: 'gayaHidupSection',
+      type: 'group',
+      label: 'Khối Gaya Hidup',
+      fields: [
+        {
+          name: 'title',
+          type: 'text',
+          defaultValue: 'Gaya Hidup',
+        },
+        {
+          name: 'featuredPost',
+          type: 'relationship',
+          relationTo: 'posts',
+          label: 'Bài nổi bật chính (Ảnh lớn phía trên)',
+        },
+        {
+          name: 'subPosts',
+          type: 'relationship',
+          relationTo: 'posts',
+          hasMany: true,
+          maxRows: 4,
+          label: '4 Bài danh sách nhỏ (Xếp dọc phía dưới)',
+        },
+      ],
+    },
   ],
 }
