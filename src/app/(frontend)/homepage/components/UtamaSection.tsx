@@ -93,6 +93,7 @@ export default function UtamaSection({ data }: { data: any }) {
                     src={item.featuredImage?.url}
                     alt={item.featuredImage?.alt || item.title}
                     className="w-full aspect-[5/3] object-cover"
+                    loading="lazy"
                   />
 
                   <div className="flex gap-2 text-xs">

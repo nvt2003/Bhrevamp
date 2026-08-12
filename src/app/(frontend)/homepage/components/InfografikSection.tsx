@@ -24,6 +24,7 @@ export default function InfografikSection({ data }: { data: any }) {
                 src={featuredImage.url}
                 alt={featuredImage.alt || title}
                 fill
+                loading="lazy"
                 className="object-cover group-hover:scale-102 transition-transform duration-300"
               />
             )}

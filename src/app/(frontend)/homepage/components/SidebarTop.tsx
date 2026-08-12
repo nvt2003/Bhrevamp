@@ -37,6 +37,7 @@ export default function SidebarTop({ terkini, trending }: { terkini: any[]; tren
                 <img
                   src={item.featuredImage?.url}
                   alt={item.title}
+                  loading="lazy"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
                 <span className="absolute bottom-0 left-1 text-3xl font-black text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] leading-none select-none">

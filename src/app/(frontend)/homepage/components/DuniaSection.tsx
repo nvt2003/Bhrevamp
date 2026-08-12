@@ -33,6 +33,7 @@ export default function DuniaSection({ data }: { data: any }) {
                         src={post.featuredImage.url}
                         alt={post.title}
                         fill
+                        loading="lazy"
                         className="object-cover group-hover:scale-105 transition-transform duration-300"
                       />
                     )}
@@ -69,6 +70,7 @@ export default function DuniaSection({ data }: { data: any }) {
                         src={post.featuredImage.url}
                         alt={post.title}
                         fill
+                        loading="lazy"
                         className="object-cover group-hover:scale-105 transition-transform duration-300"
                       />
                     )}

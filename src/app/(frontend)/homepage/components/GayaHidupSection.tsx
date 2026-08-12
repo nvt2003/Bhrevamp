@@ -31,6 +31,7 @@ export default function GayaHidupSection({ data }: { data: any }) {
                   src={featuredPost.featuredImage.url}
                   alt={featuredPost.title}
                   fill
+                  loading="lazy"
                   className="object-cover group-hover:scale-105 transition-transform duration-300"
                 />
               )}
@@ -68,6 +69,7 @@ export default function GayaHidupSection({ data }: { data: any }) {
                       src={post.featuredImage.url}
                       alt={post.title}
                       fill
+                      loading="lazy"
                       className="object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                   )}
