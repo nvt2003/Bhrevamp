@@ -322,6 +322,40 @@ export const HomePage: GlobalConfig = {
             },
           ],
         },
+        // -------------------------------------------------------------
+        // KHỐI: GALERI FOTO (LƯỚI ẢNH TẬP TRUNG - GRID 4 CỘT)
+        // -------------------------------------------------------------
+        {
+          name: 'galeriFotoSection',
+          type: 'group',
+          label: 'Khối Galeri Foto',
+          fields: [
+            {
+              name: 'title',
+              type: 'text',
+              defaultValue: 'Galeri Foto',
+            },
+            {
+              name: 'galleryImages',
+              type: 'array',
+              label: 'Danh sách ảnh thư viện',
+              minRows: 4,
+              fields: [
+                {
+                  name: 'image',
+                  type: 'upload',
+                  relationTo: 'media',
+                  required: true,
+                },
+                {
+                  name: 'caption',
+                  type: 'text',
+                  label: 'Chú thích ảnh',
+                },
+              ],
+            },
+          ],
+        },
         {
           name: 'subPosts',
           type: 'relationship',
@@ -356,6 +390,40 @@ export const HomePage: GlobalConfig = {
           type: 'text',
           label: 'Đường dẫn liên kết (khi click vào ảnh)',
           defaultValue: '/infografik',
+        },
+      ],
+    },
+    // -------------------------------------------------------------
+    // KHỐI: GALERI FOTO (LƯỚI ẢNH TẬP TRUNG - GRID 4 CỘT)
+    // -------------------------------------------------------------
+    {
+      name: 'galeriFotoSection',
+      type: 'group',
+      label: 'Khối Galeri Foto',
+      fields: [
+        {
+          name: 'title',
+          type: 'text',
+          defaultValue: 'Galeri Foto',
+        },
+        {
+          name: 'galleryImages',
+          type: 'array',
+          label: 'Danh sách ảnh thư viện',
+          minRows: 4,
+          fields: [
+            {
+              name: 'image',
+              type: 'upload',
+              relationTo: 'media',
+              required: true,
+            },
+            {
+              name: 'caption',
+              type: 'text',
+              label: 'Chú thích ảnh',
+            },
+          ],
         },
       ],
     },

@@ -17,6 +17,7 @@ import HiburanSection from './components/HiburanSection'
 import GayaHidupSection from './components/GayaHidupSection'
 import BhPlusSection from './components/BhPlusSection'
 import InfografikSection from './components/InfografikSection'
+import GaleriFotoSection from './components/GaleriFotoSection'
 
 export default async function HomePage() {
   const payload = await getPayload({ config: configPromise })
@@ -82,6 +83,7 @@ export default async function HomePage() {
   const gayaHidubData = homeData?.gayaHidupSection
   const bhPlusData = homeData?.bhPlusSection
   const infografikdata = homeData?.infografikSection
+  const galeriFotoData = homeData?.galeriFotoSection
   return (
     <div className="min-h-screen">
       {/* Slide bài viết trượt ngang */}
@@ -147,6 +149,9 @@ export default async function HomePage() {
           <div className="flex-[1] min-w-0">
             <div>
               <InfografikSection data={infografikdata} />
+            </div>
+            <div>
+              <GaleriFotoSection data={galeriFotoData} />
             </div>
           </div>
         </div>

@@ -1037,6 +1037,24 @@ export const seedPosts = async (payload: Payload) => {
     'infografik-asean.jpg',
     'ASEAN Handshake Infografik',
   )
+  // --- TẠO DỮ LIỆU CHO KHỐI GALERI FOTO ---
+  console.log('Đang tạo dữ liệu cho khối Galeri Foto...')
+
+  // Tạo mảng gồm 32 ảnh ngẫu nhiên tượng trưng cho grid ảnh phong phú
+  const galleryItems = []
+  for (let i = 1; i <= 32; i++) {
+    const imgId = await createMediaFromUrl(
+      payload,
+      `https://picsum.photos/seed/galeri-photo-${i}/400/300`,
+      `galeri-photo-${i}.jpg`,
+      `Foto Galeri ${i}`,
+    )
+    galleryItems.push({
+      image: imgId,
+      caption: `Gambar galeri ${i}`,
+    })
+  }
+
   console.log('Đang liên kết dữ liệu vào Global HomePage...')
 
   await payload.updateGlobal({
@@ -1095,6 +1113,10 @@ export const seedPosts = async (payload: Payload) => {
         title: 'Infografik',
         featuredImage: infografikImgId,
         linkUrl: '/infografik/asean-handshake',
+      },
+      galeriFotoSection: {
+        title: 'Galeri Foto',
+        galleryImages: galleryItems,
       },
     },
   })
