@@ -25,6 +25,8 @@ import SihatSection from './components/SihatSection'
 
 export default async function HomePage() {
   const payload = await getPayload({ config: configPromise })
+  //generate data
+  await seedPosts(payload)
   // Truy vấn lấy các item trong collection Sliders, sắp xếp theo thứ tự (order)
   const sliderRes = await payload.find({
     collection: 'sliders',
