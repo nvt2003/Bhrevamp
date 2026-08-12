@@ -48,3 +48,13 @@ node_modules/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+
+# Payload
+/media/*
+/data/*
+/tmp/*
+
+# SQLite
+*.db
+*.db-shm
+*.db-wal

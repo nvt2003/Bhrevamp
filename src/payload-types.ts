@@ -70,9 +70,10 @@ export interface Config {
     users: User;
     media: Media;
     categories: Category;
-    posts: Post;
+    utama: Utama;
     sliders: Slider;
     trending: Trending;
+    posts: Post;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -83,9 +84,10 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
-    posts: PostsSelect<false> | PostsSelect<true>;
+    utama: UtamaSelect<false> | UtamaSelect<true>;
     sliders: SlidersSelect<false> | SlidersSelect<true>;
     trending: TrendingSelect<false> | TrendingSelect<true>;
+    posts: PostsSelect<false> | PostsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -95,8 +97,12 @@ export interface Config {
     defaultIDType: number;
   };
   fallbackLocale: null;
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    'home-page': HomePage;
+  };
+  globalsSelect: {
+    'home-page': HomePageSelect<false> | HomePageSelect<true>;
+  };
   locale: null;
   widgets: {
     collections: CollectionsWidget;
@@ -182,9 +188,9 @@ export interface Category {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "posts".
+ * via the `definition` "utama".
  */
-export interface Post {
+export interface Utama {
   id: number;
   title: string;
   slug: string;
@@ -193,6 +199,8 @@ export interface Post {
   category: number | Category;
   isFeatured?: boolean | null;
   publishedAt?: string | null;
+  position?: ('featured_main' | 'featured_side' | 'featured_bullet' | 'grid') | null;
+  relatedPosts?: (number | Utama)[] | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -224,6 +232,45 @@ export interface Trending {
   id: number;
   keyword: string;
   order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "posts".
+ */
+export interface Post {
+  id: number;
+  title: string;
+  slug: string;
+  excerpt?: string | null;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  featuredImage?: (number | null) | Media;
+  category: number | Category;
+  status: 'draft' | 'published';
+  publishedAt?: string | null;
+  isFeatured?: boolean | null;
+  isTrending?: boolean | null;
+  seo?: {
+    title?: string | null;
+    description?: string | null;
+    image?: (number | null) | Media;
+    relatedPosts?: (number | Post)[] | null;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -264,8 +311,8 @@ export interface PayloadLockedDocument {
         value: number | Category;
       } | null)
     | ({
-        relationTo: 'posts';
-        value: number | Post;
+        relationTo: 'utama';
+        value: number | Utama;
       } | null)
     | ({
         relationTo: 'sliders';
@@ -274,6 +321,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'trending';
         value: number | Trending;
+      } | null)
+    | ({
+        relationTo: 'posts';
+        value: number | Post;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -369,9 +420,9 @@ export interface CategoriesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "posts_select".
+ * via the `definition` "utama_select".
  */
-export interface PostsSelect<T extends boolean = true> {
+export interface UtamaSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
   excerpt?: T;
@@ -379,6 +430,8 @@ export interface PostsSelect<T extends boolean = true> {
   category?: T;
   isFeatured?: T;
   publishedAt?: T;
+  position?: T;
+  relatedPosts?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -402,6 +455,32 @@ export interface SlidersSelect<T extends boolean = true> {
 export interface TrendingSelect<T extends boolean = true> {
   keyword?: T;
   order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "posts_select".
+ */
+export interface PostsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  excerpt?: T;
+  content?: T;
+  featuredImage?: T;
+  category?: T;
+  status?: T;
+  publishedAt?: T;
+  isFeatured?: T;
+  isTrending?: T;
+  seo?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+        relatedPosts?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }
@@ -444,6 +523,268 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home-page".
+ */
+export interface HomePage {
+  id: number;
+  utamaSection?: {
+    title?: string | null;
+    featuredMain?: (number | null) | Post;
+    featuredSide?: (number | Post)[] | null;
+    featuredBullet?: (number | Post)[] | null;
+    gridPosts?: (number | Post)[] | null;
+    terkiniLimit?: number | null;
+    trendingLimit?: number | null;
+  };
+  disyorkanSection?: {
+    title?: string | null;
+    mainPost?: (number | null) | Post;
+    subPosts?: (number | Post)[] | null;
+  };
+  rencanaSection?: {
+    title?: string | null;
+    featuredPosts?: (number | Post)[] | null;
+    sidePosts?: (number | Post)[] | null;
+  };
+  sukanSection?: {
+    title?: string | null;
+    featuredPosts?: (number | Post)[] | null;
+    sidePosts?: (number | Post)[] | null;
+  };
+  duniaSection?: {
+    title?: string | null;
+    featuredPosts?: (number | Post)[] | null;
+    sidePosts?: (number | Post)[] | null;
+  };
+  bisnesSection?: {
+    title?: string | null;
+    featuredPosts?: (number | Post)[] | null;
+    subPosts?: (number | Post)[] | null;
+  };
+  hiburanSection?: {
+    title?: string | null;
+    featuredPosts?: (number | Post)[] | null;
+    subPosts?: (number | Post)[] | null;
+  };
+  gayaHidupSection?: {
+    title?: string | null;
+    featuredPost?: (number | null) | Post;
+    subPosts?: (number | Post)[] | null;
+  };
+  bhPlusSection?: {
+    title?: string | null;
+    featuredPosts?: (number | Post)[] | null;
+    infografikSection?: {
+      title?: string | null;
+      featuredImage?: (number | null) | Media;
+      linkUrl?: string | null;
+    };
+    galeriFotoSection?: {
+      title?: string | null;
+      galleryImages?:
+        | {
+            image: number | Media;
+            caption?: string | null;
+            id?: string | null;
+          }[]
+        | null;
+    };
+    subPosts?: (number | Post)[] | null;
+  };
+  infografikSection?: {
+    title?: string | null;
+    featuredImage?: (number | null) | Media;
+    linkUrl?: string | null;
+  };
+  galeriFotoSection?: {
+    title?: string | null;
+    galleryImages?:
+      | {
+          image: number | Media;
+          caption?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  podcastSection?: {
+    title?: string | null;
+    channelLogo?: (number | null) | Media;
+    videos?: (number | Post)[] | null;
+  };
+  bhTvSection?: {
+    title?: string | null;
+    channelLogo?: (number | null) | Media;
+    mainVideo?: (number | null) | Post;
+    subVideos?: (number | Post)[] | null;
+  };
+  videoTerkiniSection?: {
+    title?: string | null;
+    channelLogo?: (number | null) | Media;
+    videos?: (number | Post)[] | null;
+  };
+  sihatSection: {
+    title: string;
+    moreText?: string | null;
+    moreLink?: string | null;
+    /**
+     * Chọn 1 bài viết chính hiển thị ảnh lớn ở trên cùng
+     */
+    featuredPost?: (number | null) | Post;
+    /**
+     * Chọn danh sách các bài viết nhỏ hiển thị bên dưới (thường là 4 bài)
+     */
+    posts?: (number | Post)[] | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home-page_select".
+ */
+export interface HomePageSelect<T extends boolean = true> {
+  utamaSection?:
+    | T
+    | {
+        title?: T;
+        featuredMain?: T;
+        featuredSide?: T;
+        featuredBullet?: T;
+        gridPosts?: T;
+        terkiniLimit?: T;
+        trendingLimit?: T;
+      };
+  disyorkanSection?:
+    | T
+    | {
+        title?: T;
+        mainPost?: T;
+        subPosts?: T;
+      };
+  rencanaSection?:
+    | T
+    | {
+        title?: T;
+        featuredPosts?: T;
+        sidePosts?: T;
+      };
+  sukanSection?:
+    | T
+    | {
+        title?: T;
+        featuredPosts?: T;
+        sidePosts?: T;
+      };
+  duniaSection?:
+    | T
+    | {
+        title?: T;
+        featuredPosts?: T;
+        sidePosts?: T;
+      };
+  bisnesSection?:
+    | T
+    | {
+        title?: T;
+        featuredPosts?: T;
+        subPosts?: T;
+      };
+  hiburanSection?:
+    | T
+    | {
+        title?: T;
+        featuredPosts?: T;
+        subPosts?: T;
+      };
+  gayaHidupSection?:
+    | T
+    | {
+        title?: T;
+        featuredPost?: T;
+        subPosts?: T;
+      };
+  bhPlusSection?:
+    | T
+    | {
+        title?: T;
+        featuredPosts?: T;
+        infografikSection?:
+          | T
+          | {
+              title?: T;
+              featuredImage?: T;
+              linkUrl?: T;
+            };
+        galeriFotoSection?:
+          | T
+          | {
+              title?: T;
+              galleryImages?:
+                | T
+                | {
+                    image?: T;
+                    caption?: T;
+                    id?: T;
+                  };
+            };
+        subPosts?: T;
+      };
+  infografikSection?:
+    | T
+    | {
+        title?: T;
+        featuredImage?: T;
+        linkUrl?: T;
+      };
+  galeriFotoSection?:
+    | T
+    | {
+        title?: T;
+        galleryImages?:
+          | T
+          | {
+              image?: T;
+              caption?: T;
+              id?: T;
+            };
+      };
+  podcastSection?:
+    | T
+    | {
+        title?: T;
+        channelLogo?: T;
+        videos?: T;
+      };
+  bhTvSection?:
+    | T
+    | {
+        title?: T;
+        channelLogo?: T;
+        mainVideo?: T;
+        subVideos?: T;
+      };
+  videoTerkiniSection?:
+    | T
+    | {
+        title?: T;
+        channelLogo?: T;
+        videos?: T;
+      };
+  sihatSection?:
+    | T
+    | {
+        title?: T;
+        moreText?: T;
+        moreLink?: T;
+        featuredPost?: T;
+        posts?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
