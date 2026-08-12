@@ -183,5 +183,36 @@ export const HomePage: GlobalConfig = {
         },
       ],
     },
+    // -------------------------------------------------------------
+    // KHỐI: BISNES (2 BÀI LỚN PHÍA TRÊN + 4 BÀI NHỎ 2x2 PHÍA DƯỚI)
+    // -------------------------------------------------------------
+    {
+      name: 'bisnesSection',
+      type: 'group',
+      label: 'Khối Bisnes',
+      fields: [
+        {
+          name: 'title',
+          type: 'text',
+          defaultValue: 'Bisnes',
+        },
+        {
+          name: 'featuredPosts',
+          type: 'relationship',
+          relationTo: 'posts',
+          hasMany: true,
+          maxRows: 2,
+          label: '2 Bài nổi bật chính (Hàng trên)',
+        },
+        {
+          name: 'subPosts',
+          type: 'relationship',
+          relationTo: 'posts',
+          hasMany: true,
+          maxRows: 4,
+          label: '4 Bài danh sách nhỏ (Hàng dưới - Grid 2x2)',
+        },
+      ],
+    },
   ],
 }

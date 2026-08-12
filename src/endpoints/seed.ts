@@ -700,6 +700,93 @@ export const seedPosts = async (payload: Payload) => {
     })
     createdDuniaSideIds.push(Number(post.id))
   }
+  // --- TẠO BÀI DÙNG CHO BISNES ---
+  console.log('Đang tạo tin cho khối Bisnes...')
+
+  // 1. 2 Bài nổi bật phía trên
+  const bisnesFeaturedItems = [
+    {
+      title: 'Peugeot 3008: Simfoni keanggunan Eropah di jalanan Malaysia',
+      seed: 'kwasaland-property',
+    },
+    {
+      title: 'Titijaya beli dua aset hartanah bernilai RM105 juta di Kota Kinabalu',
+      seed: 'titijaya-press',
+    },
+  ]
+
+  const createdBisnesFeaturedIds: number[] = []
+  for (let i = 0; i < bisnesFeaturedItems.length; i++) {
+    const item = bisnesFeaturedItems[i]
+    const imgId = await createMediaFromUrl(
+      payload,
+      `https://picsum.photos/seed/${item.seed}/600/400`,
+      `bisnes-featured-${i}.jpg`,
+      item.title,
+    )
+    const post = await payload.create({
+      collection: 'posts',
+      data: {
+        title: item.title,
+        category: categoryMap['bisnes'] || categoryMap['nasional'],
+        featuredImage: imgId,
+        status: 'published',
+        publishedAt: new Date().toISOString(),
+        slug: makeSlug(item.title),
+        content: createDummyContent(item.title),
+      },
+      draft: true,
+      overrideAccess: true,
+    })
+    createdBisnesFeaturedIds.push(Number(post.id))
+  }
+
+  // 2. 4 Bài danh sách phía dưới (Grid 2x2)
+  const bisnesSubItems = [
+    {
+      title: 'Mahkamah sahkan pernikahan Marissa-Aslam, perkahwinan perlu didaftar segera',
+      seed: 'business-ceo-1',
+    },
+    {
+      title: 'Kadar inflasi Malaysia kekal stabil pada suku kedua tahun ini',
+      seed: 'business-man-2',
+    },
+    {
+      title: 'Syarikat kesihatan tempatan jalin kerjasama strategik peluasan pasaran',
+      seed: 'corporate-signing',
+    },
+    {
+      title: 'Sektor perbankan dijangka terus kukuh dipacu pertumbuhan domestik',
+      seed: 'building-corporate',
+    },
+  ]
+
+  const createdBisnesSubIds: number[] = []
+  for (let i = 0; i < bisnesSubItems.length; i++) {
+    const item = bisnesSubItems[i]
+    const imgId = await createMediaFromUrl(
+      payload,
+      `https://picsum.photos/seed/${item.seed}/300/200`,
+      `bisnes-sub-${i}.jpg`,
+      item.title,
+    )
+    const post = await payload.create({
+      collection: 'posts',
+      data: {
+        title: item.title,
+        category: categoryMap['bisnes'] || categoryMap['nasional'],
+        featuredImage: imgId,
+        status: 'published',
+        publishedAt: new Date().toISOString(),
+        slug: makeSlug(item.title),
+        content: createDummyContent(item.title),
+      },
+      draft: true,
+      overrideAccess: true,
+    })
+    createdBisnesSubIds.push(Number(post.id))
+  }
+
   console.log('Đang liên kết dữ liệu vào Global HomePage...')
 
   await payload.updateGlobal({
