@@ -786,6 +786,92 @@ export const seedPosts = async (payload: Payload) => {
     })
     createdBisnesSubIds.push(Number(post.id))
   }
+  // --- TẠO BÀI DÙNG CHO HIBURAN ---
+  console.log('Đang tạo tin cho khối Hiburan...')
+
+  // 1. 2 Bài nổi bật phía trên
+  const hiburanFeaturedItems = [
+    {
+      title: 'Paduan suara anak penyanyi legenda',
+      seed: 'singing-duo',
+    },
+    {
+      title: 'Amar, Qobin mungkin akhiri kembara berbasikal di Madinah',
+      seed: 'cyclist-travel',
+    },
+  ]
+
+  const createdHiburanFeaturedIds: number[] = []
+  for (let i = 0; i < hiburanFeaturedItems.length; i++) {
+    const item = hiburanFeaturedItems[i]
+    const imgId = await createMediaFromUrl(
+      payload,
+      `https://picsum.photos/seed/${item.seed}/600/400`,
+      `hiburan-featured-${i}.jpg`,
+      item.title,
+    )
+    const post = await payload.create({
+      collection: 'posts',
+      data: {
+        title: item.title,
+        category: categoryMap['hiburan'] || categoryMap['nasional'],
+        featuredImage: imgId,
+        status: 'published',
+        publishedAt: new Date().toISOString(),
+        slug: makeSlug(item.title),
+        content: createDummyContent(item.title),
+      },
+      draft: true,
+      overrideAccess: true,
+    })
+    createdHiburanFeaturedIds.push(Number(post.id))
+  }
+
+  // 2. 4 Bài danh sách phía dưới (Grid 2x2)
+  const hiburanSubItems = [
+    {
+      title: 'Konsert jelajah artis tempatan mendapat sambutan hangat penyokong',
+      seed: 'stage-concert',
+    },
+    {
+      title: 'Pelakon popular impi watak mencabar dalam filem aksi terbaharu',
+      seed: 'actor-suit',
+    },
+    {
+      title: 'Filem animasi tempatan catat kutipan tertinggi di panggung',
+      seed: 'celebrity-family',
+    },
+    {
+      title: 'Pasangan selebriti berkongsi detik manis sambutan ulang tahun',
+      seed: 'celebrity-couple',
+    },
+  ]
+
+  const createdHiburanSubIds: number[] = []
+  for (let i = 0; i < hiburanSubItems.length; i++) {
+    const item = hiburanSubItems[i]
+    const imgId = await createMediaFromUrl(
+      payload,
+      `https://picsum.photos/seed/${item.seed}/300/200`,
+      `hiburan-sub-${i}.jpg`,
+      item.title,
+    )
+    const post = await payload.create({
+      collection: 'posts',
+      data: {
+        title: item.title,
+        category: categoryMap['hiburan'] || categoryMap['nasional'],
+        featuredImage: imgId,
+        status: 'published',
+        publishedAt: new Date().toISOString(),
+        slug: makeSlug(item.title),
+        content: createDummyContent(item.title),
+      },
+      draft: true,
+      overrideAccess: true,
+    })
+    createdHiburanSubIds.push(Number(post.id))
+  }
 
   console.log('Đang liên kết dữ liệu vào Global HomePage...')
 
@@ -820,6 +906,16 @@ export const seedPosts = async (payload: Payload) => {
         title: 'Dunia',
         featuredPosts: createdDuniaFeaturedIds,
         sidePosts: createdDuniaSideIds,
+      },
+      bisnesSection: {
+        title: 'Bisnes',
+        featuredPosts: createdBisnesFeaturedIds,
+        subPosts: createdBisnesSubIds,
+      },
+      hiburanSection: {
+        title: 'Hiburan',
+        featuredPosts: createdHiburanFeaturedIds,
+        subPosts: createdHiburanSubIds,
       },
     },
   })

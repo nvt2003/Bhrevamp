@@ -12,6 +12,8 @@ import DisyorkanSection from './components/DisyorkanSection'
 import RencanaSection from './components/RencanaSection'
 import SukanSection from './components/SukanSection'
 import DuniaSection from './components/DuniaSection'
+import BisnesSection from './components/BisnesSection'
+import HiburanSection from './components/HiburanSection'
 
 export default async function HomePage() {
   const payload = await getPayload({ config: configPromise })
@@ -73,6 +75,7 @@ export default async function HomePage() {
   const sukanData = homeData?.sukanSection
   const duniaData = homeData?.duniaSection
   const bisnesData = homeData?.bisnesSection
+  const hiburanData = homeData?.hiburanSection
   return (
     <div className="min-h-screen">
       {/* Slide bài viết trượt ngang */}
@@ -111,9 +114,13 @@ export default async function HomePage() {
         <div className="flex mt-8">
           <div className="flex-[2] min-w-0">
             {/* Bisnes */}
-            <div></div>
+            <div>
+              <BisnesSection data={bisnesData} />
+            </div>
             {/* Hiburan */}
-            <div></div>
+            <div>
+              <HiburanSection data={hiburanData} />
+            </div>
           </div>
           {/* Postcast */}
           <div className="flex-[1] min-w-0"></div>
