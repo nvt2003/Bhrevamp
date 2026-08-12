@@ -1446,7 +1446,7 @@ export async function seedFooter(payload: Payload) {
       },
       columns: [
         {
-          title: 'Tin Tức',
+          title: '',
           links: [
             { label: 'Berita', url: '/berita' },
             { label: 'BHPLUS', url: '/bhplus' },
@@ -1455,7 +1455,7 @@ export async function seedFooter(payload: Payload) {
           ],
         },
         {
-          title: 'Chuyên Mục',
+          title: '',
           links: [
             { label: 'Sukan', url: '/sukan' },
             { label: 'Dunia', url: '/dunia' },
@@ -1464,7 +1464,7 @@ export async function seedFooter(payload: Payload) {
           ],
         },
         {
-          title: 'Media',
+          title: '',
           links: [
             { label: 'Multimedia', url: '/multimedia' },
             { label: 'Foto', url: '/foto' },
