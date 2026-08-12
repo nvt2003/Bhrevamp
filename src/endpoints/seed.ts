@@ -1232,6 +1232,11 @@ export const seedPosts = async (payload: Payload) => {
       duration: '1:10',
       seed: 'iran-official-5',
     },
+    {
+      title: "Iran berikrar balas 'tindakan' abcdef swiper...",
+      duration: '1:10',
+      seed: 'iran-official-6',
+    },
   ]
 
   const createdVideoTerkiniIds: number[] = []
