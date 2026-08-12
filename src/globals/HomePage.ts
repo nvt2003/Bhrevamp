@@ -559,7 +559,7 @@ export const HomePage: GlobalConfig = {
         },
         // 2. Danh sách các bài viết phụ (Sub-posts - danh sách)
         {
-          name: 'posts',
+          name: 'subPosts',
           type: 'relationship',
           relationTo: 'posts',
           hasMany: true,

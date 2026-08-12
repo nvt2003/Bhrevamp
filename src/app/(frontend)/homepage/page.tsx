@@ -148,7 +148,11 @@ export default async function HomePage() {
             </div>
           </div>
           <div className="flex-[1] min-w-0">
-            <div className="bg-blue-100">Ad</div>
+            <div className="flex items-center justify-center">
+              <div className="w-full max-w-[300px] aspect-[300/225] bg-blue-200 text-black flex items-center justify-center">
+                Ad 300x225
+              </div>
+            </div>
             {/* Postcast */}
             <div>
               <PodcastSection data={podcatData} />
