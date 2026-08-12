@@ -9,7 +9,7 @@ export default function BhPlusSection({ data }: { data: any }) {
   return (
     <section className="my-8">
       {/* Header */}
-      <div className="flex items-center justify-between border-b pb-2 mb-4">
+      <div className="flex items-center justify-between pb-2 mb-4">
         <h2 className="text-2xl font-bold border-b-2 border-red-600 -mb-2 pb-2 inline-block">
           {title}
         </h2>
