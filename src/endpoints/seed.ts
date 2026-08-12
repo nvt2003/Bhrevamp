@@ -442,7 +442,92 @@ export const seedPosts = async (payload: Payload) => {
     })
     createdDisyorkanSubIds.push(Number(post.id))
   }
+  // --- TẠO BÀI DÙNG CHO RENCANA ---
+  console.log('Đang tạo tin cho khối Rencana...')
 
+  // 1. 2 Bài chính (Trái & Giữa)
+  const rencanaFeaturedItems = [
+    {
+      title: 'Sekolah Rendah Agama Sungai Udang usang, perlu bangunan baharu - Rais',
+      seed: 'school-renovate',
+    },
+    {
+      title: 'Hari akhir Sidang Kemuncak ASEAN ke-46 tumpu pengukuhan kerjasama',
+      seed: 'asean-summit',
+    },
+  ]
+
+  const createdRencanaFeaturedIds: number[] = []
+  for (let i = 0; i < rencanaFeaturedItems.length; i++) {
+    const item = rencanaFeaturedItems[i]
+    const imgId = await createMediaFromUrl(
+      payload,
+      `https://picsum.photos/seed/${item.seed}/600/400`,
+      `rencana-featured-${i}.jpg`,
+      item.title,
+    )
+    const post = await payload.create({
+      collection: 'posts',
+      data: {
+        title: item.title,
+        category: categoryMap['nasional'],
+        featuredImage: imgId,
+        status: 'published',
+        publishedAt: new Date().toISOString(),
+        slug: makeSlug(item.title),
+        content: createDummyContent(item.title),
+      },
+      draft: true,
+      overrideAccess: true,
+    })
+    createdRencanaFeaturedIds.push(Number(post.id))
+  }
+
+  // 2. 4 Bài danh sách bên phải
+  const rencanaSideItems = [
+    {
+      title: 'Mahkamah sahkan pernikahan Marissa-Aslam, perkahwinan perlu didaftar segera',
+      seed: 'court-marissa',
+    },
+    {
+      title: 'Dewan Rakyat: Isu bekalan beras, akaun media sosial antara tumpuan hari ini',
+      seed: 'parliament-news',
+    },
+    {
+      title: 'Polis kesan sindiket penyeludupan dadah guna khidmat kurier',
+      seed: 'police-investigation',
+    },
+    {
+      title: 'Pemimpin ASEAN sepakat perkasa kinh doanh và đổi mới sáng tạo khu vực',
+      seed: 'asean-leaders',
+    },
+  ]
+
+  const createdRencanaSideIds: number[] = []
+  for (let i = 0; i < rencanaSideItems.length; i++) {
+    const item = rencanaSideItems[i]
+    const imgId = await createMediaFromUrl(
+      payload,
+      `https://picsum.photos/seed/${item.seed}/300/200`,
+      `rencana-side-${i}.jpg`,
+      item.title,
+    )
+    const post = await payload.create({
+      collection: 'posts',
+      data: {
+        title: item.title,
+        category: categoryMap['nasional'],
+        featuredImage: imgId,
+        status: 'published',
+        publishedAt: new Date().toISOString(),
+        slug: makeSlug(item.title),
+        content: createDummyContent(item.title),
+      },
+      draft: true,
+      overrideAccess: true,
+    })
+    createdRencanaSideIds.push(Number(post.id))
+  }
   console.log('Đang liên kết dữ liệu vào Global HomePage...')
 
   await payload.updateGlobal({
@@ -461,6 +546,11 @@ export const seedPosts = async (payload: Payload) => {
         title: 'Disyorkan',
         mainPost: disyorkanMain.id,
         subPosts: createdDisyorkanSubIds,
+      },
+      rencanaSection: {
+        title: 'Rencana',
+        featuredPosts: createdRencanaFeaturedIds,
+        sidePosts: createdRencanaSideIds,
       },
     },
   })

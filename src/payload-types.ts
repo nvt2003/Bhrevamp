@@ -544,6 +544,11 @@ export interface HomePage {
     mainPost?: (number | null) | Post;
     subPosts?: (number | Post)[] | null;
   };
+  rencanaSection?: {
+    title?: string | null;
+    featuredPosts?: (number | Post)[] | null;
+    sidePosts?: (number | Post)[] | null;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -569,6 +574,13 @@ export interface HomePageSelect<T extends boolean = true> {
         title?: T;
         mainPost?: T;
         subPosts?: T;
+      };
+  rencanaSection?:
+    | T
+    | {
+        title?: T;
+        featuredPosts?: T;
+        sidePosts?: T;
       };
   updatedAt?: T;
   createdAt?: T;

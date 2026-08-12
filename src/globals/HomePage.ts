@@ -90,5 +90,36 @@ export const HomePage: GlobalConfig = {
         },
       ],
     },
+    // -------------------------------------------------------------
+    // KHỐI: RENCANA (2 BÀI LỚN BÊN TRÁI + 4 BÀI DỌC BÊN PHẢI)
+    // -------------------------------------------------------------
+    {
+      name: 'rencanaSection',
+      type: 'group',
+      label: 'Khối Rencana',
+      fields: [
+        {
+          name: 'title',
+          type: 'text',
+          defaultValue: 'Rencana',
+        },
+        {
+          name: 'featuredPosts',
+          type: 'relationship',
+          relationTo: 'posts',
+          hasMany: true,
+          maxRows: 2,
+          label: '2 Bài nổi bật chính (Cột trái & giữa)',
+        },
+        {
+          name: 'sidePosts',
+          type: 'relationship',
+          relationTo: 'posts',
+          hasMany: true,
+          maxRows: 4,
+          label: '4 Bài danh sách dọc (Cột phải - có thumbnail nhỏ)',
+        },
+      ],
+    },
   ],
 }
