@@ -1028,6 +1028,15 @@ export const seedPosts = async (payload: Payload) => {
     })
     createdBhPlusSubIds.push(Number(post.id))
   }
+  // --- TẠO DỮ LIỆU CHO KHỐI INFOGRAFIK ---
+  console.log('Đang tạo dữ liệu cho khối Infografik...')
+
+  const infografikImgId = await createMediaFromUrl(
+    payload,
+    'https://picsum.photos/seed/asean-infographic/800/1130',
+    'infografik-asean.jpg',
+    'ASEAN Handshake Infografik',
+  )
   console.log('Đang liên kết dữ liệu vào Global HomePage...')
 
   await payload.updateGlobal({
@@ -1081,6 +1090,11 @@ export const seedPosts = async (payload: Payload) => {
         title: 'BH Plus',
         featuredPosts: createdBhPlusFeaturedIds,
         subPosts: createdBhPlusSubIds,
+      },
+      infografikSection: {
+        title: 'Infografik',
+        featuredImage: infografikImgId,
+        linkUrl: '/infografik/asean-handshake',
       },
     },
   })

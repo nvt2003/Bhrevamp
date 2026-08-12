@@ -295,6 +295,33 @@ export const HomePage: GlobalConfig = {
           maxRows: 2,
           label: '2 Bài nổi bật chính (Hàng trên)',
         },
+        // -------------------------------------------------------------
+        // KHỐI: INFOGRAFIK (HIỂN THỊ ẢNH INFOGRAPHIC DỌC)
+        // -------------------------------------------------------------
+        {
+          name: 'infografikSection',
+          type: 'group',
+          label: 'Khối Infografik',
+          fields: [
+            {
+              name: 'title',
+              type: 'text',
+              defaultValue: 'Infografik',
+            },
+            {
+              name: 'featuredImage',
+              type: 'upload',
+              relationTo: 'media',
+              label: 'Ảnh Infographic chính',
+            },
+            {
+              name: 'linkUrl',
+              type: 'text',
+              label: 'Đường dẫn liên kết (khi click vào ảnh)',
+              defaultValue: '/infografik',
+            },
+          ],
+        },
         {
           name: 'subPosts',
           type: 'relationship',
@@ -302,6 +329,33 @@ export const HomePage: GlobalConfig = {
           hasMany: true,
           maxRows: 4,
           label: '4 Bài danh sách nhỏ (Hàng dưới - Grid 2x2)',
+        },
+      ],
+    },
+    // -------------------------------------------------------------
+    // KHỐI: INFOGRAFIK (HIỂN THỊ ẢNH INFOGRAPHIC DỌC)
+    // -------------------------------------------------------------
+    {
+      name: 'infografikSection',
+      type: 'group',
+      label: 'Khối Infografik',
+      fields: [
+        {
+          name: 'title',
+          type: 'text',
+          defaultValue: 'Infografik',
+        },
+        {
+          name: 'featuredImage',
+          type: 'upload',
+          relationTo: 'media',
+          label: 'Ảnh Infographic chính',
+        },
+        {
+          name: 'linkUrl',
+          type: 'text',
+          label: 'Đường dẫn liên kết (khi click vào ảnh)',
+          defaultValue: '/infografik',
         },
       ],
     },
