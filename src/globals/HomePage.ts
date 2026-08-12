@@ -274,5 +274,36 @@ export const HomePage: GlobalConfig = {
         },
       ],
     },
+    // -------------------------------------------------------------
+    // KHỐI: BH PLUS (2 BÀI LỚN PHÍA TRÊN + 4 BÀI NHỎ 2x2 PHÍA DƯỚI)
+    // -------------------------------------------------------------
+    {
+      name: 'bhPlusSection',
+      type: 'group',
+      label: 'Khối BH Plus',
+      fields: [
+        {
+          name: 'title',
+          type: 'text',
+          defaultValue: 'BH Plus',
+        },
+        {
+          name: 'featuredPosts',
+          type: 'relationship',
+          relationTo: 'posts',
+          hasMany: true,
+          maxRows: 2,
+          label: '2 Bài nổi bật chính (Hàng trên)',
+        },
+        {
+          name: 'subPosts',
+          type: 'relationship',
+          relationTo: 'posts',
+          hasMany: true,
+          maxRows: 4,
+          label: '4 Bài danh sách nhỏ (Hàng dưới - Grid 2x2)',
+        },
+      ],
+    },
   ],
 }

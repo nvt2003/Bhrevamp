@@ -942,7 +942,92 @@ export const seedPosts = async (payload: Payload) => {
     })
     createdGayaHidupSubIds.push(Number(post.id))
   }
+  // --- TẠO BÀI DÙNG CHO BH PLUS ---
+  console.log('Đang tạo tin cho khối BH Plus...')
 
+  // 1. 2 Bài nổi bật phía trên
+  const bhPlusFeaturedItems = [
+    {
+      title: 'Paduan suara anak penyanyi legenda',
+      seed: 'singers-duo',
+    },
+    {
+      title: 'Amar, Qobin mungkin akhiri kembara berbasikal di Madinah',
+      seed: 'cyclist-madinah',
+    },
+  ]
+
+  const createdBhPlusFeaturedIds: number[] = []
+  for (let i = 0; i < bhPlusFeaturedItems.length; i++) {
+    const item = bhPlusFeaturedItems[i]
+    const imgId = await createMediaFromUrl(
+      payload,
+      `https://picsum.photos/seed/${item.seed}/600/400`,
+      `bhplus-featured-${i}.jpg`,
+      item.title,
+    )
+    const post = await payload.create({
+      collection: 'posts',
+      data: {
+        title: item.title,
+        category: categoryMap['nasional'],
+        featuredImage: imgId,
+        status: 'published',
+        publishedAt: new Date().toISOString(),
+        slug: makeSlug(item.title),
+        content: createDummyContent(item.title),
+      },
+      draft: true,
+      overrideAccess: true,
+    })
+    createdBhPlusFeaturedIds.push(Number(post.id))
+  }
+
+  // 2. 4 Bài danh sách phía dưới (Grid 2x2)
+  const bhPlusSubItems = [
+    {
+      title: 'Gusmao beri pengamal media coklat',
+      seed: 'gusmao-chocolate',
+    },
+    {
+      title: "Barisan ASEAN All-Stars tekad 'malukan' United",
+      seed: 'asean-united',
+    },
+    {
+      title: 'Eksperimen individu Cklamovski',
+      seed: 'coach-experiment',
+    },
+    {
+      title: 'Kerajaan negeri tunggu laporan penuh insiden murid dimarahi guru - Amirudin',
+      seed: 'education-report',
+    },
+  ]
+
+  const createdBhPlusSubIds: number[] = []
+  for (let i = 0; i < bhPlusSubItems.length; i++) {
+    const item = bhPlusSubItems[i]
+    const imgId = await createMediaFromUrl(
+      payload,
+      `https://picsum.photos/seed/${item.seed}/300/200`,
+      `bhplus-sub-${i}.jpg`,
+      item.title,
+    )
+    const post = await payload.create({
+      collection: 'posts',
+      data: {
+        title: item.title,
+        category: categoryMap['nasional'],
+        featuredImage: imgId,
+        status: 'published',
+        publishedAt: new Date().toISOString(),
+        slug: makeSlug(item.title),
+        content: createDummyContent(item.title),
+      },
+      draft: true,
+      overrideAccess: true,
+    })
+    createdBhPlusSubIds.push(Number(post.id))
+  }
   console.log('Đang liên kết dữ liệu vào Global HomePage...')
 
   await payload.updateGlobal({
@@ -991,6 +1076,11 @@ export const seedPosts = async (payload: Payload) => {
         title: 'Gaya Hidup',
         featuredPost: gayaHidupMain.id,
         subPosts: createdGayaHidupSubIds,
+      },
+      bhPlusSection: {
+        title: 'BH Plus',
+        featuredPosts: createdBhPlusFeaturedIds,
+        subPosts: createdBhPlusSubIds,
       },
     },
   })
