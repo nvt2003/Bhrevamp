@@ -21,6 +21,7 @@ import GaleriFotoSection from './components/GaleriFotoSection'
 import PodcastSection from './components/PodcastSection'
 import BhTvSection from './components/BhTvSection'
 import VideoTerkiniSection from './components/VideoTerkiniSection'
+import SihatSection from './components/SihatSection'
 
 export default async function HomePage() {
   const payload = await getPayload({ config: configPromise })
@@ -84,6 +85,7 @@ export default async function HomePage() {
   const bisnesData = homeData?.bisnesSection
   const hiburanData = homeData?.hiburanSection
   const gayaHidubData = homeData?.gayaHidupSection
+  const sihatData = homeData?.sihatSection
   const bhPlusData = homeData?.bhPlusSection
   const infografikdata = homeData?.infografikSection
   const galeriFotoData = homeData?.galeriFotoSection
@@ -157,9 +159,15 @@ export default async function HomePage() {
         </div>
         <div className="flex gap-2 mt-8">
           <div className="flex-[2] min-w-0">
-            {/* Gaya Hidup */}
-            <div>
-              <GayaHidupSection data={gayaHidubData} />
+            <div className="flex gap-2">
+              {/* Gaya Hidup */}
+              <div>
+                <GayaHidupSection data={gayaHidubData} />
+              </div>
+              {/* Shihat */}
+              <div>
+                <SihatSection data={sihatData} />
+              </div>
             </div>
             {/* Bh Plus */}
             <div>

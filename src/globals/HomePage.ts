@@ -519,5 +519,56 @@ export const HomePage: GlobalConfig = {
         },
       ],
     },
+    // ==========================================
+    // GAYA HIDUP / SIHAT SECTION
+    // ==========================================
+    {
+      name: 'sihatSection', // Hoặc 'gayaHidupSection' tùy tên bạn đặt trong schema
+      type: 'group',
+      label: 'Chuyên mục Sihat / Gaya Hidup',
+      fields: [
+        {
+          name: 'title',
+          type: 'text',
+          label: 'Tiêu đề Section',
+          defaultValue: 'Sihat',
+          required: true,
+        },
+        {
+          name: 'moreText',
+          type: 'text',
+          label: 'Text nút Xem thêm',
+          defaultValue: 'Lagi Sihat',
+        },
+        {
+          name: 'moreLink',
+          type: 'text',
+          label: 'Đường dẫn Xem thêm',
+          defaultValue: '/sihat',
+        },
+        // 1. Bài viết chính (Featured Post - 1 bài)
+        {
+          name: 'featuredPost',
+          type: 'relationship',
+          relationTo: 'posts', // Slug của collection chứa các bài viết
+          label: 'Bài viết chính (Featured Post)',
+          required: false,
+          admin: {
+            description: 'Chọn 1 bài viết chính hiển thị ảnh lớn ở trên cùng',
+          },
+        },
+        // 2. Danh sách các bài viết phụ (Sub-posts - danh sách)
+        {
+          name: 'posts',
+          type: 'relationship',
+          relationTo: 'posts',
+          hasMany: true,
+          label: 'Danh sách bài viết phụ',
+          admin: {
+            description: 'Chọn danh sách các bài viết nhỏ hiển thị bên dưới (thường là 4 bài)',
+          },
+        },
+      ],
+    },
   ],
 }

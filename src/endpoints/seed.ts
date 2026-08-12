@@ -97,6 +97,8 @@ export const seedPosts = async (payload: Payload) => {
     { name: 'WILAYAH', slug: 'wilayah' },
     { name: 'KES', slug: 'kes' },
     { name: 'SUKAN', slug: 'sukan' },
+    { name: 'Rias', slug: 'rias' },
+    { name: 'Wanita', slug: 'wanita' },
   ]
 
   const categoryMap: Record<string, number> = {}
@@ -1252,7 +1254,7 @@ export const seedPosts = async (payload: Payload) => {
       collection: 'posts',
       data: {
         title: item.title,
-        category: categoryMap['nasional'],
+        category: categoryMap['rias'],
         featuredImage: imgId,
         status: 'published',
         publishedAt: new Date().toISOString(),
@@ -1265,6 +1267,67 @@ export const seedPosts = async (payload: Payload) => {
     })
     createdVideoTerkiniIds.push(Number(post.id))
   }
+  // --- TẠO DỮ LIỆU CHO KHỐI SIHAT ---
+  console.log('Đang tạo tin cho khối Sihat...')
+
+  const sihatItems = [
+    {
+      title: 'Amar, Qobin mungkin akhiri kembara berbasikal di Madinah',
+      seed: 'sihat-featured-1',
+      isMain: true,
+    },
+    {
+      title: 'Penampilan beridentitikan batik, lambang cinta warisan Wan Zakaria',
+      seed: 'sihat-sub-1',
+    },
+    {
+      title: 'Yogurt, tempe, kimchi sumber makanan probiotik baik untuk usus',
+      seed: 'sihat-sub-2',
+    },
+    {
+      title: 'Nankai Trough, amaran bencana abad ini',
+      seed: 'sihat-sub-3',
+    },
+    {
+      title: "Aroma kopi makin harum di Pu'er",
+      seed: 'sihat-sub-4',
+    },
+  ]
+
+  let sihatMainId: number | null = null
+  const createdSihatSubIds: number[] = []
+
+  for (let i = 0; i < sihatItems.length; i++) {
+    const item = sihatItems[i]
+    const imgId = await createMediaFromUrl(
+      payload,
+      `https://picsum.photos/seed/${item.seed}/800/500`,
+      `sihat-${i}.jpg`,
+      item.title,
+    )
+
+    const post = await payload.create({
+      collection: 'posts',
+      data: {
+        title: item.title,
+        category: categoryMap['sihat'] || categoryMap['wanita'],
+        featuredImage: imgId,
+        status: 'published',
+        publishedAt: new Date().toISOString(),
+        slug: makeSlug(item.title),
+        content: createDummyContent(item.title),
+      },
+      draft: true,
+      overrideAccess: true,
+    })
+
+    if (item.isMain) {
+      sihatMainId = Number(post.id)
+    } else {
+      createdSihatSubIds.push(Number(post.id))
+    }
+  }
+
   console.log('Đang liên kết dữ liệu vào Global HomePage...')
 
   await payload.updateGlobal({
@@ -1343,6 +1406,11 @@ export const seedPosts = async (payload: Payload) => {
         title: 'Video Terkini',
         channelLogo: videoTerkiniLogoImg,
         videos: createdVideoTerkiniIds,
+      },
+      sihatSection: {
+        title: 'Sihat',
+        featuredPost: sihatMainId,
+        subPosts: createdSihatSubIds,
       },
     },
   })
