@@ -427,5 +427,69 @@ export const HomePage: GlobalConfig = {
         },
       ],
     },
+    // -------------------------------------------------------------
+    // KHỐI: PODCAST (DANH SÁCH VIDEO DỌC CÓ PLAY ICON & BADGE LOGO)
+    // -------------------------------------------------------------
+    {
+      name: 'podcastSection',
+      type: 'group',
+      label: 'Khối Podcast',
+      fields: [
+        {
+          name: 'title',
+          type: 'text',
+          defaultValue: 'Podcast',
+        },
+        {
+          name: 'channelLogo',
+          type: 'upload',
+          relationTo: 'media',
+          label: 'Logo kênh (BH TV)',
+        },
+        {
+          name: 'videos',
+          type: 'relationship',
+          relationTo: 'posts', // hoặc collection 'videos' tùy thuộc vào dự án của bạn
+          hasMany: true,
+          maxRows: 3,
+          label: 'Danh sách 3 video podcast',
+        },
+      ],
+    },
+    // -------------------------------------------------------------
+    // KHỐI: BH TV (1 VIDEO LỚN BÊN TRÁI + 6 VIDEO NHỎ LƯỚI 3x2 BÊN PHẢI)
+    // -------------------------------------------------------------
+    {
+      name: 'bhTvSection',
+      type: 'group',
+      label: 'Khối BH TV',
+      fields: [
+        {
+          name: 'title',
+          type: 'text',
+          defaultValue: 'BH TV',
+        },
+        {
+          name: 'channelLogo',
+          type: 'upload',
+          relationTo: 'media',
+          label: 'Logo kênh BH TV',
+        },
+        {
+          name: 'mainVideo',
+          type: 'relationship',
+          relationTo: 'posts',
+          label: 'Video chính nổi bật (Bên trái)',
+        },
+        {
+          name: 'subVideos',
+          type: 'relationship',
+          relationTo: 'posts',
+          hasMany: true,
+          maxRows: 6,
+          label: '6 Video danh sách nhỏ (Lưới 3 cột x 2 hàng bên phải)',
+        },
+      ],
+    },
   ],
 }

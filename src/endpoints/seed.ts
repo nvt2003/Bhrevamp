@@ -1054,6 +1054,58 @@ export const seedPosts = async (payload: Payload) => {
       caption: `Gambar galeri ${i}`,
     })
   }
+  // --- TẠO DỮ LIỆU CHO KHỐI PODCAST ---
+  console.log('Đang tạo tin cho khối Podcast...')
+
+  // 1. Tạo hoặc lấy logo tạm thời (BH TV Badge)
+  const podcastLogoImg = await createMediaFromUrl(
+    payload,
+    'https://picsum.photos/seed/bhtv-logo/100/100',
+    'bhtv-logo.jpg',
+    'BH TV Logo',
+  )
+
+  // 2. Tạo 3 video podcast
+  const podcastItems = [
+    {
+      title: 'Impak positif kenaikan gaji minimum bakal dirasai semua lapisan',
+      seed: 'podcast-guest-1',
+    },
+    {
+      title: 'Bawa pulang pekerja mahir, hartawan mampu tingkat ekonomi negara - Nazri Khan',
+      seed: 'podcast-guest-2',
+    },
+    {
+      title: "Belanjawan 2025 bukan 'hukuman' kepada golongan mahakaya, T15",
+      seed: 'podcast-studio-3',
+    },
+  ]
+
+  const createdPodcastIds: number[] = []
+  for (let i = 0; i < podcastItems.length; i++) {
+    const item = podcastItems[i]
+    const imgId = await createMediaFromUrl(
+      payload,
+      `https://picsum.photos/seed/${item.seed}/600/350`,
+      `podcast-thumb-${i}.jpg`,
+      item.title,
+    )
+    const post = await payload.create({
+      collection: 'posts',
+      data: {
+        title: item.title,
+        category: categoryMap['nasional'],
+        featuredImage: imgId,
+        status: 'published',
+        publishedAt: new Date().toISOString(),
+        slug: makeSlug(item.title),
+        content: createDummyContent(item.title),
+      },
+      draft: true,
+      overrideAccess: true,
+    })
+    createdPodcastIds.push(Number(post.id))
+  }
 
   console.log('Đang liên kết dữ liệu vào Global HomePage...')
 
@@ -1117,6 +1169,11 @@ export const seedPosts = async (payload: Payload) => {
       galeriFotoSection: {
         title: 'Galeri Foto',
         galleryImages: galleryItems,
+      },
+      podcastSection: {
+        title: 'Podcast',
+        channelLogo: podcastLogoImg,
+        videos: createdPodcastIds,
       },
     },
   })

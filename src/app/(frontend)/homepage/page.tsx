@@ -18,6 +18,7 @@ import GayaHidupSection from './components/GayaHidupSection'
 import BhPlusSection from './components/BhPlusSection'
 import InfografikSection from './components/InfografikSection'
 import GaleriFotoSection from './components/GaleriFotoSection'
+import PodcastSection from './components/PodcastSection'
 
 export default async function HomePage() {
   const payload = await getPayload({ config: configPromise })
@@ -84,6 +85,7 @@ export default async function HomePage() {
   const bhPlusData = homeData?.bhPlusSection
   const infografikdata = homeData?.infografikSection
   const galeriFotoData = homeData?.galeriFotoSection
+  const podcatData = homeData?.podcastSection
   return (
     <div className="min-h-screen">
       {/* Slide bài viết trượt ngang */}
@@ -130,8 +132,13 @@ export default async function HomePage() {
               <HiburanSection data={hiburanData} />
             </div>
           </div>
-          {/* Postcast */}
-          <div className="flex-[1] min-w-0"></div>
+          <div className="flex-[1] min-w-0">
+            <div className="bg-blue-100">Ad</div>
+            {/* Postcast */}
+            <div>
+              <PodcastSection data={podcatData} />
+            </div>
+          </div>
         </div>
         {/* Dunia */}
         <div className="flex mt-8">
@@ -139,17 +146,21 @@ export default async function HomePage() {
         </div>
         <div className="flex gap-2 mt-8">
           <div className="flex-[2] min-w-0">
+            {/* Gaya Hidup */}
             <div>
               <GayaHidupSection data={gayaHidubData} />
             </div>
+            {/* Bh Plus */}
             <div>
               <BhPlusSection data={bhPlusData} />
             </div>
           </div>
           <div className="flex-[1] min-w-0">
+            {/* Infografik */}
             <div>
               <InfografikSection data={infografikdata} />
             </div>
+            {/* Galeri Foto */}
             <div>
               <GaleriFotoSection data={galeriFotoData} />
             </div>
