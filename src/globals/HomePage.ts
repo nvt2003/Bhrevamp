@@ -491,5 +491,33 @@ export const HomePage: GlobalConfig = {
         },
       ],
     },
+    // -------------------------------------------------------------
+    // KHỐI: VIDEO TERKINI (CAROUSEL VIDEO DẠNG KHUNG DỌC SHORTS 9:16)
+    // -------------------------------------------------------------
+    {
+      name: 'videoTerkiniSection',
+      type: 'group',
+      label: 'Khối Video Terkini',
+      fields: [
+        {
+          name: 'title',
+          type: 'text',
+          defaultValue: 'Video Terkini',
+        },
+        {
+          name: 'channelLogo',
+          type: 'upload',
+          relationTo: 'media',
+          label: 'Logo kênh BH TV (Góc trên bên phải)',
+        },
+        {
+          name: 'videos',
+          type: 'relationship',
+          relationTo: 'posts',
+          hasMany: true,
+          label: 'Danh sách các Video ngắn (Tỷ lệ 9:16)',
+        },
+      ],
+    },
   ],
 }

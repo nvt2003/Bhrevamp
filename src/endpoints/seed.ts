@@ -1194,7 +1194,72 @@ export const seedPosts = async (payload: Payload) => {
     })
     createdSubVideoIds.push(Number(post.id))
   }
+  // --- TẠO DỮ LIỆU CHO KHỐI VIDEO TERKINI ---
+  console.log('Đang tạo tin cho khối Video Terkini...')
 
+  // 1. Logo BH TV góc trên phải
+  const videoTerkiniLogoImg = await createMediaFromUrl(
+    payload,
+    'https://picsum.photos/seed/bhtv-top-right-logo/100/100',
+    'bhtv-top-logo.jpg',
+    'BH TV Top Right Logo',
+  )
+
+  // 2. Danh sách 5 video ngắn
+  const videoTerkiniItems = [
+    {
+      title: 'Letupan lori tangki minyak ragut 147 nyawa di Nigeria',
+      duration: '1:10',
+      seed: 'tanker-explosion-1',
+    },
+    {
+      title: "Mesir gesa tindakan 'segera dan tegas' hentikan serangan...",
+      duration: '1:10',
+      seed: 'egypt-news-2',
+    },
+    {
+      title: 'Kanak-kanak tidak sempat terima dos kedua vaksin polio, maut kena...',
+      duration: '1:10',
+      seed: 'rubble-child-3',
+    },
+    {
+      title: 'Hampir 100 terbunuh akibat letupan lori tangki di Nigeria',
+      duration: '1:10',
+      seed: 'fire-explosion-4',
+    },
+    {
+      title: "Iran berikrar balas 'tindakan' menyerang...",
+      duration: '1:10',
+      seed: 'iran-official-5',
+    },
+  ]
+
+  const createdVideoTerkiniIds: number[] = []
+  for (let i = 0; i < videoTerkiniItems.length; i++) {
+    const item = videoTerkiniItems[i]
+    const imgId = await createMediaFromUrl(
+      payload,
+      `https://picsum.photos/seed/${item.seed}/450/800`, // Ảnh dạng dọc 9:16
+      `video-terkini-${i}.jpg`,
+      item.title,
+    )
+    const post = await payload.create({
+      collection: 'posts',
+      data: {
+        title: item.title,
+        category: categoryMap['nasional'],
+        featuredImage: imgId,
+        status: 'published',
+        publishedAt: new Date().toISOString(),
+        slug: makeSlug(item.title),
+        content: createDummyContent(item.title),
+      },
+
+      draft: true,
+      overrideAccess: true,
+    })
+    createdVideoTerkiniIds.push(Number(post.id))
+  }
   console.log('Đang liên kết dữ liệu vào Global HomePage...')
 
   await payload.updateGlobal({
@@ -1268,6 +1333,11 @@ export const seedPosts = async (payload: Payload) => {
         channelLogo: bhTvLogoImg,
         mainVideo: createdMainVideo.id,
         subVideos: createdSubVideoIds,
+      },
+      videoTerkiniSection: {
+        title: 'Video Terkini',
+        channelLogo: videoTerkiniLogoImg,
+        videos: createdVideoTerkiniIds,
       },
     },
   })

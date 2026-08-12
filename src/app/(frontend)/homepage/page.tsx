@@ -20,6 +20,7 @@ import InfografikSection from './components/InfografikSection'
 import GaleriFotoSection from './components/GaleriFotoSection'
 import PodcastSection from './components/PodcastSection'
 import BhTvSection from './components/BhTvSection'
+import VideoTerkiniSection from './components/VideoTerkiniSection'
 
 export default async function HomePage() {
   const payload = await getPayload({ config: configPromise })
@@ -88,6 +89,7 @@ export default async function HomePage() {
   const galeriFotoData = homeData?.galeriFotoSection
   const podcatData = homeData?.podcastSection
   const bhTvData = homeData?.bhTvSection
+  const videoTerkiniData = homeData?.videoTerkiniSection
   return (
     <div className="min-h-screen">
       {/* Slide bài viết trượt ngang */}
@@ -113,6 +115,10 @@ export default async function HomePage() {
         {/* Disyorkan */}
         <div className="flex mt-8">
           <DisyorkanSection data={disyorkanData} />
+        </div>
+        {/* Video Terkini */}
+        <div className="flex mt-8">
+          <VideoTerkiniSection data={videoTerkiniData} />
         </div>
         {/* Rencana */}
         <div className="flex mt-8">
