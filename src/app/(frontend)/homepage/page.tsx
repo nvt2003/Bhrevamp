@@ -19,6 +19,7 @@ import BhPlusSection from './components/BhPlusSection'
 import InfografikSection from './components/InfografikSection'
 import GaleriFotoSection from './components/GaleriFotoSection'
 import PodcastSection from './components/PodcastSection'
+import BhTvSection from './components/BhTvSection'
 
 export default async function HomePage() {
   const payload = await getPayload({ config: configPromise })
@@ -86,6 +87,7 @@ export default async function HomePage() {
   const infografikdata = homeData?.infografikSection
   const galeriFotoData = homeData?.galeriFotoSection
   const podcatData = homeData?.podcastSection
+  const bhTvData = homeData?.bhTvSection
   return (
     <div className="min-h-screen">
       {/* Slide bài viết trượt ngang */}
@@ -116,11 +118,14 @@ export default async function HomePage() {
         <div className="flex mt-8">
           <RencanaSection data={rencanaData} />
         </div>
+        {/* BH TV */}
+        <div className="flex mt-8">
+          <BhTvSection data={bhTvData} />
+        </div>
         {/* Sukan */}
         <div className="flex mt-8">
           <SukanSection data={sukanData} />
         </div>
-        {/* Sukan */}
         <div className="flex mt-8 gap-2">
           <div className="flex-[2] min-w-0">
             {/* Bisnes */}

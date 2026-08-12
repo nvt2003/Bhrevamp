@@ -1106,6 +1106,94 @@ export const seedPosts = async (payload: Payload) => {
     })
     createdPodcastIds.push(Number(post.id))
   }
+  // --- TẠO DỮ LIỆU CHO KHỐI BH TV ---
+  console.log('Đang tạo tin cho khối BH TV...')
+
+  // 1. Tạo/Lấy logo BH TV
+  const bhTvLogoImg = await createMediaFromUrl(
+    payload,
+    'https://picsum.photos/seed/bhtv-badge-logo/100/100',
+    'bhtv-logo.jpg',
+    'BH TV Logo',
+  )
+
+  // 2. Video nổi bật chính (Bên trái)
+  const mainVideoImg = await createMediaFromUrl(
+    payload,
+    'https://picsum.photos/seed/melaka-court/800/450',
+    'bhtv-main-video.jpg',
+    'Gugur janin guna ubat beli di TikTok',
+  )
+
+  const createdMainVideo = await payload.create({
+    collection: 'posts',
+    data: {
+      title: 'Gugur janin guna ubat beli di TikTok, pekerja kafe dipenjara 9 bulan',
+      category: categoryMap['kes'] || categoryMap['nasional'],
+      featuredImage: mainVideoImg,
+      status: 'published',
+      publishedAt: new Date().toISOString(),
+      slug: makeSlug('Gugur janin guna ubat beli di TikTok pekerja kafe dipenjara 9 bulan'),
+      content: createDummyContent('Video chi tiết vụ án...'),
+    },
+    draft: true,
+    overrideAccess: true,
+  })
+
+  // 3. 6 Video nhỏ bên phải
+  const bhTvSubItems = [
+    {
+      title: 'Suspek kes simbah asid pengusaha spa disambung reman 4 hari',
+      seed: 'police-arrest-1',
+    },
+    {
+      title: "'Geng Bob' curi sarung meter air tumpas diserbu polis",
+      seed: 'police-conference-2',
+    },
+    {
+      title:
+        "'Saya jerit panggil nama mak su, tapi yang kedengaran hanya suara kesakitan' - Anak saudara",
+      seed: 'accident-witness-3',
+    },
+    {
+      title: 'MPV terbabas, langgar pembahagi konkrit, 2 maut',
+      seed: 'car-accident-4',
+    },
+    {
+      title: 'Suspek kedua kes simbah asid pengusaha spa direman tujuh hari',
+      seed: 'suspect-face-5',
+    },
+    {
+      title: 'Gugur janin guna ubat beli di TikTok, pekerja kafe dipenjara 9 bulan',
+      seed: 'court-escort-6',
+    },
+  ]
+
+  const createdSubVideoIds: number[] = []
+  for (let i = 0; i < bhTvSubItems.length; i++) {
+    const item = bhTvSubItems[i]
+    const imgId = await createMediaFromUrl(
+      payload,
+      `https://picsum.photos/seed/${item.seed}/400/250`,
+      `bhtv-sub-${i}.jpg`,
+      item.title,
+    )
+    const post = await payload.create({
+      collection: 'posts',
+      data: {
+        title: item.title,
+        category: categoryMap['kes'] || categoryMap['nasional'],
+        featuredImage: imgId,
+        status: 'published',
+        publishedAt: new Date().toISOString(),
+        slug: makeSlug(item.title),
+        content: createDummyContent(item.title),
+      },
+      draft: true,
+      overrideAccess: true,
+    })
+    createdSubVideoIds.push(Number(post.id))
+  }
 
   console.log('Đang liên kết dữ liệu vào Global HomePage...')
 
@@ -1174,6 +1262,12 @@ export const seedPosts = async (payload: Payload) => {
         title: 'Podcast',
         channelLogo: podcastLogoImg,
         videos: createdPodcastIds,
+      },
+      bhTvSection: {
+        title: 'BH TV',
+        channelLogo: bhTvLogoImg,
+        mainVideo: createdMainVideo.id,
+        subVideos: createdSubVideoIds,
       },
     },
   })
