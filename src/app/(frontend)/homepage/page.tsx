@@ -22,6 +22,7 @@ import PodcastSection from './components/PodcastSection'
 import BhTvSection from './components/BhTvSection'
 import VideoTerkiniSection from './components/VideoTerkiniSection'
 import SihatSection from './components/SihatSection'
+import Footer from '../components/Footer'
 
 export default async function HomePage() {
   const payload = await getPayload({ config: configPromise })
@@ -94,6 +95,9 @@ export default async function HomePage() {
   const podcatData = homeData?.podcastSection
   const bhTvData = homeData?.bhTvSection
   const videoTerkiniData = homeData?.videoTerkiniSection
+  const footerData = await payload.findGlobal({
+    slug: 'footer',
+  })
   return (
     <div className="min-h-screen">
       {/* Slide bài viết trượt ngang */}
@@ -192,6 +196,7 @@ export default async function HomePage() {
           </div>
         </div>
       </div>
+      <Footer data={footerData} />
     </div>
   )
 }
