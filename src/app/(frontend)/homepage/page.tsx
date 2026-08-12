@@ -67,7 +67,8 @@ export default async function HomePage() {
     limit: utamaSection?.trendingLimit || 5,
   })
   const disyorkanData = homeData?.disyorkanSection
-  const rencanaData = homeData.rencanaSection
+  const rencanaData = homeData?.rencanaSection
+  const sukanData = homeData?.sukanSection
   return (
     <div className="min-h-screen">
       {/* Slide bài viết trượt ngang */}
@@ -97,6 +98,10 @@ export default async function HomePage() {
         {/* Rencana */}
         <div className="flex mt-8">
           <RencanaSection data={rencanaData} />
+        </div>
+        {/* Sukan */}
+        <div className="flex mt-8">
+          <RencanaSection data={sukanData} />
         </div>
       </div>
     </div>

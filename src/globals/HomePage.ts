@@ -121,5 +121,67 @@ export const HomePage: GlobalConfig = {
         },
       ],
     },
+    // -------------------------------------------------------------
+    // KHỐI: SUKAN (2 BÀI LỚN BÊN TRÁI + 4 BÀI DỌC BÊN PHẢI)
+    // -------------------------------------------------------------
+    {
+      name: 'sukanSection',
+      type: 'group',
+      label: 'Khối Sukan',
+      fields: [
+        {
+          name: 'title',
+          type: 'text',
+          defaultValue: 'Sukan',
+        },
+        {
+          name: 'featuredPosts',
+          type: 'relationship',
+          relationTo: 'posts',
+          hasMany: true,
+          maxRows: 2,
+          label: '2 Bài nổi bật chính (Bên trái & Giữa)',
+        },
+        {
+          name: 'sidePosts',
+          type: 'relationship',
+          relationTo: 'posts',
+          hasMany: true,
+          maxRows: 4,
+          label: '4 Bài danh sách dọc (Bên phải - có thumbnail)',
+        },
+      ],
+    },
+    // -------------------------------------------------------------
+    // KHỐI: DUNIA (2 BÀI LỚN BÊN TRÁI + 4 BÀI DỌC BÊN PHẢI)
+    // -------------------------------------------------------------
+    {
+      name: 'duniaSection',
+      type: 'group',
+      label: 'Khối Dunia',
+      fields: [
+        {
+          name: 'title',
+          type: 'text',
+          defaultValue: 'Dunia',
+        },
+        {
+          name: 'featuredPosts',
+          type: 'relationship',
+          relationTo: 'posts',
+          hasMany: true,
+          maxRows: 2,
+          label: '2 Bài nổi bật chính (Cột trái & Giữa)',
+        },
+        {
+          name: 'sidePosts',
+          type: 'relationship',
+          relationTo: 'posts',
+          hasMany: true,
+          maxRows: 4,
+          label: '4 Bài danh sách dọc (Cột phải - có thumbnail)',
+        },
+      ],
+    },
   ],
 }

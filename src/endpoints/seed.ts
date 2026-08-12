@@ -528,6 +528,178 @@ export const seedPosts = async (payload: Payload) => {
     })
     createdRencanaSideIds.push(Number(post.id))
   }
+  // --- TẠO BÀI DÙNG CHO SUKAN ---
+  console.log('Đang tạo tin cho khối Sukan...')
+
+  // 1. 2 Bài chính nổi bật
+  const sukanFeaturedItems = [
+    {
+      title: 'Xabi Alonso tekad bawa Real Madrid kembali cemerlang musim depan',
+      seed: 'xabi-alonso',
+    },
+    {
+      title: 'Beregu lelaki negara mara ke suku akhir Terbuka Jepun',
+      seed: 'badminton-pair',
+    },
+  ]
+
+  const createdSukanFeaturedIds: number[] = []
+  for (let i = 0; i < sukanFeaturedItems.length; i++) {
+    const item = sukanFeaturedItems[i]
+    const imgId = await createMediaFromUrl(
+      payload,
+      `https://picsum.photos/seed/${item.seed}/600/400`,
+      `sukan-featured-${i}.jpg`,
+      item.title,
+    )
+    const post = await payload.create({
+      collection: 'posts',
+      data: {
+        title: item.title,
+        category: categoryMap['sukan'] || categoryMap['nasional'],
+        featuredImage: imgId,
+        status: 'published',
+        publishedAt: new Date().toISOString(),
+        slug: makeSlug(item.title),
+        content: createDummyContent(item.title),
+      },
+      draft: true,
+      overrideAccess: true,
+    })
+    createdSukanFeaturedIds.push(Number(post.id))
+  }
+
+  // 2. 4 Bài danh sách bên phải
+  const sukanSideItems = [
+    {
+      title: 'Sidang Khas Parlimen tumpu isu pembangunan sukan tanah air',
+      seed: 'sukan-parliament',
+    },
+    {
+      title: 'Kelab peminat Harimau Malaya lancar jersi edisi khas',
+      seed: 'football-fans',
+    },
+    {
+      title: 'Pemain badminton wanita negara kejutkan pilihan ketiga kejohanan',
+      seed: 'badminton-women',
+    },
+    {
+      title: 'Jurulatih baharu skuad kebangsaan sasar kelayakan Piala Asia',
+      seed: 'coach-national',
+    },
+  ]
+
+  const createdSukanSideIds: number[] = []
+  for (let i = 0; i < sukanSideItems.length; i++) {
+    const item = sukanSideItems[i]
+    const imgId = await createMediaFromUrl(
+      payload,
+      `https://picsum.photos/seed/${item.seed}/300/200`,
+      `sukan-side-${i}.jpg`,
+      item.title,
+    )
+    const post = await payload.create({
+      collection: 'posts',
+      data: {
+        title: item.title,
+        category: categoryMap['sukan'] || categoryMap['nasional'],
+        featuredImage: imgId,
+        status: 'published',
+        publishedAt: new Date().toISOString(),
+        slug: makeSlug(item.title),
+        content: createDummyContent(item.title),
+      },
+      draft: true,
+      overrideAccess: true,
+    })
+    createdSukanSideIds.push(Number(post.id))
+  }
+  // --- TẠO BÀI DÙNG CHO DUNIA ---
+  console.log('Đang tạo tin cho khối Dunia...')
+
+  // 1. 2 Bài chính nổi bật
+  const duniaFeaturedItems = [
+    {
+      title: 'Pelampau Israel serang penduduk Palestin Baitulmaqdis',
+      seed: 'israel-palestine',
+    },
+    {
+      title: 'Kami Rita Sherpa perbaharui rekod dunia daki Everest buat kali ke-31',
+      seed: 'everest-sherpa',
+    },
+  ]
+
+  const createdDuniaFeaturedIds: number[] = []
+  for (let i = 0; i < duniaFeaturedItems.length; i++) {
+    const item = duniaFeaturedItems[i]
+    const imgId = await createMediaFromUrl(
+      payload,
+      `https://picsum.photos/seed/${item.seed}/600/400`,
+      `dunia-featured-${i}.jpg`,
+      item.title,
+    )
+    const post = await payload.create({
+      collection: 'posts',
+      data: {
+        title: item.title,
+        category: categoryMap['dunia'] || categoryMap['nasional'],
+        featuredImage: imgId,
+        status: 'published',
+        publishedAt: new Date().toISOString(),
+        slug: makeSlug(item.title),
+        content: createDummyContent(item.title),
+      },
+      draft: true,
+      overrideAccess: true,
+    })
+    createdDuniaFeaturedIds.push(Number(post.id))
+  }
+
+  // 2. 4 Bài danh sách bên phải
+  const duniaSideItems = [
+    {
+      title: 'Pegawai tinggi kementerian Indonesia disiasat seleweng berbilion rupiah',
+      seed: 'indonesia-money',
+    },
+    {
+      title: 'Arab Saudi kuatkuasa sekatan visa bagi negara tertentu',
+      seed: 'mecca-saudi',
+    },
+    {
+      title: "2 maut, 9 cedera dalam kes tembakan 'Memorial Day' di AS",
+      seed: 'us-police',
+    },
+    {
+      title: 'Remaja ditahan sebar ekstremisme dalam talian di Sulawesi',
+      seed: 'sulawesi-arrest',
+    },
+  ]
+
+  const createdDuniaSideIds: number[] = []
+  for (let i = 0; i < duniaSideItems.length; i++) {
+    const item = duniaSideItems[i]
+    const imgId = await createMediaFromUrl(
+      payload,
+      `https://picsum.photos/seed/${item.seed}/300/200`,
+      `dunia-side-${i}.jpg`,
+      item.title,
+    )
+    const post = await payload.create({
+      collection: 'posts',
+      data: {
+        title: item.title,
+        category: categoryMap['dunia'] || categoryMap['nasional'],
+        featuredImage: imgId,
+        status: 'published',
+        publishedAt: new Date().toISOString(),
+        slug: makeSlug(item.title),
+        content: createDummyContent(item.title),
+      },
+      draft: true,
+      overrideAccess: true,
+    })
+    createdDuniaSideIds.push(Number(post.id))
+  }
   console.log('Đang liên kết dữ liệu vào Global HomePage...')
 
   await payload.updateGlobal({
@@ -551,6 +723,16 @@ export const seedPosts = async (payload: Payload) => {
         title: 'Rencana',
         featuredPosts: createdRencanaFeaturedIds,
         sidePosts: createdRencanaSideIds,
+      },
+      sukanSection: {
+        title: 'Sukan',
+        featuredPosts: createdSukanFeaturedIds,
+        sidePosts: createdSukanSideIds,
+      },
+      duniaSection: {
+        title: 'Dunia',
+        featuredPosts: createdDuniaFeaturedIds,
+        sidePosts: createdDuniaSideIds,
       },
     },
   })
