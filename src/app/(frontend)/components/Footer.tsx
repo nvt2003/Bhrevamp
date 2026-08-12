@@ -56,20 +56,22 @@ export default function Footer({ data }: { data: any }) {
 
           {/* Social Icons */}
           <div className="flex items-center gap-2">
-            {socialLinks?.map((item: any, idx: number) => (
-              <a
-                key={idx}
-                href={item.url}
-                target="_blank"
-                rel="noreferrer"
-                className="w-9 h-9 rounded-full bg-neutral-700 hover:bg-neutral-600 text-white flex items-center justify-center transition-colors text-base"
-              >
-                {(() => {
-                  const Icon = Icons[item.platform as keyof typeof Icons]
-                  return Icon ? <Icon /> : null
-                })()}
-              </a>
-            ))}
+            {console.log(socialLinks)}
+            {socialLinks?.map((item: any, idx: number) => {
+              const IconComponent = Icons[item.platform as keyof typeof Icons]
+              return (
+                <a
+                  key={idx}
+                  href={item.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={item.platform}
+                  className="w-9 h-9 rounded-full bg-neutral-700 hover:bg-neutral-600 text-white flex items-center justify-center transition-colors"
+                >
+                  {IconComponent ? <IconComponent /> : null}
+                </a>
+              )
+            })}
           </div>
 
           {/* Mobile App Badges */}

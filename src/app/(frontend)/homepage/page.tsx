@@ -3,7 +3,7 @@ import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import Link from 'next/link'
 import NewsSlider from '../components/NewsSlider'
-import { seedPosts } from '@/endpoints/seed'
+import { seedPosts, seedFooter } from '@/endpoints/seed'
 import TrendingBar from '../components/TrendingBar'
 import FloatingWidget from '../components/FloatingWidget'
 import UtamaSection from './components/UtamaSection'
@@ -22,12 +22,29 @@ import PodcastSection from './components/PodcastSection'
 import BhTvSection from './components/BhTvSection'
 import VideoTerkiniSection from './components/VideoTerkiniSection'
 import SihatSection from './components/SihatSection'
-import Footer from '../components/Footer'
 
 export default async function HomePage() {
   const payload = await getPayload({ config: configPromise })
-  //generate data
-  await seedPosts(payload)
+  //Kiểm tra xem Footer đã có dữ liệu chưa
+  const footerData = await payload.findGlobal({
+    slug: 'footer',
+  })
+  // Nếu chưa có cột links nào thì mới seed
+  const isFooterEmpty = !footerData?.columns || footerData.columns.length === 0
+
+  if (isFooterEmpty) {
+    payload.logger.info('Trang chủ được truy cập lần đầu. Đang tự động seed dữ liệu...')
+
+    try {
+      // Chạy 2 hàm seed
+      await seedFooter(payload)
+      await seedPosts(payload)
+
+      payload.logger.info('Seed dữ liệu tự động hoàn tất!')
+    } catch (error) {
+      payload.logger.error('Lỗi khi tự động seed')
+    }
+  }
   // Truy vấn lấy các item trong collection Sliders, sắp xếp theo thứ tự (order)
   const sliderRes = await payload.find({
     collection: 'sliders',
@@ -95,9 +112,6 @@ export default async function HomePage() {
   const podcatData = homeData?.podcastSection
   const bhTvData = homeData?.bhTvSection
   const videoTerkiniData = homeData?.videoTerkiniSection
-  const footerData = await payload.findGlobal({
-    slug: 'footer',
-  })
   return (
     <div className="min-h-screen">
       {/* Slide bài viết trượt ngang */}
@@ -196,7 +210,6 @@ export default async function HomePage() {
           </div>
         </div>
       </div>
-      <Footer data={footerData} />
     </div>
   )
 }

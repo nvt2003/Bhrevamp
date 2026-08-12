@@ -1,4 +1,5 @@
-import { Payload } from 'payload'
+import { getPayload, Payload } from 'payload'
+import configPromise from '@payload-config'
 
 // Helper function tải ảnh từ URL ngoài và tạo record trong collection 'media'
 const createMediaFromUrl = async (
@@ -64,6 +65,7 @@ const createDummyContent = (text: string) => ({
     version: 1,
   },
 })
+
 export const seedPosts = async (payload: Payload) => {
   // 1. Kiểm tra xem posts đã tồn tại chưa
   const existingPosts = await payload.find({
@@ -1418,4 +1420,75 @@ export const seedPosts = async (payload: Payload) => {
     },
   })
   console.log('Khởi tạo toàn bộ dữ liệu Posts thành công!')
+}
+export async function seedFooter(payload: Payload) {
+  console.log('Khởi tạo toàn bộ dữ liệu footer!')
+  payload.logger.info('— Seeding Footer...')
+
+  // 1. Upload Logo mẫu (nếu chưa có media)
+  // Lưu ý: Đảm bảo bạn đã có collection 'media' trong project
+
+  const logoMedia = await payload.create({
+    collection: 'media',
+    filePath: 'path/to/logo.png',
+    data: { alt: 'BH Online Logo' },
+  })
+
+  // 2. Cập nhật dữ liệu cho Global 'footer'
+  await payload.updateGlobal({
+    slug: 'footer',
+    data: {
+      // logo: logoMedia.id, // Bật lại dòng này nếu dùng upload media ở trên
+      socialLinks: [
+        { platform: 'facebook', url: 'https://facebook.com' },
+        { platform: 'twitter', url: 'https://x.com' },
+        { platform: 'whatsapp', url: 'https://whatsapp.com' },
+        { platform: 'youtube', url: 'https://youtube.com' },
+        { platform: 'tiktok', url: 'https://tiktok.com' },
+        { platform: 'linkedin', url: 'https://linkedin.com' },
+      ],
+      appStoreLinks: {
+        appStoreUrl: 'https://apple.com/app-store',
+        googlePlayUrl: 'https://play.google.com',
+      },
+      columns: [
+        {
+          title: 'Tin Tức',
+          links: [
+            { label: 'Berita', url: '/berita' },
+            { label: 'BHPLUS', url: '/bhplus' },
+            { label: 'Nasional', url: '/nasional' },
+            { label: 'Kes', url: '/kes' },
+          ],
+        },
+        {
+          title: 'Chuyên Mục',
+          links: [
+            { label: 'Sukan', url: '/sukan' },
+            { label: 'Dunia', url: '/dunia' },
+            { label: 'Hiburan', url: '/hiburan' },
+            { label: 'Bisnes', url: '/bisnes' },
+          ],
+        },
+        {
+          title: 'Media',
+          links: [
+            { label: 'Multimedia', url: '/multimedia' },
+            { label: 'Foto', url: '/foto' },
+            { label: 'BHTV', url: '/bhtv' },
+          ],
+        },
+      ],
+      copyrightText: '2026 © BH, New Straits Times Press (M) Bhd. All rights reserved.',
+      bottomLinks: [
+        { label: 'Redaksi', url: '/redaksi' },
+        { label: 'Disclaimer', url: '/disclaimer' },
+        { label: 'Notis Perlindungan Data Peribadi', url: '/privacy-policy' },
+      ],
+    },
+  })
+
+  payload.logger.info('Footer seeded successfully!')
+
+  console.log('Khởi tạo toàn bộ dữ liệu footer thành công!')
 }
