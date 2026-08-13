@@ -1333,6 +1333,15 @@ export const seedPosts = async (payload: Payload) => {
     }
   }
 
+  // --- Chuẩn bị danh sách Trending Keywords---
+  console.log('Chuẩn bị danh sách Trending Keywords...')
+  const trendingKeywords = ['Accounts', '1MDB scandal', 'Election 2024', 'Floods', 'New year 2025']
+
+  const processedTrending = trendingKeywords.map((keyword, index) => ({
+    keyword,
+    order: index + 1,
+  }))
+
   console.log('Đang liên kết dữ liệu vào Global HomePage...')
 
   await payload.updateGlobal({
@@ -1417,6 +1426,8 @@ export const seedPosts = async (payload: Payload) => {
         featuredPost: sihatMainId,
         subPosts: createdSihatSubIds,
       },
+
+      trending: processedTrending,
     },
   })
   console.log('Khởi tạo toàn bộ dữ liệu Posts thành công!')
@@ -1484,4 +1495,60 @@ export async function seedFooter(payload: Payload) {
   payload.logger.info('Footer seeded successfully!')
 
   console.log('Khởi tạo toàn bộ dữ liệu footer thành công!')
+}
+
+export async function seedHeader(payload: Payload) {
+  console.log('Đang cập nhật dữ liệu Header Global...')
+
+  // 1. Chuẩn bị danh sách Sliders xuất hiện trên thanh Carousel Header
+  const slidersData = [
+    {
+      title: "Stacy 'terbang' di Sabah",
+      category: 'Hiburan',
+      slug: makeSlug("Stacy 'terbang' di Sabah"),
+      imgSeed: 'stacy-sabah',
+    },
+    {
+      title: 'Komputer riba serba pintar permudah sambungan iPhone, Windows',
+      category: 'Bisnes',
+      slug: makeSlug('Komputer riba serba pintar permudah sambungan iPhone, Windows'),
+      imgSeed: 'laptop-phone',
+    },
+    {
+      title: 'Khelif perlu pulangkan pingat - Kremlin',
+      category: 'Sukan',
+      slug: makeSlug('Khelif perlu pulangkan pingat - Kremlin'),
+      imgSeed: 'khelif-boxer',
+    },
+    {
+      title: 'Perang Israel-Iran tidak mengubah nasib Gaza',
+      category: 'Nasional',
+      slug: makeSlug('Perang Israel-Iran tidak mengubah nasib Gaza'),
+      imgSeed: 'gaza-war',
+    },
+  ]
+
+  // Upload ảnh và map lại danh sách slider hoàn chỉnh
+  const processedSliders = []
+  for (let i = 0; i < slidersData.length; i++) {
+    const item = slidersData[i]
+
+    // Upload media
+    const imgId = await createMediaFromUrl(
+      payload,
+      `https://picsum.photos/seed/${item.imgSeed}/400/250`,
+      `header-slider-${i}.jpg`,
+      item.title,
+    )
+
+    processedSliders.push({
+      title: item.title,
+      category: item.category,
+      slug: item.slug,
+      image: imgId,
+      order: i + 1,
+    })
+  }
+
+  console.log('Cập nhật dữ liệu Header Global thành công!')
 }

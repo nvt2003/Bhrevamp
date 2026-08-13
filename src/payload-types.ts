@@ -553,6 +553,13 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface HomePage {
   id: number;
+  trending?:
+    | {
+        keyword: string;
+        order?: number | null;
+        id?: string | null;
+      }[]
+    | null;
   utamaSection?: {
     title?: string | null;
     featuredMain?: (number | null) | Post;
@@ -824,6 +831,13 @@ export interface AdsConfig {
  * via the `definition` "home-page_select".
  */
 export interface HomePageSelect<T extends boolean = true> {
+  trending?:
+    | T
+    | {
+        keyword?: T;
+        order?: T;
+        id?: T;
+      };
   utamaSection?:
     | T
     | {

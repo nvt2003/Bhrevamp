@@ -4,6 +4,31 @@ export const HomePage: GlobalConfig = {
   label: 'Trang Chủ',
   access: { read: () => true },
   fields: [
+    //Danh sách Trending Keywords
+    {
+      name: 'trending',
+      type: 'array',
+      label: 'Trending Keywords',
+      labels: {
+        singular: 'Keyword',
+        plural: 'Keywords',
+      },
+      fields: [
+        {
+          name: 'keyword',
+          type: 'text',
+          label: 'Từ khóa',
+          required: true,
+        },
+        {
+          name: 'order',
+          type: 'number',
+          label: 'Thứ tự',
+          defaultValue: 0,
+        },
+      ],
+    },
+
     // -------------------------------------------------------------
     // KHỐI 1: UTAMA + SIDEBAR (TERKINI & TRENDING)
     // -------------------------------------------------------------
