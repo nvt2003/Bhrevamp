@@ -56,7 +56,6 @@ export default function Footer({ data }: { data: any }) {
 
           {/* Social Icons */}
           <div className="flex items-center gap-2">
-            {console.log(socialLinks)}
             {socialLinks?.map((item: any, idx: number) => {
               const IconComponent = Icons[item.platform as keyof typeof Icons]
               return (
