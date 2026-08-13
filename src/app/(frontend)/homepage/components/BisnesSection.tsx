@@ -53,11 +53,14 @@ export default function BisnesSection({ data }: { data: any }) {
       </div>
 
       {/* Hàng Dưới: 4 Bài Nhỏ Xếp Dạng Grid 2 Cột, Có Đường Phân Cách ngang/dọc */}
-      <div className="border-t dark:border-gray-800 pt-4 grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 divide-y md:divide-y-0">
+      <div className="border-t border-gray-200 dark:border-gray-800 pt-4 grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 divide-y md:divide-y-0">
         {subPosts.map((post: any) => {
           if (typeof post !== 'object') return null
           return (
-            <div key={post.id} className="pt-3 md:pt-0 border-b border-gray-100 dark:border-gray-800 pb-3">
+            <div
+              key={post.id}
+              className="pt-3 md:pt-0 border-b border-gray-100 dark:border-gray-800 pb-3"
+            >
               <Link
                 href={`/posts/${post.slug}`}
                 className="group flex gap-3 items-start justify-between"

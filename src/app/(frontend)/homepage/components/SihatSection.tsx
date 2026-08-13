@@ -45,7 +45,7 @@ export default function SihatSection({ data }: { data: any }) {
                   src={featuredImgUrl}
                   alt={featuredPost.title || title}
                   fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  className="max-w-[250px] aspect-[250/150] object-cover group-hover:scale-105 transition-transform duration-300"
                 />
               )}
             </div>
@@ -63,7 +63,7 @@ export default function SihatSection({ data }: { data: any }) {
             </div>
 
             {/* Tiêu đề bài chính */}
-            <h3 className="text-base font-bold text-gray-900  dark:text-white leading-snug group-hover:underline line-clamp-2">
+            <h3 className="text-lg font-bold text-gray-900  dark:text-white leading-snug group-hover:underline line-clamp-2">
               {featuredPost.title}
             </h3>
           </Link>
@@ -71,7 +71,7 @@ export default function SihatSection({ data }: { data: any }) {
       )}
 
       {/* 3. Danh sách các bài phụ nằm ngang phía dưới (Sub-posts) */}
-      <div className="divide-y divide-gray-200 border-t border-gray-800">
+      <div className="divide-y divide-gray-200 border-t border-gray-200 dark:border-gray-800">
         {posts.map((post: any, index: number) => {
           if (typeof post !== 'object') return null
           const imgUrl = typeof post.featuredImage === 'object' ? post.featuredImage?.url : null

@@ -61,7 +61,7 @@ export default function DuniaSection({ data }: { data: any }) {
             return (
               <div
                 key={post.id}
-                className={`dark:border-t dark:border-gray-800 py-3 ${idx === 0 ? 'pt-0' : ''}`}
+                className={`dark:border-t border-gray-200 dark:border-gray-800 py-3 ${idx === 0 ? 'pt-0' : ''}`}
               >
                 <Link href={`/posts/${post.slug}`} className="group flex gap-3 items-start">
                   <div className="flex-1">

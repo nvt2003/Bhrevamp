@@ -53,50 +53,51 @@ export default function Footer({ data }: { data: any }) {
               />
             )}
           </div>
+          <div className="flex gap-2">
+            {/* Social Icons */}
+            <div className="flex items-center gap-2">
+              {socialLinks?.map((item: any, idx: number) => {
+                const IconComponent = Icons[item.platform as keyof typeof Icons]
+                return (
+                  <a
+                    key={idx}
+                    href={item.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={item.platform}
+                    className="w-9 h-9 rounded-full bg-neutral-700 hover:bg-neutral-600 text-white flex items-center justify-center transition-colors"
+                  >
+                    {IconComponent ? <IconComponent /> : null}
+                  </a>
+                )
+              })}
+            </div>
 
-          {/* Social Icons */}
-          <div className="flex items-center gap-2">
-            {socialLinks?.map((item: any, idx: number) => {
-              const IconComponent = Icons[item.platform as keyof typeof Icons]
-              return (
-                <a
-                  key={idx}
-                  href={item.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label={item.platform}
-                  className="w-9 h-9 rounded-full bg-neutral-700 hover:bg-neutral-600 text-white flex items-center justify-center transition-colors"
-                >
-                  {IconComponent ? <IconComponent /> : null}
+            {/* Mobile App Badges */}
+            <div className="flex items-center gap-3">
+              {appStoreLinks?.appStoreUrl && (
+                <a href={appStoreLinks.appStoreUrl} target="_blank" rel="noreferrer">
+                  <Image
+                    src="/assets/app-store-badge.png"
+                    alt="Download on App Store"
+                    width={135}
+                    height={40}
+                    className="h-10 w-auto"
+                  />
                 </a>
-              )
-            })}
-          </div>
-
-          {/* Mobile App Badges */}
-          <div className="flex items-center gap-3">
-            {appStoreLinks?.appStoreUrl && (
-              <a href={appStoreLinks.appStoreUrl} target="_blank" rel="noreferrer">
-                <Image
-                  src="/assets/app-store-badge.png"
-                  alt="Download on App Store"
-                  width={135}
-                  height={40}
-                  className="h-10 w-auto"
-                />
-              </a>
-            )}
-            {appStoreLinks?.googlePlayUrl && (
-              <a href={appStoreLinks.googlePlayUrl} target="_blank" rel="noreferrer">
-                <Image
-                  src="/assets/google-play-badge.png"
-                  alt="Get it on Google Play"
-                  width={135}
-                  height={40}
-                  className="h-10 w-auto"
-                />
-              </a>
-            )}
+              )}
+              {appStoreLinks?.googlePlayUrl && (
+                <a href={appStoreLinks.googlePlayUrl} target="_blank" rel="noreferrer">
+                  <Image
+                    src="/assets/google-play-badge.png"
+                    alt="Get it on Google Play"
+                    width={135}
+                    height={40}
+                    className="h-10 w-auto"
+                  />
+                </a>
+              )}
+            </div>
           </div>
         </div>
 

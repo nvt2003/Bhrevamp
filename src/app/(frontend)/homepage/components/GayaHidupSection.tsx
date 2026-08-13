@@ -33,7 +33,7 @@ export default function GayaHidupSection({ data }: { data: any }) {
                   alt={featuredPost.title}
                   fill
                   loading="lazy"
-                  className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  className="max-w-[250px] aspect-[250/150] object-cover group-hover:scale-105 transition-transform duration-300"
                 />
               )}
             </div>
@@ -51,7 +51,7 @@ export default function GayaHidupSection({ data }: { data: any }) {
       )}
 
       {/* 4 Bài Nhỏ Phía Dưới (Danh sách xếp dọc) */}
-      <div className="border-t dark:border-gray-800 pt-2 flex flex-col divide-y divide-gray-200">
+      <div className="border-t border-gray-200 dark:border-gray-800 pt-2 flex flex-col divide-y divide-gray-200">
         {subPosts.map((post: any) => {
           if (typeof post !== 'object') return null
           return (
