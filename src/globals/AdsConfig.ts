@@ -1,4 +1,4 @@
-import { GlobalConfig } from 'payload/types'
+import { GlobalConfig } from 'payload'
 
 export const AdsConfig: GlobalConfig = {
   slug: 'ads-config',
@@ -19,7 +19,7 @@ export const AdsConfig: GlobalConfig = {
               type: 'group',
               label: 'Ad 1',
               fields: [
-                { name: 'active', type: 'checkbox', defaultValue: true },
+                { name: 'active', type: 'checkbox', defaultValue: false },
                 { name: 'imageUrl', type: 'text', label: 'Image' },
                 { name: 'link', type: 'text', label: 'Url' },
                 {
@@ -35,7 +35,7 @@ export const AdsConfig: GlobalConfig = {
               type: 'group',
               label: 'Ad 2',
               fields: [
-                { name: 'active', type: 'checkbox', defaultValue: true },
+                { name: 'active', type: 'checkbox', defaultValue: false },
                 { name: 'imageUrl', type: 'text', label: 'Image' },
                 { name: 'link', type: 'text', label: 'Url' },
                 {
@@ -51,7 +51,7 @@ export const AdsConfig: GlobalConfig = {
               type: 'group',
               label: 'Ad 3',
               fields: [
-                { name: 'active', type: 'checkbox', defaultValue: true },
+                { name: 'active', type: 'checkbox', defaultValue: false },
                 { name: 'imageUrl', type: 'text', label: 'Image' },
                 { name: 'link', type: 'text', label: 'Url' },
                 {
@@ -74,7 +74,7 @@ export const AdsConfig: GlobalConfig = {
               type: 'group',
               label: '',
               fields: [
-                { name: 'active', type: 'checkbox', defaultValue: true },
+                { name: 'active', type: 'checkbox', defaultValue: false },
                 { name: 'imageUrl', type: 'text', label: 'Image' },
                 { name: 'link', type: 'text', label: 'Url' },
                 {
@@ -90,7 +90,7 @@ export const AdsConfig: GlobalConfig = {
               type: 'group',
               label: 'Mobile Sticky Leaderboard',
               fields: [
-                { name: 'active', type: 'checkbox', defaultValue: true },
+                { name: 'active', type: 'checkbox', defaultValue: false },
                 { name: 'imageUrl', type: 'text' },
                 { name: 'link', type: 'text' },
                 { name: 'code', type: 'code', admin: { language: 'html' } },
@@ -101,7 +101,7 @@ export const AdsConfig: GlobalConfig = {
               type: 'group',
               label: 'Mobile Banner A',
               fields: [
-                { name: 'active', type: 'checkbox', defaultValue: true },
+                { name: 'active', type: 'checkbox', defaultValue: false },
                 { name: 'imageUrl', type: 'text' },
                 { name: 'link', type: 'text' },
                 { name: 'code', type: 'code', admin: { language: 'html' } },
@@ -112,7 +112,7 @@ export const AdsConfig: GlobalConfig = {
               type: 'group',
               label: 'Mobile Banner B',
               fields: [
-                { name: 'active', type: 'checkbox', defaultValue: true },
+                { name: 'active', type: 'checkbox', defaultValue: false },
                 { name: 'imageUrl', type: 'text' },
                 { name: 'link', type: 'text' },
                 { name: 'code', type: 'code', admin: { language: 'html' } },
@@ -123,7 +123,7 @@ export const AdsConfig: GlobalConfig = {
               type: 'group',
               label: '',
               fields: [
-                { name: 'active', type: 'checkbox', defaultValue: true },
+                { name: 'active', type: 'checkbox', defaultValue: false },
                 { name: 'imageUrl', type: 'text', label: 'Image' },
                 { name: 'link', type: 'text', label: 'Url' },
                 {
