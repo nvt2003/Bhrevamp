@@ -90,7 +90,7 @@ export default function Header() {
                 MEDIA RUJUKAN MASSA
               </span>
             </div>
-            <p className="text-xs font-medium text-gray-60 mt-0.5">
+            <p className="text-xs font-bold text-gray-60 mt-0.5">
               Portal berita dan akhbar No. 1 di Malaysia
             </p>
           </div>
