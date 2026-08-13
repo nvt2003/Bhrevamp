@@ -17,7 +17,7 @@ export default function SidebarTop({ terkini, trending }: { terkini: any[]; tren
             <div key={item.id} className="py-3 flex gap-3 group cursor-pointer items-start">
               {/* Tiêu đề & thời gian */}
               <div className="flex-1 min-w-0 pr-1">
-                <h3 className="text-sm font-semibold text-gray-900 group-hover:text-[#D81B50] leading-snug line-clamp-3">
+                <h3 className="text-sm font-semibold text-gray-900  dark:text-white group-hover:text-[#D81B50] leading-snug line-clamp-3">
                   {item.title}
                 </h3>
                 <span className="text-xs text-gray-400 mt-2 block">
@@ -53,13 +53,13 @@ export default function SidebarTop({ terkini, trending }: { terkini: any[]; tren
           {trending?.map((item, index) => (
             <div key={item.id} className="py-3 flex items-start gap-4 group cursor-pointer">
               {/* Số thứ tự Trending lớn */}
-              <span className="text-3xl font-black text-black group-hover:text-[#D81B50] leading-none shrink-0 w-6 pt-0.5">
+              <span className="text-3xl font-black text-black  dark:text-white group-hover:text-[#D81B50] leading-none shrink-0 w-6 pt-0.5">
                 {index + 1}
               </span>
 
               {/* Tiêu đề & thời gian */}
               <div className="flex-1 min-w-0">
-                <h3 className="text-sm font-semibold text-gray-900 group-hover:text-[#D81B50] leading-snug line-clamp-3">
+                <h3 className="text-sm font-semibold text-gray-900 group-hover:text-  dark:text-white [#D81B50] leading-snug line-clamp-3">
                   {item.title}
                 </h3>
                 <span className="text-xs text-gray-400 mt-2 block">

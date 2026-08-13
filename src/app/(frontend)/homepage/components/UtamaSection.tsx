@@ -63,7 +63,7 @@ export default function UtamaSection({ data }: { data: any }) {
                 </span>
               </div>
 
-              <h1 className="text-xl md:text-2xl font-bold leading-tight mb-2 hover:text-[#D81B50] cursor-pointer">
+              <h1 className="text-xl md:text-2xl font-bold  dark:text-white leading-tight mb-2 hover:text-[#D81B50] cursor-pointer">
                 {featuredMain.title}
               </h1>
 
@@ -76,7 +76,7 @@ export default function UtamaSection({ data }: { data: any }) {
             {featuredBullet?.map((bullet: any) => (
               <div key={bullet.id} className="py-3 flex items-start gap-3 group cursor-pointer">
                 <span className="w-2.5 h-2.5 bg-[#D81B50] mt-1.5 shrink-0 inline-block"></span>
-                <p className="text-sm font-semibold text-gray-800 group-hover:text-[#D81B50] transition-colors leading-snug">
+                <p className="text-sm font-semibold text-gray-800 dark:text-white group-hover:text-[#D81B50] transition-colors leading-snug">
                   {bullet.title}
                 </p>
               </div>
@@ -85,7 +85,7 @@ export default function UtamaSection({ data }: { data: any }) {
         </div>
         {/* Grid Posts Section - Có Fallback xử lý lỗi ảnh */}
         {gridPosts && gridPosts.length > 0 && (
-          <div className="w-full md:col-span-12 mt-10 pt-6 border-t border-gray-200">
+          <div className="w-full md:col-span-12 mt-10 pt-6 border-t border-gray-200 dark:border-black">
             <div className="w-full grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-8">
               {gridPosts.map((item: any) => (
                 <div key={item.id} className="w-full">
@@ -104,7 +104,7 @@ export default function UtamaSection({ data }: { data: any }) {
                       {formatRelativeTime(featuredMain.publishedAt)}
                     </div>
                   </div>
-                  <p className=" font-semibold text-gray-800 group-hover:text-[#D81B50] transition-colors leading-snug">
+                  <p className=" font-semibold text-gray-800  dark:text-white group-hover:text-[#D81B50] transition-colors leading-snug">
                     {item.title}
                   </p>
                 </div>
