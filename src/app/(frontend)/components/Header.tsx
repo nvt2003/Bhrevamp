@@ -91,7 +91,7 @@ export default function Header() {
               </span>
             </div>
             <p className="text-xs font-medium text-gray-60 mt-0.5">
-              Portal berita dan akhbar No. 1
+              Portal berita dan akhbar No. 1 di Malaysia
             </p>
           </div>
         </Link>
