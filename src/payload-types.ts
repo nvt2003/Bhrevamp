@@ -718,24 +718,68 @@ export interface AdsConfig {
     imageUrl?: string | null;
     link?: string | null;
     code?: string | null;
+    sizePreset?:
+      | (
+          | 'max-w-[970px] aspect-[970/90]'
+          | 'max-w-[300px] aspect-[300/250]'
+          | 'max-w-[320px] aspect-[320/50]'
+          | 'max-w-[320px] aspect-[320/100]'
+          | 'custom'
+        )
+      | null;
+    customWidth?: number | null;
+    customHeight?: number | null;
   };
   Ad_Before_Terkini?: {
     active?: boolean | null;
     imageUrl?: string | null;
     link?: string | null;
     code?: string | null;
+    sizePreset?:
+      | (
+          | 'max-w-[970px] aspect-[970/90]'
+          | 'max-w-[300px] aspect-[300/250]'
+          | 'max-w-[320px] aspect-[320/50]'
+          | 'max-w-[320px] aspect-[320/100]'
+          | 'custom'
+        )
+      | null;
+    customWidth?: number | null;
+    customHeight?: number | null;
   };
   Ad_Before_Poscast?: {
     active?: boolean | null;
     imageUrl?: string | null;
     link?: string | null;
     code?: string | null;
+    sizePreset?:
+      | (
+          | 'max-w-[970px] aspect-[970/90]'
+          | 'max-w-[300px] aspect-[300/250]'
+          | 'max-w-[320px] aspect-[320/50]'
+          | 'max-w-[320px] aspect-[320/100]'
+          | 'custom'
+        )
+      | null;
+    customWidth?: number | null;
+    customHeight?: number | null;
   };
   BH_320x50?: {
     active?: boolean | null;
     imageUrl?: string | null;
     link?: string | null;
     code?: string | null;
+    sizePreset?:
+      | (
+          | 'max-w-[970px] aspect-[970/90]'
+          | 'max-w-[300px] aspect-[300/250]'
+          | 'max-w-[320px] aspect-[320/50]'
+          | 'max-w-[320px] aspect-[320/100]'
+          | 'custom'
+        )
+      | null;
+    customWidth?: number | null;
+    customHeight?: number | null;
   };
   BH_HP_Sticky_Leaderboard?: {
     active?: boolean | null;
@@ -760,6 +804,17 @@ export interface AdsConfig {
     imageUrl?: string | null;
     link?: string | null;
     code?: string | null;
+    sizePreset?:
+      | (
+          | 'max-w-[970px] aspect-[970/90]'
+          | 'max-w-[300px] aspect-[300/250]'
+          | 'max-w-[320px] aspect-[320/50]'
+          | 'max-w-[320px] aspect-[320/100]'
+          | 'custom'
+        )
+      | null;
+    customWidth?: number | null;
+    customHeight?: number | null;
   };
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -966,6 +1021,9 @@ export interface AdsConfigSelect<T extends boolean = true> {
         imageUrl?: T;
         link?: T;
         code?: T;
+        sizePreset?: T;
+        customWidth?: T;
+        customHeight?: T;
       };
   Ad_Before_Terkini?:
     | T
@@ -974,6 +1032,9 @@ export interface AdsConfigSelect<T extends boolean = true> {
         imageUrl?: T;
         link?: T;
         code?: T;
+        sizePreset?: T;
+        customWidth?: T;
+        customHeight?: T;
       };
   Ad_Before_Poscast?:
     | T
@@ -982,6 +1043,9 @@ export interface AdsConfigSelect<T extends boolean = true> {
         imageUrl?: T;
         link?: T;
         code?: T;
+        sizePreset?: T;
+        customWidth?: T;
+        customHeight?: T;
       };
   BH_320x50?:
     | T
@@ -990,6 +1054,9 @@ export interface AdsConfigSelect<T extends boolean = true> {
         imageUrl?: T;
         link?: T;
         code?: T;
+        sizePreset?: T;
+        customWidth?: T;
+        customHeight?: T;
       };
   BH_HP_Sticky_Leaderboard?:
     | T
@@ -1022,6 +1089,9 @@ export interface AdsConfigSelect<T extends boolean = true> {
         imageUrl?: T;
         link?: T;
         code?: T;
+        sizePreset?: T;
+        customWidth?: T;
+        customHeight?: T;
       };
   updatedAt?: T;
   createdAt?: T;

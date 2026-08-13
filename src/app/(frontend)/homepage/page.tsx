@@ -169,13 +169,10 @@ export default async function HomePage() {
           </div>
           <div className="flex-[1] min-w-0">
             <div className="flex items-center justify-center">
-              <div className="w-full max-w-[300px] aspect-[300/225] bg-blue-200 text-black flex items-center justify-center">
-                Ad 300x225
-              </div>
+              <AdSlot pcAd={adsData?.Ad_Before_Poscast} className="my-6" />
             </div>
             {/* Postcast */}
             <div>
-              <AdSlot pcAd={adsData?.Ad_Before_Poscast} className="my-6" />
               <PodcastSection data={podcatData} />
             </div>
           </div>
