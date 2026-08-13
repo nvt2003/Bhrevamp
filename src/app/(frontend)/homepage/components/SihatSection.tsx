@@ -22,13 +22,13 @@ export default function SihatSection({ data }: { data: any }) {
   return (
     <section className="my-8 w-full font-sans">
       {/* 1. Header */}
-      <div className="flex items-center justify-between border-b pb-2 mb-4">
-        <h2 className="text-2xl font-bold border-b-2 border-red-600 -mb-2 pb-2 inline-block text-gray-900">
+      <div className="flex items-center justify-between pb-2 mb-4">
+        <h2 className="text-2xl font-bold border-b-2 border-red-600 -mb-2 pb-2 inline-block text-gray-900  dark:text-white">
           {title}
         </h2>
         <Link
           href={moreLink}
-          className="text-sm font-semibold text-gray-900 hover:text-red-600 flex items-center transition-colors"
+          className="text-sm font-semibold text-gray-900 dark:text-white hover:text-red-600 flex items-center transition-colors"
         >
           {moreText} <span className="ml-1 text-red-600 font-bold">&gt;</span>
         </Link>
@@ -63,7 +63,7 @@ export default function SihatSection({ data }: { data: any }) {
             </div>
 
             {/* Tiêu đề bài chính */}
-            <h3 className="text-base font-bold text-gray-900 leading-snug group-hover:underline line-clamp-2">
+            <h3 className="text-base font-bold text-gray-900  dark:text-white leading-snug group-hover:underline line-clamp-2">
               {featuredPost.title}
             </h3>
           </Link>
@@ -71,7 +71,7 @@ export default function SihatSection({ data }: { data: any }) {
       )}
 
       {/* 3. Danh sách các bài phụ nằm ngang phía dưới (Sub-posts) */}
-      <div className="divide-y divide-gray-200 border-t border-gray-200">
+      <div className="divide-y divide-gray-200 border-t border-gray-800">
         {posts.map((post: any, index: number) => {
           if (typeof post !== 'object') return null
           const imgUrl = typeof post.featuredImage === 'object' ? post.featuredImage?.url : null
