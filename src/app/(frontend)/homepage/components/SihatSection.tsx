@@ -45,7 +45,7 @@ export default function SihatSection({ data }: { data: any }) {
                   src={featuredImgUrl}
                   alt={featuredPost.title || title}
                   fill
-                  className="max-w-[250px] aspect-[250/150] object-cover group-hover:scale-105 transition-transform duration-300"
+                  className="relative aspect-[16/10] w-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
               )}
             </div>
