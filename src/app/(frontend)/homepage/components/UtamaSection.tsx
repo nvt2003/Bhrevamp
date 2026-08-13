@@ -51,7 +51,7 @@ export default function UtamaSection({ data, adsData }: { data: any; adsData?: a
         <AdSlot mobileAd={adsData} />
         {gridPosts && gridPosts.length > 0 && (
           <div className="mt-8 border-t border-gray-200 pt-6 dark:border-gray-800">
-            <div className="grid grid-cols-2 gap-x-4 gap-y-6">
+            <div className="grid grid-cols-1 gap-x-4 gap-y-6">
               {gridPosts.slice(0, 5).map((item: any) => (
                 <div key={item.id} className="min-w-0">
                   <img
@@ -171,9 +171,7 @@ export default function UtamaSection({ data, adsData }: { data: any; adsData?: a
                       <div className="text-[#D81B50] font-bold uppercase tracking-wide">
                         {item.category?.name}
                       </div>
-                      <div className="text-gray-300">
-                        {formatRelativeTime(featuredMain.publishedAt)}
-                      </div>
+                      <div className="text-gray-300">{formatRelativeTime(item.publishedAt)}</div>
                     </div>
                     <p className=" font-semibold text-gray-800  dark:text-white group-hover:text-[#D81B50] transition-colors leading-snug">
                       {item.title}
