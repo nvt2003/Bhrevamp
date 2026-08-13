@@ -70,7 +70,6 @@ export interface Config {
     users: User;
     media: Media;
     categories: Category;
-    utama: Utama;
     sliders: Slider;
     trending: Trending;
     posts: Post;
@@ -84,7 +83,6 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
-    utama: UtamaSelect<false> | UtamaSelect<true>;
     sliders: SlidersSelect<false> | SlidersSelect<true>;
     trending: TrendingSelect<false> | TrendingSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
@@ -100,10 +98,12 @@ export interface Config {
   globals: {
     'home-page': HomePage;
     footer: Footer;
+    'ads-config': AdsConfig;
   };
   globalsSelect: {
     'home-page': HomePageSelect<false> | HomePageSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
+    'ads-config': AdsConfigSelect<false> | AdsConfigSelect<true>;
   };
   locale: null;
   widgets: {
@@ -216,24 +216,6 @@ export interface Category {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "utama".
- */
-export interface Utama {
-  id: number;
-  title: string;
-  slug: string;
-  excerpt?: string | null;
-  featuredImage?: (number | null) | Media;
-  category: number | Category;
-  isFeatured?: boolean | null;
-  publishedAt?: string | null;
-  position?: ('featured_main' | 'featured_side' | 'featured_bullet' | 'grid') | null;
-  relatedPosts?: (number | Utama)[] | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "sliders".
  */
 export interface Slider {
@@ -337,10 +319,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'categories';
         value: number | Category;
-      } | null)
-    | ({
-        relationTo: 'utama';
-        value: number | Utama;
       } | null)
     | ({
         relationTo: 'sliders';
@@ -477,23 +455,6 @@ export interface MediaSelect<T extends boolean = true> {
 export interface CategoriesSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "utama_select".
- */
-export interface UtamaSelect<T extends boolean = true> {
-  title?: T;
-  slug?: T;
-  excerpt?: T;
-  featuredImage?: T;
-  category?: T;
-  isFeatured?: T;
-  publishedAt?: T;
-  position?: T;
-  relatedPosts?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -748,6 +709,63 @@ export interface Footer {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ads-config".
+ */
+export interface AdsConfig {
+  id: number;
+  BH?: {
+    active?: boolean | null;
+    imageUrl?: string | null;
+    link?: string | null;
+    code?: string | null;
+  };
+  Ad_Before_Terkini?: {
+    active?: boolean | null;
+    imageUrl?: string | null;
+    link?: string | null;
+    code?: string | null;
+  };
+  Ad_Before_Poscast?: {
+    active?: boolean | null;
+    imageUrl?: string | null;
+    link?: string | null;
+    code?: string | null;
+  };
+  BH_320x50?: {
+    active?: boolean | null;
+    imageUrl?: string | null;
+    link?: string | null;
+    code?: string | null;
+  };
+  BH_HP_Sticky_Leaderboard?: {
+    active?: boolean | null;
+    imageUrl?: string | null;
+    link?: string | null;
+    code?: string | null;
+  };
+  BH_Mobile_Banner?: {
+    active?: boolean | null;
+    imageUrl?: string | null;
+    link?: string | null;
+    code?: string | null;
+  };
+  BH_Mobile_Banner_b?: {
+    active?: boolean | null;
+    imageUrl?: string | null;
+    link?: string | null;
+    code?: string | null;
+  };
+  BH_Multisize_HouseAds?: {
+    active?: boolean | null;
+    imageUrl?: string | null;
+    link?: string | null;
+    code?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "home-page_select".
  */
 export interface HomePageSelect<T extends boolean = true> {
@@ -931,6 +949,79 @@ export interface FooterSelect<T extends boolean = true> {
         label?: T;
         url?: T;
         id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ads-config_select".
+ */
+export interface AdsConfigSelect<T extends boolean = true> {
+  BH?:
+    | T
+    | {
+        active?: T;
+        imageUrl?: T;
+        link?: T;
+        code?: T;
+      };
+  Ad_Before_Terkini?:
+    | T
+    | {
+        active?: T;
+        imageUrl?: T;
+        link?: T;
+        code?: T;
+      };
+  Ad_Before_Poscast?:
+    | T
+    | {
+        active?: T;
+        imageUrl?: T;
+        link?: T;
+        code?: T;
+      };
+  BH_320x50?:
+    | T
+    | {
+        active?: T;
+        imageUrl?: T;
+        link?: T;
+        code?: T;
+      };
+  BH_HP_Sticky_Leaderboard?:
+    | T
+    | {
+        active?: T;
+        imageUrl?: T;
+        link?: T;
+        code?: T;
+      };
+  BH_Mobile_Banner?:
+    | T
+    | {
+        active?: T;
+        imageUrl?: T;
+        link?: T;
+        code?: T;
+      };
+  BH_Mobile_Banner_b?:
+    | T
+    | {
+        active?: T;
+        imageUrl?: T;
+        link?: T;
+        code?: T;
+      };
+  BH_Multisize_HouseAds?:
+    | T
+    | {
+        active?: T;
+        imageUrl?: T;
+        link?: T;
+        code?: T;
       };
   updatedAt?: T;
   createdAt?: T;
