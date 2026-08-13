@@ -120,9 +120,9 @@ export default async function HomePage() {
           <AdSlot pcAd={adsData?.BH} mobileAd={adsData?.BH_320x50} className="my-6" />
         </div>
         {/* Utama */}
-        <div className="w-full flex gap-4 mt-6">
+        <div className="mt-6 flex w-full flex-col gap-4 md:flex-row">
           <div className="flex-[2] min-w-0">
-            <UtamaSection data={utamaData} />
+            <UtamaSection data={utamaData} adsData={adsData?.BH_Mobile_Banner} />
           </div>
           <div className="flex-[1] min-w-0">
             <AdSlot pcAd={adsData?.Ad_Before_Terkini} className="my-6" />

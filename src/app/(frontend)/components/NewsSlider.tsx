@@ -61,7 +61,7 @@ export default function NewsSlider({ sliders = [] }: { sliders?: any[] }) {
               }
             }}
             breakpoints={{
-              640: { slidesPerView: 2 },
+              640: { slidesPerView: 1.2 },
               1024: { slidesPerView: 3 },
               1280: { slidesPerView: 4 },
             }}

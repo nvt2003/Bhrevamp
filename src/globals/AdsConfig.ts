@@ -125,12 +125,7 @@ export const AdsConfig: GlobalConfig = {
               name: 'BH_Mobile_Banner',
               type: 'group',
               label: 'Mobile Banner A',
-              fields: [
-                { name: 'active', type: 'checkbox', defaultValue: false },
-                { name: 'imageUrl', type: 'text' },
-                { name: 'link', type: 'text' },
-                { name: 'code', type: 'code', admin: { language: 'html' } },
-              ],
+              fields: createAdFields('max-w-[320px] aspect-[320/100]'),
             },
             {
               name: 'BH_Mobile_Banner_b',
