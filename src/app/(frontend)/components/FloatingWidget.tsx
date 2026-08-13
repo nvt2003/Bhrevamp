@@ -12,15 +12,17 @@ export default function FloatingWidget() {
   if (!showVideo && !showBanner) return null
 
   return (
-    <div className="fixed top-50 right-6 z-50 flex flex-col items-end gap-5 max-w-[280px] sm:max-w-[320px]">
+    // <div className="fixed top-50 right-6 z-50 flex flex-col items-end gap-5 max-w-[280px] sm:max-w-[320px]">
+    <div className="fixed top-50 right-0 z-50 flex w-auto max-w-[calc(100vw-1rem)] flex-col items-end gap-5 overflow-visible sm:right-6">
       {/* ================= 1. POPUP VIDEO/THUMBNAIL (GÓC TRÊN) ================= */}
       {showVideo && (
-        <div className="relative group animate-fade-in">
+        // <div className="relative group animate-fade-in">
+        <div className="relative group w-[min(280px,calc(100vw-1rem))] max-w-full animate-fade-in">
           {/* Nút Đóng (X) màu xám viền trắng góc trên phải */}
           <button
             onClick={() => setShowVideo(false)}
             aria-label="Close video popup"
-            className="absolute -top-3 -right-3 z-10 w-7 h-7 bg-gray-600/90 hover:bg-gray-800 text-white rounded-full flex items-center justify-center border-2 border-white shadow-md transition-all scale-95 group-hover:scale-105"
+            className="absolute -top-0 -right-0 z-10 w-7 h-7 bg-gray-600/90 hover:bg-gray-800 text-white rounded-full flex items-center justify-center border-2 border-white shadow-md transition-all scale-95 group-hover:scale-105"
           >
             <X className="w-4 h-4 stroke-[3]" />
           </button>
@@ -48,7 +50,8 @@ export default function FloatingWidget() {
 
       {/* ================= 2. BANNER RINGKASAN BERITA (GÓC DƯỚI) ================= */}
       {showBanner && (
-        <div className="relative group animate-fade-in">
+        // <div className="relative group animate-fade-in">
+        <div className="relative group max-w-[calc(100vw-1rem)] animate-fade-in">
           {/* Nút Đóng (X) góc trên phải */}
           <button
             onClick={() => setShowBanner(false)}
