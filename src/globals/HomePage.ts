@@ -1,7 +1,7 @@
 import type { GlobalConfig } from 'payload'
 export const HomePage: GlobalConfig = {
   slug: 'home-page',
-  label: 'Trang Chủ',
+  label: 'Homepage',
   access: { read: () => true },
   fields: [
     //Danh sách Trending Keywords

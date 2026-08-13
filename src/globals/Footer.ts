@@ -2,7 +2,7 @@ import { GlobalConfig } from 'payload'
 
 export const Footer: GlobalConfig = {
   slug: 'footer',
-  label: 'Footer Configuration',
+  label: 'Footer Settings',
   access: {
     read: () => true,
   },

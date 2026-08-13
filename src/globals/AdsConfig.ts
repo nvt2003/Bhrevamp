@@ -67,7 +67,7 @@ const createAdFields = (defaultSizeValue: string): Field[] => [
 ]
 export const AdsConfig: GlobalConfig = {
   slug: 'ads-config',
-  label: 'Quản lý Quảng cáo',
+  label: 'Ads Settings',
   access: {
     read: () => true,
   },
