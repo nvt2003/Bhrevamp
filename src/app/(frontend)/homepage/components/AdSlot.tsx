@@ -98,7 +98,7 @@ export default function AdSlot({
   }
 
   return (
-    <div className={`ad-slot-wrapper ${className}`}>
+    <div className={`w-full ad-slot-wrapper ${className}`}>
       {/* PC */}
       <div className="hidden md:flex justify-center items-center w-full">
         {renderAdContent(pcAd)}
