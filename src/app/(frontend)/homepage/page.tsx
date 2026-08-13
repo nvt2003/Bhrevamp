@@ -22,6 +22,7 @@ import PodcastSection from './components/PodcastSection'
 import BhTvSection from './components/BhTvSection'
 import VideoTerkiniSection from './components/VideoTerkiniSection'
 import SihatSection from './components/SihatSection'
+import AdSlot from './components/AdSlot'
 
 export default async function HomePage() {
   const payload = await getPayload({ config: configPromise })
@@ -112,6 +113,8 @@ export default async function HomePage() {
   const podcatData = homeData?.podcastSection
   const bhTvData = homeData?.bhTvSection
   const videoTerkiniData = homeData?.videoTerkiniSection
+
+  const adsData = await payload.findGlobal({ slug: 'ads-config' as any })
   return (
     <div className="min-h-screen">
       {/* Slide bài viết trượt ngang */}
@@ -121,9 +124,7 @@ export default async function HomePage() {
       {/* Các phần nội dung khác của trang chủ */}
       <div className="max-w-7xl mx-auto px-4 py-6">
         <div className="w-full flex justify-center">
-          <div className="w-full max-w-[970px] aspect-[970/90] bg-blue-200 text-black flex items-center justify-center">
-            Ad 970x90
-          </div>
+          <AdSlot pcAd={adsData?.BH} mobileAd={adsData?.BH_320x50} className="my-6" />
         </div>
         {/* Utama */}
         <div className="w-full flex gap-4 mt-6">
@@ -131,6 +132,7 @@ export default async function HomePage() {
             <UtamaSection data={utamaData} />
           </div>
           <div className="flex-[1] min-w-0">
+            <AdSlot pcAd={adsData?.Ad_Before_Terkini} className="my-6" />
             <SidebarTop terkini={terkiniResponse.docs} trending={trendingResponse.docs} />
           </div>
         </div>
@@ -173,6 +175,7 @@ export default async function HomePage() {
             </div>
             {/* Postcast */}
             <div>
+              <AdSlot pcAd={adsData?.Ad_Before_Poscast} className="my-6" />
               <PodcastSection data={podcatData} />
             </div>
           </div>
