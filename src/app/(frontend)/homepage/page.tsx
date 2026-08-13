@@ -31,11 +31,10 @@ export default async function HomePage() {
     slug: 'header',
     depth: 2,
   })
-  const isHeaderEmpty = !headerData?.sliders
+  const isHeaderEmpty = headerData?.sliders
   if (isHeaderEmpty)
     try {
       await seedHeader(payload)
-      console.log('Seed dữ liệu header hoàn tất!')
     } catch (error) {
       console.log('Lỗi khi seed dữ liệu header', error)
     }
@@ -60,21 +59,6 @@ export default async function HomePage() {
       payload.logger.error('Lỗi khi tự động seed')
     }
   }
-  // // Truy vấn lấy các item trong collection Sliders, sắp xếp theo thứ tự (order)
-  // const sliderRes = await payload.find({
-  //   collection: 'sliders',
-  //   sort: 'order', // Sắp xếp theo trường order tăng dần
-  //   depth: 1, // Để lấy thông tin chi tiết của ảnh Upload
-  // })
-  // // Format lại dữ liệu cho gọn gàng để truyền xuống Client Component
-  // const slides = sliderRes.docs.map((doc: any) => ({
-  //   id: doc.id,
-  //   title: doc.title,
-  //   category: doc.category,
-  //   slug: doc.slug,
-  //   // Lấy URL ảnh từ quan hệ media
-  //   imageUrl: typeof doc.image === 'object' && doc.image?.url ? doc.image.url : '/placeholder.jpg',
-  // }))
 
   // Fetch dữ liệu Global Trang Chủ
   const homeData = await payload.findGlobal({
@@ -127,7 +111,7 @@ export default async function HomePage() {
   return (
     <div className="min-h-screen">
       {/* Slide bài viết trượt ngang */}
-      <NewsSlider sliders={sliderData} />
+      <NewsSlider sliders={headerData?.sliders ?? []} />
       <TrendingBar data={TrendingInTopData} />
       <FloatingWidget />
       {/* Các phần nội dung khác của trang chủ */}

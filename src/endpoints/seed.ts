@@ -66,6 +66,29 @@ const createDummyContent = (text: string) => ({
   },
 })
 
+const makeSlug = (text: string) => {
+  const baseSlug = text
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9 -]/g, '')
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+
+  // Thêm suffix ngắn để đảm bảo unique tuyệt đối khi Seed
+  return `${baseSlug}-${Math.floor(1000 + Math.random() * 9000)}`
+}
+
+const categoriesToSeed = [
+  { name: 'NASIONAL', slug: 'nasional' },
+  { name: 'WILAYAH', slug: 'wilayah' },
+  { name: 'KES', slug: 'kes' },
+  { name: 'SUKAN', slug: 'sukan' },
+  { name: 'Rias', slug: 'rias' },
+  { name: 'Wanita', slug: 'wanita' },
+  { name: 'Hiburan', slug: 'hiburan' },
+]
 export const seedPosts = async (payload: Payload) => {
   // 1. Kiểm tra xem posts đã tồn tại chưa
   const existingPosts = await payload.find({
@@ -77,32 +100,8 @@ export const seedPosts = async (payload: Payload) => {
     console.log('Dữ liệu Posts đã tồn tại, bỏ qua Seed.')
     return
   }
-  // Helper tạo slug không bao giờ trùng
-  const makeSlug = (text: string) => {
-    const baseSlug = text
-      .toLowerCase()
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .replace(/[^a-z0-9 -]/g, '')
-      .trim()
-      .replace(/\s+/g, '-')
-      .replace(/-+/g, '-')
 
-    // Thêm suffix ngắn để đảm bảo unique tuyệt đối khi Seed
-    return `${baseSlug}-${Math.floor(1000 + Math.random() * 9000)}`
-  }
   console.log('Đang khởi tạo dữ liệu mẫu cho Categories và Posts...')
-
-  // 2. Tạo hoặc lấy Categories
-  const categoriesToSeed = [
-    { name: 'NASIONAL', slug: 'nasional' },
-    { name: 'WILAYAH', slug: 'wilayah' },
-    { name: 'KES', slug: 'kes' },
-    { name: 'SUKAN', slug: 'sukan' },
-    { name: 'Rias', slug: 'rias' },
-    { name: 'Wanita', slug: 'wanita' },
-    { name: 'Hiburan', slug: 'hiburan' },
-  ]
 
   const categoryMap: Record<string, number> = {}
 
@@ -1427,7 +1426,7 @@ export const seedPosts = async (payload: Payload) => {
         subPosts: createdSihatSubIds,
       },
 
-      trending: processedTrending,
+      trending_in_top: processedTrending,
     },
   })
   console.log('Khởi tạo toàn bộ dữ liệu Posts thành công!')
@@ -1499,7 +1498,22 @@ export async function seedFooter(payload: Payload) {
 
 export async function seedHeader(payload: Payload) {
   console.log('Đang cập nhật dữ liệu Header Global...')
+  const categoryMap: Record<string, number> = {}
 
+  for (const cat of categoriesToSeed) {
+    const existingCategory = await payload.find({
+      collection: 'categories',
+      where: {
+        slug: {
+          equals: cat.slug,
+        },
+      },
+    })
+
+    if (existingCategory.docs.length > 0) {
+      categoryMap[cat.slug] = Number(existingCategory.docs[0].id)
+    }
+  }
   // 1. Chuẩn bị danh sách Sliders xuất hiện trên thanh Carousel Header
   const slidersData = [
     {
@@ -1527,28 +1541,41 @@ export async function seedHeader(payload: Payload) {
       imgSeed: 'gaza-war',
     },
   ]
+  const createdSliders = []
 
-  // Upload ảnh và map lại danh sách slider hoàn chỉnh
-  const processedSliders = []
   for (let i = 0; i < slidersData.length; i++) {
     const item = slidersData[i]
 
-    // Upload media
+    console.log(`Đang tạo Slider ${i + 1}: ${item.title}`)
+
     const imgId = await createMediaFromUrl(
       payload,
-      `https://picsum.photos/seed/${item.imgSeed}/400/250`,
+      `https://picsum.photos/seed/${item.imgSeed}/1200/600`,
       `header-slider-${i}.jpg`,
       item.title,
     )
 
-    processedSliders.push({
+    if (imgId === null) {
+      console.error(`Không thể tạo image cho slider: ${item.title}`)
+      continue
+    }
+    createdSliders.push({
       title: item.title,
       category: item.category,
       slug: item.slug,
       image: imgId,
-      order: i + 1,
+      order: i,
     })
   }
+
+  // 3. Update Global Header
+  await payload.updateGlobal({
+    slug: 'header',
+    data: {
+      sliders: createdSliders,
+    },
+    overrideAccess: true,
+  })
 
   console.log('Cập nhật dữ liệu Header Global thành công!')
 }
