@@ -75,7 +75,7 @@ export default function Header() {
   }
 
   return (
-    <header className="w-full border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 transition-colors duration-200">
+    <header className="w-full border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-[#444] transition-colors duration-200">
       <div className="max-w-7xl mx-auto px-4 py-3 flex flex-col md:flex-row items-center justify-between gap-4">
         {/* LOGO PLACEHOLDER */}
         <Link href="/" className="flex items-center gap-3 group">
@@ -86,11 +86,11 @@ export default function Header() {
 
           <div className="flex flex-col">
             <div className="flex items-center gap-2">
-              <span className="font-sans font-black text-xl md:text-2xl dark:text-white uppercase tracking-tight text-[#D81B50]">
+              <span className="font-sans font-black text-xl md:text-2xl uppercase tracking-tight text-[#D81B50]">
                 MEDIA RUJUKAN MASSA
               </span>
             </div>
-            <p className="text-xs font-medium text-gray-600 dark:text-gray-400 mt-0.5">
+            <p className="text-xs font-medium text-gray-60 mt-0.5">
               Portal berita dan akhbar No. 1
             </p>
           </div>
@@ -107,37 +107,38 @@ export default function Header() {
             <div className="flex items-center gap-1.5 text-gray-700 dark:text-gray-300">
               <a
                 href="#"
-                className="p-1.5 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-red-600 hover:text-white transition-colors"
+                className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-red-600 hover:text-white transition-colors"
               >
                 <FacebookIcon />
               </a>
               <a
                 href="#"
-                className="p-1.5 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-red-600 hover:text-white transition-colors"
+
+                className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-red-600 hover:text-white transition-colors"
               >
                 <XTwitterIcon />
               </a>
               <a
                 href="#"
-                className="p-1.5 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-red-600 hover:text-white transition-colors"
+                className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-red-600 hover:text-white transition-colors"
               >
                 <InstagramIcon />
               </a>
               <a
                 href="#"
-                className="p-1.5 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-red-600 hover:text-white transition-colors"
+                className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-red-600 hover:text-white transition-colors"
               >
                 <YoutubeIcon />
               </a>
               <a
                 href="#"
-                className="p-1.5 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-red-600 hover:text-white transition-colors"
+                className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-red-600 hover:text-white transition-colors"
               >
                 <LinkedinIcon />
               </a>
               <a
                 href="#"
-                className="p-1.5 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-red-600 hover:text-white transition-colors"
+                className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-red-600 hover:text-white transition-colors"
               >
                 <TikTokIcon />
               </a>

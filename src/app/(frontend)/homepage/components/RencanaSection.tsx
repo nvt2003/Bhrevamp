@@ -22,7 +22,7 @@ export default function RencanaSection({ data }: { data: any }) {
       {/* Main Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Cột Trái + Giữa: 2 Bài Ảnh Lớn (Chiếm 8/12 cột) */}
-        <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-2">
           {featuredPosts.map((post: any) => {
             if (typeof post !== 'object') return null
             return (
@@ -55,7 +55,7 @@ export default function RencanaSection({ data }: { data: any }) {
         </div>
 
         {/* Cột Phải: 4 Bài Dọc thumbnail nhỏ (Chiếm 4/12 cột) */}
-        <div className="lg:col-span-4 flex flex-col divide-y divide-gray-200">
+        <div className="lg:col-span-4 grid grid-cols-1 md:grid-cols-1 gap-2 divide-y divide-gray-200">
           {sidePosts.map((post: any, idx: number) => {
             if (typeof post !== 'object') return null
             return (

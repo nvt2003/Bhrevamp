@@ -1,7 +1,9 @@
 import React from 'react'
-import Header from '@/app/(frontend)/components/Header'
 import './styles.css'
-import Navbar from './components/Navbar'
+import HeaderResponsive from './components/HeaderResponsive'
+import { getPayload } from 'payload'
+import configPromise from '@payload-config'
+import Footer from './components/Footer'
 
 export const metadata = {
   description: 'A blank template using Payload in a Next.js app.',
@@ -10,13 +12,21 @@ export const metadata = {
 
 export default async function RootLayout(props: { children: React.ReactNode }) {
   const { children } = props
-
+  //Khởi tạo instance Local API
+  const payload = await getPayload({ config: configPromise })
+  //Query dữ liệu Global Footer
+  const footerData = await payload.findGlobal({
+    slug: 'footer',
+    // depth: 1, // Tăng depth nếu muốn tự động populate quan hệ (Media/Upload)
+  })
   return (
     <html lang="en">
       <body className="bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 min-h-screen">
-        <Header />
-        <Navbar />
+        {/* <Header />
+        <Navbar /> */}
+        <HeaderResponsive />
         <main>{children}</main>
+        <Footer data={footerData} />
       </body>
     </html>
   )

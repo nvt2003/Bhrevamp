@@ -1,9 +1,34 @@
 import type { GlobalConfig } from 'payload'
 export const HomePage: GlobalConfig = {
   slug: 'home-page',
-  label: 'Trang Chủ',
+  label: 'Homepage',
   access: { read: () => true },
   fields: [
+    //Danh sách Trending Keywords
+    {
+      name: 'trending_in_top',
+      type: 'array',
+      label: 'Trending Keywords',
+      labels: {
+        singular: 'Keyword',
+        plural: 'Keywords',
+      },
+      fields: [
+        {
+          name: 'keyword',
+          type: 'text',
+          label: 'Từ khóa',
+          required: true,
+        },
+        {
+          name: 'order',
+          type: 'number',
+          label: 'Thứ tự',
+          defaultValue: 0,
+        },
+      ],
+    },
+
     // -------------------------------------------------------------
     // KHỐI 1: UTAMA + SIDEBAR (TERKINI & TRENDING)
     // -------------------------------------------------------------

@@ -1,4 +1,5 @@
-import { Payload } from 'payload'
+import { getPayload, Payload } from 'payload'
+import configPromise from '@payload-config'
 
 // Helper function tải ảnh từ URL ngoài và tạo record trong collection 'media'
 const createMediaFromUrl = async (
@@ -64,6 +65,7 @@ const createDummyContent = (text: string) => ({
     version: 1,
   },
 })
+
 export const seedPosts = async (payload: Payload) => {
   // 1. Kiểm tra xem posts đã tồn tại chưa
   const existingPosts = await payload.find({
@@ -1331,6 +1333,15 @@ export const seedPosts = async (payload: Payload) => {
     }
   }
 
+  // --- Chuẩn bị danh sách Trending Keywords---
+  console.log('Chuẩn bị danh sách Trending Keywords...')
+  const trendingKeywords = ['Accounts', '1MDB scandal', 'Election 2024', 'Floods', 'New year 2025']
+
+  const processedTrending = trendingKeywords.map((keyword, index) => ({
+    keyword,
+    order: index + 1,
+  }))
+
   console.log('Đang liên kết dữ liệu vào Global HomePage...')
 
   await payload.updateGlobal({
@@ -1415,7 +1426,129 @@ export const seedPosts = async (payload: Payload) => {
         featuredPost: sihatMainId,
         subPosts: createdSihatSubIds,
       },
+
+      trending: processedTrending,
     },
   })
   console.log('Khởi tạo toàn bộ dữ liệu Posts thành công!')
+}
+export async function seedFooter(payload: Payload) {
+  console.log('Khởi tạo toàn bộ dữ liệu footer!')
+  payload.logger.info('— Seeding Footer...')
+
+  const logoUrl = 'https://picsum.photos/200/80'
+  const logoId = await createMediaFromUrl(payload, logoUrl, 'bh-online-logo.jpg', 'BH Online Logo')
+  // 2. Cập nhật dữ liệu cho Global 'footer'
+  await payload.updateGlobal({
+    slug: 'footer',
+    data: {
+      ...(logoId ? { logo: logoId } : {}),
+      socialLinks: [
+        { platform: 'facebook', url: 'https://facebook.com' },
+        { platform: 'twitter', url: 'https://x.com' },
+        { platform: 'whatsapp', url: 'https://whatsapp.com' },
+        { platform: 'youtube', url: 'https://youtube.com' },
+        { platform: 'tiktok', url: 'https://tiktok.com' },
+        { platform: 'linkedin', url: 'https://linkedin.com' },
+      ],
+      appStoreLinks: {
+        appStoreUrl: 'https://apple.com/app-store',
+        googlePlayUrl: 'https://play.google.com',
+      },
+      columns: [
+        {
+          title: '',
+          links: [
+            { label: 'Berita', url: '/berita' },
+            { label: 'BHPLUS', url: '/bhplus' },
+            { label: 'Nasional', url: '/nasional' },
+            { label: 'Kes', url: '/kes' },
+          ],
+        },
+        {
+          title: '',
+          links: [
+            { label: 'Sukan', url: '/sukan' },
+            { label: 'Dunia', url: '/dunia' },
+            { label: 'Hiburan', url: '/hiburan' },
+            { label: 'Bisnes', url: '/bisnes' },
+          ],
+        },
+        {
+          title: '',
+          links: [
+            { label: 'Multimedia', url: '/multimedia' },
+            { label: 'Foto', url: '/foto' },
+            { label: 'BHTV', url: '/bhtv' },
+          ],
+        },
+      ],
+      copyrightText: '2026 © BH, New Straits Times Press (M) Bhd. All rights reserved.',
+      bottomLinks: [
+        { label: 'Redaksi', url: '/redaksi' },
+        { label: 'Disclaimer', url: '/disclaimer' },
+        { label: 'Notis Perlindungan Data Peribadi', url: '/privacy-policy' },
+      ],
+    },
+  })
+
+  payload.logger.info('Footer seeded successfully!')
+
+  console.log('Khởi tạo toàn bộ dữ liệu footer thành công!')
+}
+
+export async function seedHeader(payload: Payload) {
+  console.log('Đang cập nhật dữ liệu Header Global...')
+
+  // 1. Chuẩn bị danh sách Sliders xuất hiện trên thanh Carousel Header
+  const slidersData = [
+    {
+      title: "Stacy 'terbang' di Sabah",
+      category: 'Hiburan',
+      slug: makeSlug("Stacy 'terbang' di Sabah"),
+      imgSeed: 'stacy-sabah',
+    },
+    {
+      title: 'Komputer riba serba pintar permudah sambungan iPhone, Windows',
+      category: 'Bisnes',
+      slug: makeSlug('Komputer riba serba pintar permudah sambungan iPhone, Windows'),
+      imgSeed: 'laptop-phone',
+    },
+    {
+      title: 'Khelif perlu pulangkan pingat - Kremlin',
+      category: 'Sukan',
+      slug: makeSlug('Khelif perlu pulangkan pingat - Kremlin'),
+      imgSeed: 'khelif-boxer',
+    },
+    {
+      title: 'Perang Israel-Iran tidak mengubah nasib Gaza',
+      category: 'Nasional',
+      slug: makeSlug('Perang Israel-Iran tidak mengubah nasib Gaza'),
+      imgSeed: 'gaza-war',
+    },
+  ]
+
+  // Upload ảnh và map lại danh sách slider hoàn chỉnh
+  const processedSliders = []
+  for (let i = 0; i < slidersData.length; i++) {
+    const item = slidersData[i]
+
+    // Upload media
+    const imgId = await createMediaFromUrl(
+      payload,
+      `https://picsum.photos/seed/${item.imgSeed}/400/250`,
+      `header-slider-${i}.jpg`,
+      item.title,
+    )
+
+    processedSliders.push({
+      title: item.title,
+      category: item.category,
+      slug: item.slug,
+      image: imgId,
+      order: i + 1,
+    })
+  }
+
+  console.log('Cập nhật dữ liệu Header Global thành công!')
 }

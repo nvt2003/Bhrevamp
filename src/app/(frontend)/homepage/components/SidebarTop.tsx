@@ -5,13 +5,6 @@ import { formatRelativeTime } from '@/utilities/formatTime'
 export default function SidebarTop({ terkini, trending }: { terkini: any[]; trending: any[] }) {
   return (
     <aside className="w-full space-y-8 font-sans">
-      {/* Banner Ad 300x250 */}
-      <div className="w-full flex justify-center">
-        <div className="w-[300px] h-[250px] bg-[#BFDBFE] text-black flex items-center justify-center font-medium">
-          Ad 300x250
-        </div>
-      </div>
-
       {/* 1. TERKINI (NẰM TRÊN - CÓ ẢNH VÀ SỐ ĐÈ LÊN ẢNH) */}
       <div>
         <div className="mb-4">

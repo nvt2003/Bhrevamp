@@ -3,7 +3,7 @@ import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import Link from 'next/link'
 import NewsSlider from '../components/NewsSlider'
-import { seedPosts } from '@/endpoints/seed'
+import { seedPosts, seedFooter, seedHeader } from '@/endpoints/seed'
 import TrendingBar from '../components/TrendingBar'
 import FloatingWidget from '../components/FloatingWidget'
 import UtamaSection from './components/UtamaSection'
@@ -22,33 +22,60 @@ import PodcastSection from './components/PodcastSection'
 import BhTvSection from './components/BhTvSection'
 import VideoTerkiniSection from './components/VideoTerkiniSection'
 import SihatSection from './components/SihatSection'
+import AdSlot from './components/AdSlot'
 
 export default async function HomePage() {
   const payload = await getPayload({ config: configPromise })
-  //generate data
-  await seedPosts(payload)
-  // Truy vấn lấy các item trong collection Sliders, sắp xếp theo thứ tự (order)
-  const sliderRes = await payload.find({
-    collection: 'sliders',
-    sort: 'order', // Sắp xếp theo trường order tăng dần
-    depth: 1, // Để lấy thông tin chi tiết của ảnh Upload
-  })
-  // Format lại dữ liệu cho gọn gàng để truyền xuống Client Component
-  const slides = sliderRes.docs.map((doc: any) => ({
-    id: doc.id,
-    title: doc.title,
-    category: doc.category,
-    slug: doc.slug,
-    // Lấy URL ảnh từ quan hệ media
-    imageUrl: typeof doc.image === 'object' && doc.image?.url ? doc.image.url : '/placeholder.jpg',
-  }))
 
-  const trendingRes = await payload.find({ collection: 'trending' })
-  const formattedTrending = trendingRes.docs.map((doc: any) => ({
-    id: String(doc.id),
-    keyword: doc.keyword,
-    slug: doc.slug || doc.keyword.toLowerCase().replace(/\s+/g, '-'),
-  }))
+  const headerData = await payload.findGlobal({
+    slug: 'header',
+    depth: 2,
+  })
+  const isHeaderEmpty = !headerData?.sliders
+  if (isHeaderEmpty)
+    try {
+      await seedHeader(payload)
+      console.log('Seed dữ liệu header hoàn tất!')
+    } catch (error) {
+      console.log('Lỗi khi seed dữ liệu header', error)
+    }
+  const sliderData = headerData?.sliders
+
+  //Kiểm tra xem Footer đã có dữ liệu chưa
+  const footerData = await payload.findGlobal({
+    slug: 'footer',
+  })
+  // Nếu chưa có cột links nào thì mới seed
+  const isFooterEmpty = !footerData?.columns || footerData.columns.length === 0
+
+  if (isFooterEmpty) {
+    payload.logger.info('Trang chủ được truy cập lần đầu. Đang tự động seed dữ liệu...')
+
+    try {
+      await seedFooter(payload)
+      await seedPosts(payload)
+
+      payload.logger.info('Seed dữ liệu tự động hoàn tất!')
+    } catch (error) {
+      payload.logger.error('Lỗi khi tự động seed')
+    }
+  }
+  // // Truy vấn lấy các item trong collection Sliders, sắp xếp theo thứ tự (order)
+  // const sliderRes = await payload.find({
+  //   collection: 'sliders',
+  //   sort: 'order', // Sắp xếp theo trường order tăng dần
+  //   depth: 1, // Để lấy thông tin chi tiết của ảnh Upload
+  // })
+  // // Format lại dữ liệu cho gọn gàng để truyền xuống Client Component
+  // const slides = sliderRes.docs.map((doc: any) => ({
+  //   id: doc.id,
+  //   title: doc.title,
+  //   category: doc.category,
+  //   slug: doc.slug,
+  //   // Lấy URL ảnh từ quan hệ media
+  //   imageUrl: typeof doc.image === 'object' && doc.image?.url ? doc.image.url : '/placeholder.jpg',
+  // }))
+
   // Fetch dữ liệu Global Trang Chủ
   const homeData = await payload.findGlobal({
     slug: 'home-page',
@@ -80,6 +107,7 @@ export default async function HomePage() {
     sort: '-publishedAt',
     limit: utamaSection?.trendingLimit || 5,
   })
+  const TrendingInTopData = homeData?.trending_in_top
   const disyorkanData = homeData?.disyorkanSection
   const rencanaData = homeData?.rencanaSection
   const sukanData = homeData?.sukanSection
@@ -94,18 +122,18 @@ export default async function HomePage() {
   const podcatData = homeData?.podcastSection
   const bhTvData = homeData?.bhTvSection
   const videoTerkiniData = homeData?.videoTerkiniSection
+
+  const adsData = await payload.findGlobal({ slug: 'ads-config' as any })
   return (
     <div className="min-h-screen">
       {/* Slide bài viết trượt ngang */}
-      <NewsSlider posts={slides} />
-      <TrendingBar trendingList={formattedTrending} />
+      <NewsSlider sliders={sliderData} />
+      <TrendingBar data={TrendingInTopData} />
       <FloatingWidget />
       {/* Các phần nội dung khác của trang chủ */}
       <div className="max-w-7xl mx-auto px-4 py-6">
         <div className="w-full flex justify-center">
-          <div className="w-full max-w-[970px] aspect-[970/90] bg-blue-200 text-black flex items-center justify-center">
-            Ad 970x90
-          </div>
+          <AdSlot pcAd={adsData?.BH} mobileAd={adsData?.BH_320x50} className="my-6" />
         </div>
         {/* Utama */}
         <div className="w-full flex gap-4 mt-6">
@@ -113,6 +141,7 @@ export default async function HomePage() {
             <UtamaSection data={utamaData} />
           </div>
           <div className="flex-[1] min-w-0">
+            <AdSlot pcAd={adsData?.Ad_Before_Terkini} className="my-6" />
             <SidebarTop terkini={terkiniResponse.docs} trending={trendingResponse.docs} />
           </div>
         </div>
@@ -149,9 +178,7 @@ export default async function HomePage() {
           </div>
           <div className="flex-[1] min-w-0">
             <div className="flex items-center justify-center">
-              <div className="w-full max-w-[300px] aspect-[300/225] bg-blue-200 text-black flex items-center justify-center">
-                Ad 300x225
-              </div>
+              <AdSlot pcAd={adsData?.Ad_Before_Poscast} className="my-6" />
             </div>
             {/* Postcast */}
             <div>
