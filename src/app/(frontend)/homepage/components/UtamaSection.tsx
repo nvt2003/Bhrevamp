@@ -9,7 +9,7 @@ export default function UtamaSection({ data }: { data: any }) {
     <section className="max-w-6xl mx-auto p-4 font-sans text-gray-900">
       {/* Header */}
       <div className="mb-6">
-        <div className="text-xl md:text-2xl font-semibold tracking-tight text-gray-900">
+        <div className="text-xl md:text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
           {title || 'Utama'}
         </div>
         <div className="w-10 h-1 bg-rose-600 mt-1"></div>
@@ -72,9 +72,9 @@ export default function UtamaSection({ data }: { data: any }) {
           )}
 
           {/* Bullet List */}
-          <div className="border-t border-gray-200 divide-y divide-gray-100">
+          <div className="border-t border-gray-200 dark:border-gray-800 divide-y divide-gray-100">
             {featuredBullet?.map((bullet: any) => (
-              <div key={bullet.id} className="py-3 flex items-start gap-3 group cursor-pointer">
+              <div key={bullet.id} className="dark:border-t dark:border-gray-800 py-3 flex items-start gap-3 group cursor-pointer">
                 <span className="w-2.5 h-2.5 bg-[#D81B50] mt-1.5 shrink-0 inline-block"></span>
                 <p className="text-sm font-semibold text-gray-800 dark:text-white group-hover:text-[#D81B50] transition-colors leading-snug">
                   {bullet.title}
