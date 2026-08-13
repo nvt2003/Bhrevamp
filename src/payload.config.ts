@@ -15,6 +15,7 @@ import { Posts } from './collections/Posts'
 import { HomePage } from './globals/HomePage'
 import { Footer } from './globals/Footer'
 import { AdsConfig } from './globals/AdsConfig'
+import { Header } from './globals/Header'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -26,7 +27,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  globals: [HomePage, Footer, AdsConfig],
+  globals: [HomePage, Footer, AdsConfig, Header],
   collections: [Users, Media, Categories, Sliders, Trending, Posts],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',

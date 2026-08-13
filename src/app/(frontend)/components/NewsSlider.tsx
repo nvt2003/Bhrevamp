@@ -2,17 +2,28 @@
 
 import React, { useRef } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Autoplay } from 'swiper/modules'
-
+import type { Media } from '@/payload-types'
 // Import CSS chuẩn của Swiper
 import 'swiper/css'
 import 'swiper/css/navigation'
-
-export default function NewsSlider({ posts = [] }: { posts?: any[] }) {
-  // Nếu chưa tạo slide nào trong Admin, ẩn hoặc hiện thông báo nhẹ
-  if (!posts || posts.length === 0) {
+export interface HeaderSliderItem {
+  id?: string
+  title: string
+  category: string
+  slug: string
+  image?: Media | string
+  order?: number
+}
+interface NewsSliderProps {
+  sliders?: HeaderSliderItem[]
+}
+export default function NewsSlider({ sliders = [] }: { sliders?: any[] }) {
+  // kiểm tra tạo slide chưa
+  if (!sliders || sliders.length === 0) {
     return null // Hoặc render khung trống tạm thời
   }
   const prevRef = useRef<HTMLButtonElement>(null)
@@ -56,33 +67,54 @@ export default function NewsSlider({ posts = [] }: { posts?: any[] }) {
             }}
             className="w-full"
           >
-            {posts.map((post) => (
-              <SwiperSlide key={post.id}>
-                <Link
-                  href={`/posts/${post.slug}`}
-                  className="group flex items-center gap-3 bg-transparent dark:bg-gray-900 p-2 hover:shadow-md transition-all h-20 border-r border-gray-200"
-                >
-                  {/* Ảnh Thumbnail */}
-                  <div className="w-20 h-16 shrink-0 rounded-md overflow-hidden dark:bg-gray-700">
-                    <img
-                      src={post.imageUrl}
-                      alt={post.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                  </div>
+            {sliders.map((item: any, index: number) => {
+              if (!item) return null
 
-                  {/* Nội dung tin */}
-                  <div className="flex flex-col justify-center overflow-hidden pr-1">
-                    <span className="text-[11px] font-bold text-[#D81B50] uppercase tracking-wider">
-                      {post.category}
-                    </span>
-                    <h3 className="text-xs font-semibold text-gray-800 dark:text-gray-200 line-clamp-2 leading-tight group-hover:text-red-600 transition-colors mt-0.5">
-                      {post.title}
-                    </h3>
-                  </div>
-                </Link>
-              </SwiperSlide>
-            ))}
+              // Lấy URL ảnh linh hoạt (hỗ trợ cả Object Media từ Payload hoặc string URL truyền trực tiếp)
+              const imageUrl =
+                item.image?.sizes?.thumbnail?.url ||
+                item.image?.url ||
+                (typeof item.image === 'string' ? item.image : '')
+
+              // Lấy alt text
+              const imageAlt = item.image?.alt || item.title || 'Slider image'
+
+              // Format slug/link
+              const href = item.slug?.startsWith('/') ? item.slug : `/posts/${item.slug || ''}`
+
+              return (
+                <SwiperSlide key={item.id || index}>
+                  <Link
+                    href={href}
+                    className="group flex items-center gap-3 bg-transparent dark:bg-gray-900 p-2 hover:shadow-md transition-all h-20 border-r border-gray-200 dark:border-gray-800"
+                  >
+                    {/* Thumbnail Image */}
+                    <div className="relative w-20 h-16 shrink-0 rounded-md overflow-hidden bg-slate-100 dark:bg-gray-700">
+                      {imageUrl && (
+                        <Image
+                          src={imageUrl}
+                          alt={imageAlt}
+                          fill
+                          sizes="80px"
+                          loading="lazy"
+                          className="object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                      )}
+                    </div>
+
+                    {/* Nội dung */}
+                    <div className="flex flex-col justify-center overflow-hidden pr-1">
+                      <span className="text-[11px] font-bold text-[#D81B50] uppercase tracking-wider">
+                        {item.category}
+                      </span>
+                      <h3 className="text-xs font-semibold text-gray-800 dark:text-gray-200 line-clamp-2 leading-tight group-hover:text-red-600 transition-colors mt-0.5">
+                        {item.title}
+                      </h3>
+                    </div>
+                  </Link>
+                </SwiperSlide>
+              )
+            })}
           </Swiper>
         </div>
 

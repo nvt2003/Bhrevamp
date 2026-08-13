@@ -6,7 +6,7 @@ export const HomePage: GlobalConfig = {
   fields: [
     //Danh sách Trending Keywords
     {
-      name: 'trending',
+      name: 'trending_in_top',
       type: 'array',
       label: 'Trending Keywords',
       labels: {

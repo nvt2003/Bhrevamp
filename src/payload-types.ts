@@ -99,11 +99,13 @@ export interface Config {
     'home-page': HomePage;
     footer: Footer;
     'ads-config': AdsConfig;
+    header: Header;
   };
   globalsSelect: {
     'home-page': HomePageSelect<false> | HomePageSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
     'ads-config': AdsConfigSelect<false> | AdsConfigSelect<true>;
+    header: HeaderSelect<false> | HeaderSelect<true>;
   };
   locale: null;
   widgets: {
@@ -553,7 +555,7 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface HomePage {
   id: number;
-  trending?:
+  trending_in_top?:
     | {
         keyword: string;
         order?: number | null;
@@ -828,10 +830,35 @@ export interface AdsConfig {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header".
+ */
+export interface Header {
+  id: number;
+  sliders?:
+    | {
+        title: string;
+        category: string;
+        /**
+         * Link when click on
+         */
+        slug: string;
+        image: number | Media;
+        /**
+         * Ascending
+         */
+        order?: number | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "home-page_select".
  */
 export interface HomePageSelect<T extends boolean = true> {
-  trending?:
+  trending_in_top?:
     | T
     | {
         keyword?: T;
@@ -1106,6 +1133,25 @@ export interface AdsConfigSelect<T extends boolean = true> {
         sizePreset?: T;
         customWidth?: T;
         customHeight?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header_select".
+ */
+export interface HeaderSelect<T extends boolean = true> {
+  sliders?:
+    | T
+    | {
+        title?: T;
+        category?: T;
+        slug?: T;
+        image?: T;
+        order?: T;
+        id?: T;
       };
   updatedAt?: T;
   createdAt?: T;

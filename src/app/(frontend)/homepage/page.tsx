@@ -3,7 +3,7 @@ import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import Link from 'next/link'
 import NewsSlider from '../components/NewsSlider'
-import { seedPosts, seedFooter } from '@/endpoints/seed'
+import { seedPosts, seedFooter, seedHeader } from '@/endpoints/seed'
 import TrendingBar from '../components/TrendingBar'
 import FloatingWidget from '../components/FloatingWidget'
 import UtamaSection from './components/UtamaSection'
@@ -26,6 +26,21 @@ import AdSlot from './components/AdSlot'
 
 export default async function HomePage() {
   const payload = await getPayload({ config: configPromise })
+
+  const headerData = await payload.findGlobal({
+    slug: 'header',
+    depth: 2,
+  })
+  const isHeaderEmpty = !headerData?.sliders
+  if (isHeaderEmpty)
+    try {
+      await seedHeader(payload)
+      console.log('Seed dữ liệu header hoàn tất!')
+    } catch (error) {
+      console.log('Lỗi khi seed dữ liệu header', error)
+    }
+  const sliderData = headerData?.sliders
+
   //Kiểm tra xem Footer đã có dữ liệu chưa
   const footerData = await payload.findGlobal({
     slug: 'footer',
@@ -37,7 +52,6 @@ export default async function HomePage() {
     payload.logger.info('Trang chủ được truy cập lần đầu. Đang tự động seed dữ liệu...')
 
     try {
-      // Chạy 2 hàm seed
       await seedFooter(payload)
       await seedPosts(payload)
 
@@ -46,28 +60,22 @@ export default async function HomePage() {
       payload.logger.error('Lỗi khi tự động seed')
     }
   }
-  // Truy vấn lấy các item trong collection Sliders, sắp xếp theo thứ tự (order)
-  const sliderRes = await payload.find({
-    collection: 'sliders',
-    sort: 'order', // Sắp xếp theo trường order tăng dần
-    depth: 1, // Để lấy thông tin chi tiết của ảnh Upload
-  })
-  // Format lại dữ liệu cho gọn gàng để truyền xuống Client Component
-  const slides = sliderRes.docs.map((doc: any) => ({
-    id: doc.id,
-    title: doc.title,
-    category: doc.category,
-    slug: doc.slug,
-    // Lấy URL ảnh từ quan hệ media
-    imageUrl: typeof doc.image === 'object' && doc.image?.url ? doc.image.url : '/placeholder.jpg',
-  }))
+  // // Truy vấn lấy các item trong collection Sliders, sắp xếp theo thứ tự (order)
+  // const sliderRes = await payload.find({
+  //   collection: 'sliders',
+  //   sort: 'order', // Sắp xếp theo trường order tăng dần
+  //   depth: 1, // Để lấy thông tin chi tiết của ảnh Upload
+  // })
+  // // Format lại dữ liệu cho gọn gàng để truyền xuống Client Component
+  // const slides = sliderRes.docs.map((doc: any) => ({
+  //   id: doc.id,
+  //   title: doc.title,
+  //   category: doc.category,
+  //   slug: doc.slug,
+  //   // Lấy URL ảnh từ quan hệ media
+  //   imageUrl: typeof doc.image === 'object' && doc.image?.url ? doc.image.url : '/placeholder.jpg',
+  // }))
 
-  const trendingRes = await payload.find({ collection: 'trending' })
-  const formattedTrending = trendingRes.docs.map((doc: any) => ({
-    id: String(doc.id),
-    keyword: doc.keyword,
-    slug: doc.slug || doc.keyword.toLowerCase().replace(/\s+/g, '-'),
-  }))
   // Fetch dữ liệu Global Trang Chủ
   const homeData = await payload.findGlobal({
     slug: 'home-page',
@@ -99,6 +107,7 @@ export default async function HomePage() {
     sort: '-publishedAt',
     limit: utamaSection?.trendingLimit || 5,
   })
+  const TrendingInTopData = homeData?.trending_in_top
   const disyorkanData = homeData?.disyorkanSection
   const rencanaData = homeData?.rencanaSection
   const sukanData = homeData?.sukanSection
@@ -118,8 +127,8 @@ export default async function HomePage() {
   return (
     <div className="min-h-screen">
       {/* Slide bài viết trượt ngang */}
-      <NewsSlider posts={slides} />
-      <TrendingBar trendingList={formattedTrending} />
+      <NewsSlider sliders={sliderData} />
+      <TrendingBar data={TrendingInTopData} />
       <FloatingWidget />
       {/* Các phần nội dung khác của trang chủ */}
       <div className="max-w-7xl mx-auto px-4 py-6">
