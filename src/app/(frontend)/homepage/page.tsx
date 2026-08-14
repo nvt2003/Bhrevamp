@@ -188,7 +188,11 @@ export default async function HomePage() {
           </div>
           <div className="flex-[1] min-w-0">
             <AdSlot pcAd={adsData?.BH_300x250} className="my-6" />
-            <SidebarTop terkini={terkiniResponse.docs} trending={trendingResponse.docs} />
+            <SidebarTop
+              terkini={terkiniResponse.docs}
+              trending={trendingResponse.docs}
+              adData={adsData?.BH_Mobile_Banner_b}
+            />
           </div>
         </div>
         {/* Disyorkan */}

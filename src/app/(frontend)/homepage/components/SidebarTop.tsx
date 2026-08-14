@@ -1,12 +1,26 @@
 'use client'
-import React from 'react'
+import React, { useRef } from 'react'
 import { formatRelativeTime } from '@/utilities/formatTime'
-
-export default function SidebarTop({ terkini, trending }: { terkini: any[]; trending: any[] }) {
+import TerikiPopupAd from './TerikiPopupAd'
+interface SidebarTopProps {
+  terkini: any
+  trending: any
+  adData?: any
+}
+export default function SidebarTop({
+  terkini,
+  trending,
+  adData,
+}: {
+  terkini: any[]
+  trending: any[]
+  adData?: any
+}) {
+  const sidebarRef = useRef<HTMLDivElement>(null)
   return (
     <aside className="w-full space-y-8 font-sans">
       {/* 1. TERKINI (NẰM TRÊN - CÓ ẢNH VÀ SỐ ĐÈ LÊN ẢNH) */}
-      <div>
+      <div ref={sidebarRef} className="relative">
         <div className="mb-4">
           <h2 className="text-2xl font-bold tracking-tight text-gray-900">Terkini</h2>
           <div className="w-10 h-1 bg-[#D81B50] mt-1"></div>
@@ -14,7 +28,10 @@ export default function SidebarTop({ terkini, trending }: { terkini: any[]; tren
 
         <div className="divide-y divide-gray-200">
           {terkini?.map((item, index) => (
-            <div key={item.id} className="py-3 flex gap-3 group cursor-pointer items-start dark:border-t dark:border-gray-800">
+            <div
+              key={item.id}
+              className="py-3 flex gap-3 group cursor-pointer items-start dark:border-t dark:border-gray-800"
+            >
               {/* Tiêu đề & thời gian */}
               <div className="flex-1 min-w-0 pr-1">
                 <h3 className="text-sm font-semibold text-gray-900  dark:text-white group-hover:text-[#D81B50] leading-snug line-clamp-3">
@@ -51,7 +68,10 @@ export default function SidebarTop({ terkini, trending }: { terkini: any[]; tren
 
         <div className="divide-y divide-gray-200">
           {trending?.map((item, index) => (
-            <div key={item.id} className="py-3 flex items-start gap-4 group cursor-pointer dark:border-t dark:border-gray-800">
+            <div
+              key={item.id}
+              className="py-3 flex items-start gap-4 group cursor-pointer dark:border-t dark:border-gray-800"
+            >
               {/* Số thứ tự Trending lớn */}
               <span className="text-3xl font-black text-black  dark:text-white group-hover:text-[#D81B50] leading-none shrink-0 w-6 pt-0.5">
                 {index + 1}
@@ -69,6 +89,7 @@ export default function SidebarTop({ terkini, trending }: { terkini: any[]; tren
             </div>
           ))}
         </div>
+        <TerikiPopupAd data={adData} targetRef={sidebarRef} />
       </div>
     </aside>
   )
