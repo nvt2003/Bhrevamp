@@ -155,8 +155,8 @@ export default async function HomePage() {
         <div className="flex mt-8">
           <SukanSection data={sukanData} />
         </div>
-        <div className="flex mt-8 gap-2">
-          <div className="flex-[2] min-w-0">
+        <div className="flex flex-col md:flex-row mt-8 gap-2">
+          <div className="flex-[2] min-w-0 space-y-4">
             {/* Bisnes */}
             <div>
               <BisnesSection data={bisnesData} />
@@ -166,9 +166,13 @@ export default async function HomePage() {
               <HiburanSection data={hiburanData} />
             </div>
           </div>
-          <div className="flex-[1] min-w-0">
+          <div className="flex-[1] min-w-0 space-y-4">
             <div className="flex items-center justify-center">
-              <AdSlot pcAd={adsData?.BH_300x250_b} className="my-6" />
+              <AdSlot
+                pcAd={adsData?.BH_300x250_b}
+                mobileAd={adsData?.BH_Mobile_Banner_b}
+                className="my-6"
+              />
             </div>
             {/* Postcast */}
             <div>
