@@ -29,13 +29,13 @@ export default function MobileStickyAd({ data }: MobileStickyAdProps) {
       <button
         onClick={() => setIsClosed(true)}
         className="absolute -top-7 right-2 flex h-6 w-6 items-center justify-center rounded-t-md bg-black/80 text-xs font-bold text-white hover:bg-black"
-        aria-label="Close AdsS"
+        aria-label="Close Ads"
       >
         ✕
       </button>
 
       {/* Nội dung Quảng cáo */}
-      <div className="w-full max-w-[500px] overflow-hidden text-center">
+      <div className="w-full overflow-hidden text-center">
         {/* Trường hợp 1: Chèn mã Script/HTML trực tiếp */}
         {code ? (
           <div dangerouslySetInnerHTML={{ __html: code }} className="flex justify-center" />
@@ -47,7 +47,7 @@ export default function MobileStickyAd({ data }: MobileStickyAdProps) {
               <img
                 src={imageUrl}
                 alt="Mobile Sticky Banner"
-                className="h-auto max-h-[100px] w-full object-contain mx-auto"
+                className="block h-auto w-full object-contain"
               />
             </a>
           )
