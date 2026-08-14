@@ -240,32 +240,29 @@ export default async function HomePage() {
         <div className="flex mt-8">
           <DuniaSection data={duniaData} />
         </div>
-        <div className="flex flex-col gap-2 mt-8 lg:flex-row">
-          <div className="flex flex-col gap-2 min-w-0 lg:order-1 lg:flex-[2]">
-            {/* Gaya Hidup */}
-            <div className="order-1 lg:order-none">
-              <GayaHidupSection data={gayaHidubData} />
-            </div>
-
-            {/* Sihat */}
-            <div className="order-2 lg:order-none">
-              <SihatSection data={sihatData} />
-            </div>
-
-            {/* Bh Plus */}
-            <div className="order-3 lg:order-none">
-              <BhPlusSection data={bhPlusData} />
-            </div>
+        <div className="grid grid-cols-1 gap-2 mt-8 lg:grid-cols-3">
+          {/* Gaya Hidup */}
+          <div className="order-1 min-w-0 lg:col-start-1 lg:row-start-1">
+            <GayaHidupSection data={gayaHidubData} />
           </div>
 
-          <div className="flex flex-col gap-2 min-w-0 lg:order-2 lg:flex-[1]">
-            {/* Infografik */}
-            <div className="order-4 lg:order-none">
+          {/* Sihat */}
+          <div className="order-2 min-w-0 lg:col-start-2 lg:row-start-1">
+            <SihatSection data={sihatData} />
+          </div>
+
+          {/* Bh Plus - chiếm 2 cột */}
+          <div className="order-3 min-w-0 lg:col-span-2 lg:col-start-1 lg:row-start-2">
+            <BhPlusSection data={bhPlusData} />
+          </div>
+
+          {/* Infografik + Galeri Foto */}
+          <div className="order-4 flex min-w-0 flex-col gap-2 lg:col-start-3 lg:row-span-2 lg:row-start-1">
+            <div className="min-h-[300px] flex-1">
               <InfografikSection data={infografikdata} />
             </div>
 
-            {/* Galeri Foto */}
-            <div className="order-5 lg:order-none">
+            <div className="min-h-[300px] flex-1">
               <GaleriFotoSection data={galeriFotoData} />
             </div>
           </div>

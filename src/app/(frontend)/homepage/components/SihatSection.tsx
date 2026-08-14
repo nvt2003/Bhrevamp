@@ -20,7 +20,7 @@ export default function SihatSection({ data }: { data: any }) {
     typeof featuredPost?.featuredImage === 'object' ? featuredPost?.featuredImage?.url : null
 
   return (
-    <section className="my-8 w-full font-sans">
+    <section className="my-8 max-w-md mx-auto lg:max-w-none">
       {/* 1. Header */}
       <div className="flex items-center justify-between pb-2 mb-4">
         <h2 className="text-2xl font-bold border-b-2 border-red-600 -mb-2 pb-2 inline-block text-gray-900  dark:text-white">
@@ -36,7 +36,7 @@ export default function SihatSection({ data }: { data: any }) {
 
       {/* 2. Bài viết chính (Featured Post) */}
       {featuredPost && (
-        <article className="mb-4 group">
+        <div className="mb-6">
           <Link href={`/posts/${featuredPost.slug}`} className="block">
             {/* Ảnh lớn bài chính */}
             <div className="relative w-full aspect-[16/10] rounded overflow-hidden bg-slate-900 mb-2.5">
@@ -45,7 +45,9 @@ export default function SihatSection({ data }: { data: any }) {
                   src={featuredImgUrl}
                   alt={featuredPost.title || title}
                   fill
-                  className="relative aspect-[16/10] w-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  sizes="(max-width: 639px) 50vw, 33vw"
+                  loading="lazy"
+                  className="w-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
               )}
             </div>
@@ -67,7 +69,7 @@ export default function SihatSection({ data }: { data: any }) {
               {featuredPost.title}
             </h3>
           </Link>
-        </article>
+        </div>
       )}
 
       {/* 3. Danh sách các bài phụ nằm ngang phía dưới (Sub-posts) */}
@@ -96,6 +98,8 @@ export default function SihatSection({ data }: { data: any }) {
                       src={imgUrl}
                       alt={post.title}
                       fill
+                      loading="lazy"
+                      sizes="(max-width: 639px) 50vw, 33vw"
                       className="object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                   </div>
