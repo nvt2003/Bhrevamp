@@ -1,0 +1,132 @@
+import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-sqlite'
+
+export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
+  await db.run(sql`PRAGMA foreign_keys=OFF;`)
+  await db.run(sql`CREATE TABLE \`__new_ads_config\` (
+  	\`id\` integer PRIMARY KEY NOT NULL,
+  	\`bh_web_billboard_homepage_970x250_active\` integer DEFAULT false,
+  	\`bh_web_billboard_homepage_970x250_image_url\` text,
+  	\`bh_web_billboard_homepage_970x250_link\` text,
+  	\`bh_web_billboard_homepage_970x250_code\` text,
+  	\`bh_web_billboard_homepage_970x250_size_preset\` text DEFAULT 'max-w-[970px] aspect-[970/90]',
+  	\`bh_web_billboard_homepage_970x250_custom_width\` numeric,
+  	\`bh_web_billboard_homepage_970x250_custom_height\` numeric,
+  	\`bh_300x250_active\` integer DEFAULT false,
+  	\`bh_300x250_image_url\` text,
+  	\`bh_300x250_link\` text,
+  	\`bh_300x250_code\` text,
+  	\`bh_300x250_size_preset\` text DEFAULT 'max-w-[300px] aspect-[300/250]',
+  	\`bh_300x250_custom_width\` numeric,
+  	\`bh_300x250_custom_height\` numeric,
+  	\`bh_300x250_b_active\` integer DEFAULT false,
+  	\`bh_300x250_b_image_url\` text,
+  	\`bh_300x250_b_link\` text,
+  	\`bh_300x250_b_code\` text,
+  	\`bh_300x250_b_size_preset\` text DEFAULT 'max-w-[300px] aspect-[300/250]',
+  	\`bh_300x250_b_custom_width\` numeric,
+  	\`bh_300x250_b_custom_height\` numeric,
+  	\`bh_320x50_active\` integer DEFAULT false,
+  	\`bh_320x50_image_url\` text,
+  	\`bh_320x50_link\` text,
+  	\`bh_320x50_code\` text,
+  	\`bh_320x50_size_preset\` text DEFAULT 'max-w-[320px] aspect-[320/50]',
+  	\`bh_320x50_custom_width\` numeric,
+  	\`bh_320x50_custom_height\` numeric,
+  	\`bh_hp_sticky_leaderboard_active\` integer DEFAULT false,
+  	\`bh_hp_sticky_leaderboard_image_url\` text,
+  	\`bh_hp_sticky_leaderboard_link\` text,
+  	\`bh_hp_sticky_leaderboard_code\` text,
+  	\`bh_hp_sticky_leaderboard_size_preset\` text DEFAULT 'max-w-[320px] aspect-[320/50]',
+  	\`bh_hp_sticky_leaderboard_custom_width\` numeric,
+  	\`bh_hp_sticky_leaderboard_custom_height\` numeric,
+  	\`bh_mobile_banner_active\` integer DEFAULT false,
+  	\`bh_mobile_banner_image_url\` text,
+  	\`bh_mobile_banner_link\` text,
+  	\`bh_mobile_banner_code\` text,
+  	\`bh_mobile_banner_size_preset\` text DEFAULT 'max-w-[320px] aspect-[320/100]',
+  	\`bh_mobile_banner_custom_width\` numeric,
+  	\`bh_mobile_banner_custom_height\` numeric,
+  	\`bh_mobile_banner_b_active\` integer DEFAULT false,
+  	\`bh_mobile_banner_b_image_url\` text,
+  	\`bh_mobile_banner_b_link\` text,
+  	\`bh_mobile_banner_b_code\` text,
+  	\`bh_mobile_banner_b_size_preset\` text DEFAULT 'max-w-[320px] aspect-[320/100]',
+  	\`bh_mobile_banner_b_custom_width\` numeric,
+  	\`bh_mobile_banner_b_custom_height\` numeric,
+  	\`bh_multisize_houseads_active\` integer DEFAULT false,
+  	\`bh_multisize_houseads_image_url\` text,
+  	\`bh_multisize_houseads_link\` text,
+  	\`bh_multisize_houseads_code\` text,
+  	\`bh_multisize_houseads_size_preset\` text DEFAULT 'max-w-[970px] aspect-[970/90]',
+  	\`bh_multisize_houseads_custom_width\` numeric,
+  	\`bh_multisize_houseads_custom_height\` numeric,
+  	\`updated_at\` text,
+  	\`created_at\` text
+  );
+  `)
+  await db.run(sql`INSERT INTO \`__new_ads_config\`("id", "bh_web_billboard_homepage_970x250_active", "bh_web_billboard_homepage_970x250_image_url", "bh_web_billboard_homepage_970x250_link", "bh_web_billboard_homepage_970x250_code", "bh_web_billboard_homepage_970x250_size_preset", "bh_web_billboard_homepage_970x250_custom_width", "bh_web_billboard_homepage_970x250_custom_height", "bh_300x250_active", "bh_300x250_image_url", "bh_300x250_link", "bh_300x250_code", "bh_300x250_size_preset", "bh_300x250_custom_width", "bh_300x250_custom_height", "bh_300x250_b_active", "bh_300x250_b_image_url", "bh_300x250_b_link", "bh_300x250_b_code", "bh_300x250_b_size_preset", "bh_300x250_b_custom_width", "bh_300x250_b_custom_height", "bh_320x50_active", "bh_320x50_image_url", "bh_320x50_link", "bh_320x50_code", "bh_320x50_size_preset", "bh_320x50_custom_width", "bh_320x50_custom_height", "bh_hp_sticky_leaderboard_active", "bh_hp_sticky_leaderboard_image_url", "bh_hp_sticky_leaderboard_link", "bh_hp_sticky_leaderboard_code", "bh_hp_sticky_leaderboard_size_preset", "bh_hp_sticky_leaderboard_custom_width", "bh_hp_sticky_leaderboard_custom_height", "bh_mobile_banner_active", "bh_mobile_banner_image_url", "bh_mobile_banner_link", "bh_mobile_banner_code", "bh_mobile_banner_size_preset", "bh_mobile_banner_custom_width", "bh_mobile_banner_custom_height", "bh_mobile_banner_b_active", "bh_mobile_banner_b_image_url", "bh_mobile_banner_b_link", "bh_mobile_banner_b_code", "bh_mobile_banner_b_size_preset", "bh_mobile_banner_b_custom_width", "bh_mobile_banner_b_custom_height", "bh_multisize_houseads_active", "bh_multisize_houseads_image_url", "bh_multisize_houseads_link", "bh_multisize_houseads_code", "bh_multisize_houseads_size_preset", "bh_multisize_houseads_custom_width", "bh_multisize_houseads_custom_height", "updated_at", "created_at") SELECT "id", "bh_web_billboard_homepage_970x250_active", "bh_web_billboard_homepage_970x250_image_url", "bh_web_billboard_homepage_970x250_link", "bh_web_billboard_homepage_970x250_code", "bh_web_billboard_homepage_970x250_size_preset", "bh_web_billboard_homepage_970x250_custom_width", "bh_web_billboard_homepage_970x250_custom_height", "bh_300x250_active", "bh_300x250_image_url", "bh_300x250_link", "bh_300x250_code", "bh_300x250_size_preset", "bh_300x250_custom_width", "bh_300x250_custom_height", "bh_300x250_b_active", "bh_300x250_b_image_url", "bh_300x250_b_link", "bh_300x250_b_code", "bh_300x250_b_size_preset", "bh_300x250_b_custom_width", "bh_300x250_b_custom_height", "bh_320x50_active", "bh_320x50_image_url", "bh_320x50_link", "bh_320x50_code", "bh_320x50_size_preset", "bh_320x50_custom_width", "bh_320x50_custom_height", "bh_hp_sticky_leaderboard_active", "bh_hp_sticky_leaderboard_image_url", "bh_hp_sticky_leaderboard_link", "bh_hp_sticky_leaderboard_code", "bh_hp_sticky_leaderboard_size_preset", "bh_hp_sticky_leaderboard_custom_width", "bh_hp_sticky_leaderboard_custom_height", "bh_mobile_banner_active", "bh_mobile_banner_image_url", "bh_mobile_banner_link", "bh_mobile_banner_code", "bh_mobile_banner_size_preset", "bh_mobile_banner_custom_width", "bh_mobile_banner_custom_height", "bh_mobile_banner_b_active", "bh_mobile_banner_b_image_url", "bh_mobile_banner_b_link", "bh_mobile_banner_b_code", "bh_mobile_banner_b_size_preset", "bh_mobile_banner_b_custom_width", "bh_mobile_banner_b_custom_height", "bh_multisize_houseads_active", "bh_multisize_houseads_image_url", "bh_multisize_houseads_link", "bh_multisize_houseads_code", "bh_multisize_houseads_size_preset", "bh_multisize_houseads_custom_width", "bh_multisize_houseads_custom_height", "updated_at", "created_at" FROM \`ads_config\`;`)
+  await db.run(sql`DROP TABLE \`ads_config\`;`)
+  await db.run(sql`ALTER TABLE \`__new_ads_config\` RENAME TO \`ads_config\`;`)
+  await db.run(sql`PRAGMA foreign_keys=ON;`)
+}
+
+export async function down({ db, payload, req }: MigrateDownArgs): Promise<void> {
+  await db.run(sql`PRAGMA foreign_keys=OFF;`)
+  await db.run(sql`CREATE TABLE \`__new_ads_config\` (
+  	\`id\` integer PRIMARY KEY NOT NULL,
+  	\`bh_active\` integer DEFAULT true,
+  	\`bh_image_url\` text,
+  	\`bh_link\` text,
+  	\`bh_code\` text,
+  	\`bh_size_preset\` text DEFAULT 'max-w-[970px] aspect-[970/90]',
+  	\`bh_custom_width\` numeric,
+  	\`bh_custom_height\` numeric,
+  	\`ad_before_terkini_active\` integer DEFAULT true,
+  	\`ad_before_terkini_image_url\` text,
+  	\`ad_before_terkini_link\` text,
+  	\`ad_before_terkini_code\` text,
+  	\`ad_before_terkini_size_preset\` text DEFAULT 'max-w-[300px] aspect-[300/250]',
+  	\`ad_before_terkini_custom_width\` numeric,
+  	\`ad_before_terkini_custom_height\` numeric,
+  	\`ad_before_poscast_active\` integer DEFAULT true,
+  	\`ad_before_poscast_image_url\` text,
+  	\`ad_before_poscast_link\` text,
+  	\`ad_before_poscast_code\` text,
+  	\`ad_before_poscast_size_preset\` text DEFAULT 'max-w-[300px] aspect-[300/250]',
+  	\`ad_before_poscast_custom_width\` numeric,
+  	\`ad_before_poscast_custom_height\` numeric,
+  	\`bh_320x50_active\` integer DEFAULT true,
+  	\`bh_320x50_image_url\` text,
+  	\`bh_320x50_link\` text,
+  	\`bh_320x50_code\` text,
+  	\`bh_320x50_size_preset\` text DEFAULT 'max-w-[320px] aspect-[320/50]',
+  	\`bh_320x50_custom_width\` numeric,
+  	\`bh_320x50_custom_height\` numeric,
+  	\`bh_hp_sticky_leaderboard_active\` integer DEFAULT false,
+  	\`bh_hp_sticky_leaderboard_image_url\` text,
+  	\`bh_hp_sticky_leaderboard_link\` text,
+  	\`bh_hp_sticky_leaderboard_code\` text,
+  	\`bh_mobile_banner_active\` integer DEFAULT false,
+  	\`bh_mobile_banner_image_url\` text,
+  	\`bh_mobile_banner_link\` text,
+  	\`bh_mobile_banner_code\` text,
+  	\`bh_mobile_banner_b_active\` integer DEFAULT false,
+  	\`bh_mobile_banner_b_image_url\` text,
+  	\`bh_mobile_banner_b_link\` text,
+  	\`bh_mobile_banner_b_code\` text,
+  	\`bh_multisize_houseads_active\` integer DEFAULT true,
+  	\`bh_multisize_houseads_image_url\` text,
+  	\`bh_multisize_houseads_link\` text,
+  	\`bh_multisize_houseads_code\` text,
+  	\`bh_multisize_houseads_size_preset\` text DEFAULT 'max-w-[970px] aspect-[970/90]',
+  	\`bh_multisize_houseads_custom_width\` numeric,
+  	\`bh_multisize_houseads_custom_height\` numeric,
+  	\`updated_at\` text,
+  	\`created_at\` text
+  );
+  `)
+  await db.run(sql`INSERT INTO \`__new_ads_config\`("id", "bh_active", "bh_image_url", "bh_link", "bh_code", "bh_size_preset", "bh_custom_width", "bh_custom_height", "ad_before_terkini_active", "ad_before_terkini_image_url", "ad_before_terkini_link", "ad_before_terkini_code", "ad_before_terkini_size_preset", "ad_before_terkini_custom_width", "ad_before_terkini_custom_height", "ad_before_poscast_active", "ad_before_poscast_image_url", "ad_before_poscast_link", "ad_before_poscast_code", "ad_before_poscast_size_preset", "ad_before_poscast_custom_width", "ad_before_poscast_custom_height", "bh_320x50_active", "bh_320x50_image_url", "bh_320x50_link", "bh_320x50_code", "bh_320x50_size_preset", "bh_320x50_custom_width", "bh_320x50_custom_height", "bh_hp_sticky_leaderboard_active", "bh_hp_sticky_leaderboard_image_url", "bh_hp_sticky_leaderboard_link", "bh_hp_sticky_leaderboard_code", "bh_mobile_banner_active", "bh_mobile_banner_image_url", "bh_mobile_banner_link", "bh_mobile_banner_code", "bh_mobile_banner_b_active", "bh_mobile_banner_b_image_url", "bh_mobile_banner_b_link", "bh_mobile_banner_b_code", "bh_multisize_houseads_active", "bh_multisize_houseads_image_url", "bh_multisize_houseads_link", "bh_multisize_houseads_code", "bh_multisize_houseads_size_preset", "bh_multisize_houseads_custom_width", "bh_multisize_houseads_custom_height", "updated_at", "created_at") SELECT "id", "bh_active", "bh_image_url", "bh_link", "bh_code", "bh_size_preset", "bh_custom_width", "bh_custom_height", "ad_before_terkini_active", "ad_before_terkini_image_url", "ad_before_terkini_link", "ad_before_terkini_code", "ad_before_terkini_size_preset", "ad_before_terkini_custom_width", "ad_before_terkini_custom_height", "ad_before_poscast_active", "ad_before_poscast_image_url", "ad_before_poscast_link", "ad_before_poscast_code", "ad_before_poscast_size_preset", "ad_before_poscast_custom_width", "ad_before_poscast_custom_height", "bh_320x50_active", "bh_320x50_image_url", "bh_320x50_link", "bh_320x50_code", "bh_320x50_size_preset", "bh_320x50_custom_width", "bh_320x50_custom_height", "bh_hp_sticky_leaderboard_active", "bh_hp_sticky_leaderboard_image_url", "bh_hp_sticky_leaderboard_link", "bh_hp_sticky_leaderboard_code", "bh_mobile_banner_active", "bh_mobile_banner_image_url", "bh_mobile_banner_link", "bh_mobile_banner_code", "bh_mobile_banner_b_active", "bh_mobile_banner_b_image_url", "bh_mobile_banner_b_link", "bh_mobile_banner_b_code", "bh_multisize_houseads_active", "bh_multisize_houseads_image_url", "bh_multisize_houseads_link", "bh_multisize_houseads_code", "bh_multisize_houseads_size_preset", "bh_multisize_houseads_custom_width", "bh_multisize_houseads_custom_height", "updated_at", "created_at" FROM \`ads_config\`;`)
+  await db.run(sql`DROP TABLE \`ads_config\`;`)
+  await db.run(sql`ALTER TABLE \`__new_ads_config\` RENAME TO \`ads_config\`;`)
+  await db.run(sql`PRAGMA foreign_keys=ON;`)
+}
