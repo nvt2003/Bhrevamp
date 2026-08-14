@@ -795,6 +795,17 @@ export interface AdsConfig {
     imageUrl?: string | null;
     link?: string | null;
     code?: string | null;
+    sizePreset?:
+      | (
+          | 'max-w-[970px] aspect-[970/90]'
+          | 'max-w-[300px] aspect-[300/250]'
+          | 'max-w-[320px] aspect-[320/50]'
+          | 'max-w-[320px] aspect-[320/100]'
+          | 'custom'
+        )
+      | null;
+    customWidth?: number | null;
+    customHeight?: number | null;
   };
   BH_Mobile_Banner?: {
     active?: boolean | null;
@@ -1128,6 +1139,9 @@ export interface AdsConfigSelect<T extends boolean = true> {
         imageUrl?: T;
         link?: T;
         code?: T;
+        sizePreset?: T;
+        customWidth?: T;
+        customHeight?: T;
       };
   BH_Mobile_Banner?:
     | T

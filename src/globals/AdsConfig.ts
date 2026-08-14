@@ -160,12 +160,7 @@ export const AdsConfig: GlobalConfig = {
               name: 'BH_HP_Sticky_Leaderboard',
               type: 'group',
               label: 'Mobile Sticky Leaderboard',
-              fields: [
-                { name: 'active', type: 'checkbox', defaultValue: false },
-                { name: 'imageUrl', type: 'text' },
-                { name: 'link', type: 'text' },
-                { name: 'code', type: 'code', admin: { language: 'html' } },
-              ],
+              fields: createAdFields('max-w-[320px] aspect-[320/50]'),
             },
             {
               name: 'BH_Mobile_Banner',
