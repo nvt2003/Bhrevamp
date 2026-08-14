@@ -184,30 +184,60 @@ export default async function HomePage() {
         <div className="flex mt-8">
           <DuniaSection data={duniaData} />
         </div>
-        <div className="flex gap-2 mt-8">
+        {/* <div className="flex gap-2 mt-8">
           <div className="flex-[2] min-w-0">
             <div className="flex gap-2">
-              {/* Gaya Hidup */}
+              Gaya Hidup
               <div>
                 <GayaHidupSection data={gayaHidubData} />
               </div>
-              {/* Shihat */}
+              Shihat
               <div>
                 <SihatSection data={sihatData} />
               </div>
             </div>
-            {/* Bh Plus */}
+            Bh Plus
             <div>
               <BhPlusSection data={bhPlusData} />
             </div>
           </div>
           <div className="flex-[1] min-w-0">
-            {/* Infografik */}
+            Infografik
             <div>
               <InfografikSection data={infografikdata} />
             </div>
-            {/* Galeri Foto */}
+            Galeri Foto
             <div>
+              <GaleriFotoSection data={galeriFotoData} />
+            </div>
+          </div>
+        </div> */}
+        <div className="flex flex-col gap-2 mt-8 lg:flex-row">
+          <div className="flex flex-col gap-2 min-w-0 lg:order-1 lg:flex-[2]">
+            {/* Gaya Hidup */}
+            <div className="order-1 lg:order-none">
+              <GayaHidupSection data={gayaHidubData} />
+            </div>
+
+            {/* Sihat */}
+            <div className="order-2 lg:order-none">
+              <SihatSection data={sihatData} />
+            </div>
+
+            {/* Bh Plus */}
+            <div className="order-3 lg:order-none">
+              <BhPlusSection data={bhPlusData} />
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-2 min-w-0 lg:order-2 lg:flex-[1]">
+            {/* Infografik */}
+            <div className="order-4 lg:order-none">
+              <InfografikSection data={infografikdata} />
+            </div>
+
+            {/* Galeri Foto */}
+            <div className="order-5 lg:order-none">
               <GaleriFotoSection data={galeriFotoData} />
             </div>
           </div>
