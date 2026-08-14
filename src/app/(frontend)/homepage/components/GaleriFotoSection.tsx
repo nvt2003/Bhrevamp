@@ -18,8 +18,8 @@ export default function GaleriFotoSection({ data }: { data: any }) {
         </Link>
       </div>
 
-      {/* Lưới ảnh Grid 4 cột (Mobile 2 cột, MD/LG 4 cột) */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+      {/* Lưới ảnh Grid 4 cột */}
+      <div className="grid grid-cols-4 gap-1">
         {galleryImages.map((item: any, index: number) => {
           const imgUrl = item.image?.url || item.image
           if (!imgUrl) return null
