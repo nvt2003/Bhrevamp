@@ -62,53 +62,109 @@ export default async function HomePage() {
   }
 
   // Fetch dữ liệu Global Trang Chủ
-  const homeData = await payload.findGlobal({
-    slug: 'home-page',
-    depth: 2,
-  })
+  // const homeData = await payload.findGlobal({
+  //   slug: 'home-page',
+  //   depth: 2,
+  // })
+  // const utamaSection = homeData?.utamaSection
+  // const utamaData = {
+  //   title: utamaSection?.title || 'Utama',
+  //   featuredMain: utamaSection?.featuredMain,
+  //   featuredSide: (utamaSection?.featuredSide as any[]) || [],
+  //   featuredBullet: (utamaSection?.featuredBullet as any[]) || [],
+  //   gridPosts: (utamaSection?.gridPosts as any[]) || [],
+  // }
+  // // Fetch Terkini
+  // const terkiniResponse = await payload.find({
+  //   collection: 'posts',
+  //   where: { status: { equals: 'published' } },
+  //   sort: '-publishedAt',
+  //   limit: utamaSection?.terkiniLimit || 5,
+  // })
+
+  // // Fetch Trending
+  // const trendingResponse = await payload.find({
+  //   collection: 'posts',
+  //   where: {
+  //     status: { equals: 'published' },
+  //     isTrending: { equals: true },
+  //   },
+  //   sort: '-publishedAt',
+  //   limit: utamaSection?.trendingLimit || 5,
+  // })
+  // const TrendingInTopData = homeData?.trending_in_top
+  // const disyorkanData = homeData?.disyorkanSection
+  // const rencanaData = homeData?.rencanaSection
+  // const sukanData = homeData?.sukanSection
+  // const duniaData = homeData?.duniaSection
+  // const bisnesData = homeData?.bisnesSection
+  // const hiburanData = homeData?.hiburanSection
+  // const gayaHidubData = homeData?.gayaHidupSection
+  // const sihatData = homeData?.sihatSection
+  // const bhPlusData = homeData?.bhPlusSection
+  // const infografikdata = homeData?.infografikSection
+  // const galeriFotoData = homeData?.galeriFotoSection
+  // const podcatData = homeData?.podcastSection
+  // const bhTvData = homeData?.bhTvSection
+  // const videoTerkiniData = homeData?.videoTerkiniSection
+
+  // const adsData = await payload.findGlobal({ slug: 'ads-config' as any })
+  // 1. Chạy tất cả các query độc lập SONG SONG cùng một lúc
+  const [homeData, adsData] = await Promise.all([
+    payload.findGlobal({
+      slug: 'home-page',
+      depth: 2, // 💡 Mẹo: Nếu các section dưới chỉ cần ID/Slug, hãy hạ depth: 1 để tăng tốc
+    }),
+    payload.findGlobal({ slug: 'ads-config' as any }),
+  ])
+
   const utamaSection = homeData?.utamaSection
+
+  // 2. Fetch Terkini & Trending SONG SONG dựa trên limit lấy từ homeData
+  const [terkiniResponse, trendingResponse] = await Promise.all([
+    payload.find({
+      collection: 'posts',
+      where: { status: { equals: 'published' } },
+      sort: '-publishedAt',
+      limit: utamaSection?.terkiniLimit || 5,
+    }),
+    payload.find({
+      collection: 'posts',
+      where: {
+        status: { equals: 'published' },
+        isTrending: { equals: true },
+      },
+      sort: '-publishedAt',
+      limit: utamaSection?.trendingLimit || 5,
+    }),
+  ])
+
+  // 3. Destructuring gọn gàng toàn bộ Section
+  const {
+    trending_in_top: TrendingInTopData,
+    disyorkanSection: disyorkanData,
+    rencanaSection: rencanaData,
+    sukanSection: sukanData,
+    duniaSection: duniaData,
+    bisnesSection: bisnesData,
+    hiburanSection: hiburanData,
+    gayaHidupSection: gayaHidubData,
+    sihatSection: sihatData,
+    bhPlusSection: bhPlusData,
+    infografikSection: infografikdata,
+    galeriFotoSection: galeriFotoData,
+    podcastSection: podcatData,
+    bhTvSection: bhTvData,
+    videoTerkiniSection: videoTerkiniData,
+  } = homeData || {}
+
   const utamaData = {
     title: utamaSection?.title || 'Utama',
     featuredMain: utamaSection?.featuredMain,
-    featuredSide: (utamaSection?.featuredSide as any[]) || [],
-    featuredBullet: (utamaSection?.featuredBullet as any[]) || [],
-    gridPosts: (utamaSection?.gridPosts as any[]) || [],
+    featuredSide: utamaSection?.featuredSide || [],
+    featuredBullet: utamaSection?.featuredBullet || [],
+    gridPosts: utamaSection?.gridPosts || [],
   }
-  // Fetch Terkini
-  const terkiniResponse = await payload.find({
-    collection: 'posts',
-    where: { status: { equals: 'published' } },
-    sort: '-publishedAt',
-    limit: utamaSection?.terkiniLimit || 5,
-  })
-
-  // Fetch Trending
-  const trendingResponse = await payload.find({
-    collection: 'posts',
-    where: {
-      status: { equals: 'published' },
-      isTrending: { equals: true },
-    },
-    sort: '-publishedAt',
-    limit: utamaSection?.trendingLimit || 5,
-  })
-  const TrendingInTopData = homeData?.trending_in_top
-  const disyorkanData = homeData?.disyorkanSection
-  const rencanaData = homeData?.rencanaSection
-  const sukanData = homeData?.sukanSection
-  const duniaData = homeData?.duniaSection
-  const bisnesData = homeData?.bisnesSection
-  const hiburanData = homeData?.hiburanSection
-  const gayaHidubData = homeData?.gayaHidupSection
-  const sihatData = homeData?.sihatSection
-  const bhPlusData = homeData?.bhPlusSection
-  const infografikdata = homeData?.infografikSection
-  const galeriFotoData = homeData?.galeriFotoSection
-  const podcatData = homeData?.podcastSection
-  const bhTvData = homeData?.bhTvSection
-  const videoTerkiniData = homeData?.videoTerkiniSection
-
-  const adsData = await payload.findGlobal({ slug: 'ads-config' as any })
   return (
     <div className="min-h-screen">
       {/* Slide bài viết trượt ngang */}
