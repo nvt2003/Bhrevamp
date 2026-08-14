@@ -184,34 +184,6 @@ export default async function HomePage() {
         <div className="flex mt-8">
           <DuniaSection data={duniaData} />
         </div>
-        {/* <div className="flex gap-2 mt-8">
-          <div className="flex-[2] min-w-0">
-            <div className="flex gap-2">
-              Gaya Hidup
-              <div>
-                <GayaHidupSection data={gayaHidubData} />
-              </div>
-              Shihat
-              <div>
-                <SihatSection data={sihatData} />
-              </div>
-            </div>
-            Bh Plus
-            <div>
-              <BhPlusSection data={bhPlusData} />
-            </div>
-          </div>
-          <div className="flex-[1] min-w-0">
-            Infografik
-            <div>
-              <InfografikSection data={infografikdata} />
-            </div>
-            Galeri Foto
-            <div>
-              <GaleriFotoSection data={galeriFotoData} />
-            </div>
-          </div>
-        </div> */}
         <div className="flex flex-col gap-2 mt-8 lg:flex-row">
           <div className="flex flex-col gap-2 min-w-0 lg:order-1 lg:flex-[2]">
             {/* Gaya Hidup */}
