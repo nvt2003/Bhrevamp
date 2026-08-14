@@ -33,7 +33,8 @@ export default async function HomePage() {
     depth: 2,
   })
   const isHeaderEmpty = headerData?.sliders
-  if (!isHeaderEmpty)
+
+  if (isHeaderEmpty)
     try {
       await seedHeader(payload)
     } catch (error) {
