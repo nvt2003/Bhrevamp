@@ -34,6 +34,7 @@ export default function GaleriFotoSection({ data }: { data: any }) {
                 alt={item.caption || `Galeri Foto ${index + 1}`}
                 fill
                 loading="lazy"
+                sizes="(max-width: 639px) 50vw, 25vw"
                 className="object-cover group-hover:scale-110 transition-transform duration-300"
               />
               {/* Overlay hover nhẹ */}
