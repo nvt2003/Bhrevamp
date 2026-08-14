@@ -18,3 +18,8 @@ svg {
 @theme {
   --color-brand-media: #d81b50;
 }
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}

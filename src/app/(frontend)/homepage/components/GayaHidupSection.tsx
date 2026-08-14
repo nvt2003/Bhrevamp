@@ -33,7 +33,7 @@ export default function GayaHidupSection({ data }: { data: any }) {
                   alt={featuredPost.title}
                   fill
                   loading="lazy"
-                  className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  className="relative aspect-[16/10] w-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
               )}
             </div>
@@ -51,11 +51,11 @@ export default function GayaHidupSection({ data }: { data: any }) {
       )}
 
       {/* 4 Bài Nhỏ Phía Dưới (Danh sách xếp dọc) */}
-      <div className="border-t pt-2 flex flex-col divide-y divide-gray-200">
+      <div className="border-t border-gray-200 dark:border-gray-800 pt-2 flex flex-col divide-y divide-gray-200">
         {subPosts.map((post: any) => {
           if (typeof post !== 'object') return null
           return (
-            <div key={post.id} className="py-3">
+            <div key={post.id} className="py-3 dark:border-t dark:border-gray-800">
               <Link
                 href={`/posts/${post.slug}`}
                 className="group flex gap-3 items-start justify-between"
@@ -64,7 +64,7 @@ export default function GayaHidupSection({ data }: { data: any }) {
                   <h4 className="text-sm font-bold line-clamp-3 group-hover:text-red-600 leading-snug mb-1">
                     {post.title}
                   </h4>
-                  <span className="text-xs text-gray-400">9 minit lepas</span>
+                  <span className="text-xs text-gray-400">{formatRelativeTime(post.duration)}</span>
                 </div>
                 <div className="relative w-24 aspect-[16/10] shrink-0 bg-slate-100 overflow-hidden">
                   {post.featuredImage?.url && (

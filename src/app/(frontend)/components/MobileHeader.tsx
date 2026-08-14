@@ -126,12 +126,12 @@ export default function MobileHeader({
 
       {/* MENU MOBILE SLIDE-DOWN OVERLAY */}
       {isOpen && (
-        <div className="fixed inset-x-0 top-[57px] bottom-0 bg-gray-50 dark:bg-gray-950 z-40 overflow-y-auto flex flex-col transition-all">
-          <div className="p-4 space-y-6">
+        <div className="fixed right-0 top-[57px] bottom-0 z-50 flex w-3/4 max-w-[400px] flex-col overflow-y-auto bg-gray-50 shadow-2xl transition-all dark:bg-gray-950">
+          <div className="w-full min-w-0 p-4 space-y-6">
             {/* HÀNG TOP MENU: SOCIAL ICONS & THEME SELECTOR */}
             <div className="flex flex-col items-end gap-3 pt-2">
               {/* SOCIAL ICONS */}
-              <div className="flex items-center gap-1.5 text-white">
+              <div className="flex max-w-full flex-wrap items-center justify-end gap-1.5 text-white">
                 <a
                   href="#"
                   className="w-7 h-7 rounded-full bg-gray-800 dark:bg-gray-800 flex items-center justify-center hover:bg-red-600 transition-colors"

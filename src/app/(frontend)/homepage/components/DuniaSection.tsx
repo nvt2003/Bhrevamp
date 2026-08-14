@@ -59,13 +59,18 @@ export default function DuniaSection({ data }: { data: any }) {
           {sidePosts.map((post: any, idx: number) => {
             if (typeof post !== 'object') return null
             return (
-              <div key={post.id} className={`py-3 ${idx === 0 ? 'pt-0' : ''}`}>
+              <div
+                key={post.id}
+                className={`dark:border-t border-gray-200 dark:border-gray-800 py-3 ${idx === 0 ? 'pt-0' : ''}`}
+              >
                 <Link href={`/posts/${post.slug}`} className="group flex gap-3 items-start">
                   <div className="flex-1">
                     <h4 className="text-sm font-bold line-clamp-3 group-hover:text-red-600 leading-snug mb-1">
                       {post.title}
                     </h4>
-                    <span className="text-xs text-gray-400">9 minit lepas</span>
+                    <span className="text-xs text-gray-400">
+                      {formatRelativeTime(post.duration)}
+                    </span>
                   </div>
                   <div className="relative w-28 aspect-[16/10] shrink-0 bg-slate-100 overflow-hidden">
                     {post.featuredImage?.url && (

@@ -54,7 +54,7 @@ export default function BhTvSection({ data }: { data: any }) {
                     alt={mainVideo.title}
                     fill
                     loading="lazy"
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="w-full aspect-[16/10] object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 )}
 
@@ -83,7 +83,7 @@ export default function BhTvSection({ data }: { data: any }) {
         )}
 
         {/* BÊN PHẢI: Lưới 6 Video Nhỏ (Col 7 - Grid 3 Cột x 2 Hàng) */}
-        <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="lg:col-span-7 grid grid-cols-2 sm:grid-cols-3 gap-4">
           {subVideos.map((post: any) => {
             if (typeof post !== 'object') return null
 

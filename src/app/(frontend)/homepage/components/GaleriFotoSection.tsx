@@ -18,8 +18,8 @@ export default function GaleriFotoSection({ data }: { data: any }) {
         </Link>
       </div>
 
-      {/* Lưới ảnh Grid 4 cột (Mobile 2 cột, MD/LG 4 cột) */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+      {/* Lưới ảnh Grid 4 cột */}
+      <div className="grid grid-cols-4 gap-1">
         {galleryImages.map((item: any, index: number) => {
           const imgUrl = item.image?.url || item.image
           if (!imgUrl) return null
@@ -34,6 +34,7 @@ export default function GaleriFotoSection({ data }: { data: any }) {
                 alt={item.caption || `Galeri Foto ${index + 1}`}
                 fill
                 loading="lazy"
+                sizes="(max-width: 639px) 50vw, 25vw"
                 className="object-cover group-hover:scale-110 transition-transform duration-300"
               />
               {/* Overlay hover nhẹ */}

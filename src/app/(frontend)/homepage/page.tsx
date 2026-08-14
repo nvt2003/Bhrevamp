@@ -22,7 +22,8 @@ import PodcastSection from './components/PodcastSection'
 import BhTvSection from './components/BhTvSection'
 import VideoTerkiniSection from './components/VideoTerkiniSection'
 import SihatSection from './components/SihatSection'
-import AdSlot from './components/AdSlot'
+import AdSlot from '../components/AdSlot'
+import MobileStickyAd from './components/MobileStickyAd'
 
 export default async function HomePage() {
   const payload = await getPayload({ config: configPromise })
@@ -32,7 +33,7 @@ export default async function HomePage() {
     depth: 2,
   })
   const isHeaderEmpty = headerData?.sliders
-  if (isHeaderEmpty)
+  if (!isHeaderEmpty)
     try {
       await seedHeader(payload)
     } catch (error) {
@@ -114,18 +115,23 @@ export default async function HomePage() {
       <NewsSlider sliders={headerData?.sliders ?? []} />
       <TrendingBar data={TrendingInTopData} />
       <FloatingWidget />
+      <MobileStickyAd data={adsData?.BH_HP_Sticky_Leaderboard} />
       {/* Các phần nội dung khác của trang chủ */}
       <div className="max-w-7xl mx-auto px-4 py-6">
         <div className="w-full flex justify-center">
-          <AdSlot pcAd={adsData?.BH} mobileAd={adsData?.BH_320x50} className="my-6" />
+          <AdSlot
+            pcAd={adsData?.BH_Web_Billboard_Homepage_970x250}
+            mobileAd={adsData?.BH_320x50}
+            className="my-6"
+          />
         </div>
         {/* Utama */}
-        <div className="w-full flex gap-4 mt-6">
+        <div className="mt-6 flex w-full flex-col gap-4 md:flex-row">
           <div className="flex-[2] min-w-0">
-            <UtamaSection data={utamaData} />
+            <UtamaSection data={utamaData} adsData={adsData?.BH_Mobile_Banner} />
           </div>
           <div className="flex-[1] min-w-0">
-            <AdSlot pcAd={adsData?.Ad_Before_Terkini} className="my-6" />
+            <AdSlot pcAd={adsData?.BH_300x250} className="my-6" />
             <SidebarTop terkini={terkiniResponse.docs} trending={trendingResponse.docs} />
           </div>
         </div>
@@ -149,8 +155,8 @@ export default async function HomePage() {
         <div className="flex mt-8">
           <SukanSection data={sukanData} />
         </div>
-        <div className="flex mt-8 gap-2">
-          <div className="flex-[2] min-w-0">
+        <div className="flex flex-col md:flex-row mt-8 gap-2">
+          <div className="flex-[2] min-w-0 space-y-4">
             {/* Bisnes */}
             <div>
               <BisnesSection data={bisnesData} />
@@ -160,9 +166,13 @@ export default async function HomePage() {
               <HiburanSection data={hiburanData} />
             </div>
           </div>
-          <div className="flex-[1] min-w-0">
+          <div className="flex-[1] min-w-0 space-y-4">
             <div className="flex items-center justify-center">
-              <AdSlot pcAd={adsData?.Ad_Before_Poscast} className="my-6" />
+              <AdSlot
+                pcAd={adsData?.BH_300x250_b}
+                mobileAd={adsData?.BH_Mobile_Banner_b}
+                className="my-6"
+              />
             </div>
             {/* Postcast */}
             <div>
@@ -174,30 +184,32 @@ export default async function HomePage() {
         <div className="flex mt-8">
           <DuniaSection data={duniaData} />
         </div>
-        <div className="flex gap-2 mt-8">
-          <div className="flex-[2] min-w-0">
-            <div className="flex gap-2">
-              {/* Gaya Hidup */}
-              <div>
-                <GayaHidupSection data={gayaHidubData} />
-              </div>
-              {/* Shihat */}
-              <div>
-                <SihatSection data={sihatData} />
-              </div>
+        <div className="flex flex-col gap-2 mt-8 lg:flex-row">
+          <div className="flex flex-col gap-2 min-w-0 lg:order-1 lg:flex-[2]">
+            {/* Gaya Hidup */}
+            <div className="order-1 lg:order-none">
+              <GayaHidupSection data={gayaHidubData} />
             </div>
+
+            {/* Sihat */}
+            <div className="order-2 lg:order-none">
+              <SihatSection data={sihatData} />
+            </div>
+
             {/* Bh Plus */}
-            <div>
+            <div className="order-3 lg:order-none">
               <BhPlusSection data={bhPlusData} />
             </div>
           </div>
-          <div className="flex-[1] min-w-0">
+
+          <div className="flex flex-col gap-2 min-w-0 lg:order-2 lg:flex-[1]">
             {/* Infografik */}
-            <div>
+            <div className="order-4 lg:order-none">
               <InfografikSection data={infografikdata} />
             </div>
+
             {/* Galeri Foto */}
-            <div>
+            <div className="order-5 lg:order-none">
               <GaleriFotoSection data={galeriFotoData} />
             </div>
           </div>

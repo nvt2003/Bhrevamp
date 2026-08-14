@@ -59,7 +59,10 @@ export default function RencanaSection({ data }: { data: any }) {
           {sidePosts.map((post: any, idx: number) => {
             if (typeof post !== 'object') return null
             return (
-              <div key={post.id} className={`py-3 ${idx === 0 ? 'pt-0' : ''}`}>
+              <div
+                key={post.id}
+                className={`dark:border-t border-gray-200 dark:border-gray-800 py-3 ${idx === 0 ? 'pt-0' : ''}`}
+              >
                 <Link href={`/posts/${post.slug}`} className="group flex gap-3 items-start">
                   <div className="flex-1">
                     <h4 className="text-sm font-bold line-clamp-3 group-hover:text-red-600 leading-snug mb-1">
@@ -74,7 +77,7 @@ export default function RencanaSection({ data }: { data: any }) {
                         alt={post.title}
                         fill
                         loading="lazy"
-                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                        className="w-full aspect-[5/3] object-cover group-hover:scale-105 transition-transform duration-300"
                       />
                     )}
                   </div>

@@ -53,11 +53,11 @@ export default function BhPlusSection({ data }: { data: any }) {
       </div>
 
       {/* Hàng Dưới: 4 Bài Nhỏ Grid 2x2 */}
-      <div className="border-t pt-4 grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
+      <div className="border-t border-gray-200 dark:border-gray-800 pt-4 grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
         {subPosts.map((post: any) => {
           if (typeof post !== 'object') return null
           return (
-            <div key={post.id} className="border-b border-gray-100 pb-3">
+            <div key={post.id} className="border-b border-gray-100  dark:border-gray-800 pb-3">
               <Link
                 href={`/posts/${post.slug}`}
                 className="group flex gap-3 items-start justify-between"

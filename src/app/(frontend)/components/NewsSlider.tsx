@@ -30,16 +30,16 @@ export default function NewsSlider({ sliders = [] }: { sliders?: any[] }) {
   const nextRef = useRef<HTMLButtonElement>(null)
 
   return (
-    <section className="w-full bg-gray-100 dark:bg-gray-800/60 py-3 my-2">
+    <section className="w-full bg-gray-100 dark:bg-[#444] py-3 my-2">
       <div className="max-w-7xl mx-auto px-4 relative flex items-center">
         {/* NÚT MŨI TÊN TRÁI */}
-        <div className="absolute left-0 top-0 z-10 flex h-full w-24 p-4 items-center justify-start bg-gradient-to-r from-gray-200 to-transparent">
+        <div className="absolute left-0 top-0 z-10 flex h-full w-24 p-4 items-center justify-start bg-gradient-to-r from-gray-200 dark:from-[#444] to-transparent">
           <button
             ref={prevRef}
             aria-label="Previous slide"
-            className="z-10 shrink-0 mr-2 w-5 h-5 md:w-9 md:h-9 rounded-md border-2 border-red-500/80 bg-white dark:bg-gray-900 text-red-600 flex items-center justify-center hover:bg-red-600 hover:text-white transition-colors shadow-sm disabled:opacity-30 disabled:cursor-not-allowed"
+            className="z-10 shrink-0 mr-2 w-5 h-5 md:w-9 md:h-9 rounded-md border-2 border-[#D31145] bg-white dark:bg-gray-900 text-red-600 flex items-center justify-center hover:bg-red-600 hover:text-white transition-colors shadow-sm disabled:opacity-30 disabled:cursor-not-allowed"
           >
-            <ChevronLeft className="w-full h-full p-[1px] stroke-[2.5]" />
+            <ChevronLeft className="w-full text-[#D31145] h-full p-[1px] stroke-[2.5]" />
           </button>
         </div>
 
@@ -61,7 +61,7 @@ export default function NewsSlider({ sliders = [] }: { sliders?: any[] }) {
               }
             }}
             breakpoints={{
-              640: { slidesPerView: 2 },
+              640: { slidesPerView: 1.2 },
               1024: { slidesPerView: 3 },
               1280: { slidesPerView: 4 },
             }}
@@ -86,7 +86,7 @@ export default function NewsSlider({ sliders = [] }: { sliders?: any[] }) {
                 <SwiperSlide key={item.id || index}>
                   <Link
                     href={href}
-                    className="group flex items-center gap-3 bg-transparent dark:bg-gray-900 p-2 hover:shadow-md transition-all h-20 border-r border-gray-200 dark:border-gray-800"
+                    className="group flex items-center gap-3 bg-transparent p-2 hover:shadow-md transition-all h-20 border-r border-gray-200 dark:border-white-800"
                   >
                     {/* Thumbnail Image */}
                     <div className="relative w-20 h-16 shrink-0 rounded-md overflow-hidden bg-slate-100 dark:bg-gray-700">
@@ -120,13 +120,13 @@ export default function NewsSlider({ sliders = [] }: { sliders?: any[] }) {
 
         {/* NÚT MŨI TÊN PHẢI */}
 
-        <div className="absolute right-0 top-0 z-10 flex h-full w-24 p-4 items-center justify-end bg-gradient-to-l from-gray-200 to-transparent">
+        <div className="absolute right-0 top-0 z-10 flex h-full w-24 p-4 items-center justify-end bg-gradient-to-l from-gray-200 dark:from-[#444] to-transparent">
           <button
             ref={nextRef}
             aria-label="Next slide"
-            className="z-10 shrink-0 ml-2 w-5 h-5 md:w-9 md:h-9 rounded-md border-2 border-red-500/80 bg-white dark:bg-gray-900 text-red-600 flex items-center justify-center hover:bg-red-600 hover:text-white transition-colors shadow-sm disabled:opacity-30 disabled:cursor-not-allowed"
+            className="z-10 shrink-0 ml-2 w-5 h-5 md:w-9 md:h-9 rounded-md border-2 border-[#D31145] bg-white dark:bg-gray-900 text-red-600 flex items-center justify-center hover:bg-red-600 hover:text-white transition-colors shadow-sm disabled:opacity-30 disabled:cursor-not-allowed"
           >
-            <ChevronRight className="w-full h-full p-[1px] stroke-[2.5]" />
+            <ChevronRight className="w-full h-full p-[1px] stroke-[2.5] text-[#D31145]" />
           </button>
         </div>
       </div>

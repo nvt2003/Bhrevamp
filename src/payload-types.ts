@@ -722,7 +722,7 @@ export interface Footer {
  */
 export interface AdsConfig {
   id: number;
-  BH?: {
+  BH_Web_Billboard_Homepage_970x250?: {
     active?: boolean | null;
     imageUrl?: string | null;
     link?: string | null;
@@ -739,7 +739,7 @@ export interface AdsConfig {
     customWidth?: number | null;
     customHeight?: number | null;
   };
-  Ad_Before_Terkini?: {
+  BH_300x250?: {
     active?: boolean | null;
     imageUrl?: string | null;
     link?: string | null;
@@ -756,7 +756,7 @@ export interface AdsConfig {
     customWidth?: number | null;
     customHeight?: number | null;
   };
-  Ad_Before_Poscast?: {
+  BH_300x250_b?: {
     active?: boolean | null;
     imageUrl?: string | null;
     link?: string | null;
@@ -795,18 +795,51 @@ export interface AdsConfig {
     imageUrl?: string | null;
     link?: string | null;
     code?: string | null;
+    sizePreset?:
+      | (
+          | 'max-w-[970px] aspect-[970/90]'
+          | 'max-w-[300px] aspect-[300/250]'
+          | 'max-w-[320px] aspect-[320/50]'
+          | 'max-w-[320px] aspect-[320/100]'
+          | 'custom'
+        )
+      | null;
+    customWidth?: number | null;
+    customHeight?: number | null;
   };
   BH_Mobile_Banner?: {
     active?: boolean | null;
     imageUrl?: string | null;
     link?: string | null;
     code?: string | null;
+    sizePreset?:
+      | (
+          | 'max-w-[970px] aspect-[970/90]'
+          | 'max-w-[300px] aspect-[300/250]'
+          | 'max-w-[320px] aspect-[320/50]'
+          | 'max-w-[320px] aspect-[320/100]'
+          | 'custom'
+        )
+      | null;
+    customWidth?: number | null;
+    customHeight?: number | null;
   };
   BH_Mobile_Banner_b?: {
     active?: boolean | null;
     imageUrl?: string | null;
     link?: string | null;
     code?: string | null;
+    sizePreset?:
+      | (
+          | 'max-w-[970px] aspect-[970/90]'
+          | 'max-w-[300px] aspect-[300/250]'
+          | 'max-w-[320px] aspect-[320/50]'
+          | 'max-w-[320px] aspect-[320/100]'
+          | 'custom'
+        )
+      | null;
+    customWidth?: number | null;
+    customHeight?: number | null;
   };
   BH_Multisize_HouseAds?: {
     active?: boolean | null;
@@ -1055,7 +1088,7 @@ export interface FooterSelect<T extends boolean = true> {
  * via the `definition` "ads-config_select".
  */
 export interface AdsConfigSelect<T extends boolean = true> {
-  BH?:
+  BH_Web_Billboard_Homepage_970x250?:
     | T
     | {
         active?: T;
@@ -1066,7 +1099,7 @@ export interface AdsConfigSelect<T extends boolean = true> {
         customWidth?: T;
         customHeight?: T;
       };
-  Ad_Before_Terkini?:
+  BH_300x250?:
     | T
     | {
         active?: T;
@@ -1077,7 +1110,7 @@ export interface AdsConfigSelect<T extends boolean = true> {
         customWidth?: T;
         customHeight?: T;
       };
-  Ad_Before_Poscast?:
+  BH_300x250_b?:
     | T
     | {
         active?: T;
@@ -1106,6 +1139,9 @@ export interface AdsConfigSelect<T extends boolean = true> {
         imageUrl?: T;
         link?: T;
         code?: T;
+        sizePreset?: T;
+        customWidth?: T;
+        customHeight?: T;
       };
   BH_Mobile_Banner?:
     | T
@@ -1114,6 +1150,9 @@ export interface AdsConfigSelect<T extends boolean = true> {
         imageUrl?: T;
         link?: T;
         code?: T;
+        sizePreset?: T;
+        customWidth?: T;
+        customHeight?: T;
       };
   BH_Mobile_Banner_b?:
     | T
@@ -1122,6 +1161,9 @@ export interface AdsConfigSelect<T extends boolean = true> {
         imageUrl?: T;
         link?: T;
         code?: T;
+        sizePreset?: T;
+        customWidth?: T;
+        customHeight?: T;
       };
   BH_Multisize_HouseAds?:
     | T

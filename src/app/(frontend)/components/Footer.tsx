@@ -53,50 +53,51 @@ export default function Footer({ data }: { data: any }) {
               />
             )}
           </div>
+          <div className="flex gap-2">
+            {/* Social Icons */}
+            <div className="flex items-center gap-2">
+              {socialLinks?.map((item: any, idx: number) => {
+                const IconComponent = Icons[item.platform as keyof typeof Icons]
+                return (
+                  <a
+                    key={idx}
+                    href={item.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={item.platform}
+                    className="w-9 h-9 rounded-full bg-neutral-700 hover:bg-neutral-600 text-white flex items-center justify-center transition-colors"
+                  >
+                    {IconComponent ? <IconComponent /> : null}
+                  </a>
+                )
+              })}
+            </div>
 
-          {/* Social Icons */}
-          <div className="flex items-center gap-2">
-            {socialLinks?.map((item: any, idx: number) => {
-              const IconComponent = Icons[item.platform as keyof typeof Icons]
-              return (
-                <a
-                  key={idx}
-                  href={item.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label={item.platform}
-                  className="w-9 h-9 rounded-full bg-neutral-700 hover:bg-neutral-600 text-white flex items-center justify-center transition-colors"
-                >
-                  {IconComponent ? <IconComponent /> : null}
+            {/* Mobile App Badges */}
+            <div className="flex items-center gap-3">
+              {appStoreLinks?.appStoreUrl && (
+                <a href={appStoreLinks.appStoreUrl} target="_blank" rel="noreferrer">
+                  <Image
+                    src="/assets/app-store-badge.png"
+                    alt="Download on App Store"
+                    width={135}
+                    height={40}
+                    className="h-10 w-auto"
+                  />
                 </a>
-              )
-            })}
-          </div>
-
-          {/* Mobile App Badges */}
-          <div className="flex items-center gap-3">
-            {appStoreLinks?.appStoreUrl && (
-              <a href={appStoreLinks.appStoreUrl} target="_blank" rel="noreferrer">
-                <Image
-                  src="/assets/app-store-badge.png"
-                  alt="Download on App Store"
-                  width={135}
-                  height={40}
-                  className="h-10 w-auto"
-                />
-              </a>
-            )}
-            {appStoreLinks?.googlePlayUrl && (
-              <a href={appStoreLinks.googlePlayUrl} target="_blank" rel="noreferrer">
-                <Image
-                  src="/assets/google-play-badge.png"
-                  alt="Get it on Google Play"
-                  width={135}
-                  height={40}
-                  className="h-10 w-auto"
-                />
-              </a>
-            )}
+              )}
+              {appStoreLinks?.googlePlayUrl && (
+                <a href={appStoreLinks.googlePlayUrl} target="_blank" rel="noreferrer">
+                  <Image
+                    src="/assets/google-play-badge.png"
+                    alt="Get it on Google Play"
+                    width={135}
+                    height={40}
+                    className="h-10 w-auto"
+                  />
+                </a>
+              )}
+            </div>
           </div>
         </div>
 
@@ -104,10 +105,14 @@ export default function Footer({ data }: { data: any }) {
         <div className="border-t border-gray-600 my-6" />
 
         {/* --- Middle Row: Link Columns --- */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-8 py-2">
+        <div className="grid grid-cols-2 md:grid-cols-4 md:grid-flow-row grid-flow-col grid-rows-2 md:grid-rows-1 gap-4 justify-items-center">
           {columns?.map((col: any, colIdx: number) => (
             <div key={colIdx} className="space-y-2">
-              {col.title && <h4 className="text-white font-bold text-base mb-3">{col.title}</h4>}
+              {col.title && (
+                <h4 className="text-white font-bold text-base mb-3 text-left w-full">
+                  {col.title}
+                </h4>
+              )}
               <ul className="space-y-1.5 text-xs">
                 {col.links?.map((link: any, linkIdx: number) => (
                   <li key={linkIdx}>
