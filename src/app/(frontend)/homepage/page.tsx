@@ -22,7 +22,8 @@ import PodcastSection from './components/PodcastSection'
 import BhTvSection from './components/BhTvSection'
 import VideoTerkiniSection from './components/VideoTerkiniSection'
 import SihatSection from './components/SihatSection'
-import AdSlot from './components/AdSlot'
+import AdSlot from '../components/AdSlot'
+import MobileStickyAd from './components/MobileStickyAd'
 
 export default async function HomePage() {
   const payload = await getPayload({ config: configPromise })
@@ -114,6 +115,7 @@ export default async function HomePage() {
       <NewsSlider sliders={headerData?.sliders ?? []} />
       <TrendingBar data={TrendingInTopData} />
       <FloatingWidget />
+      <MobileStickyAd data={adsData?.BH_HP_Sticky_Leaderboard} />
       {/* Các phần nội dung khác của trang chủ */}
       <div className="max-w-7xl mx-auto px-4 py-6">
         <div className="w-full flex justify-center">
