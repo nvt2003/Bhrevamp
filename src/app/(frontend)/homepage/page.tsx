@@ -117,7 +117,11 @@ export default async function HomePage() {
       {/* Các phần nội dung khác của trang chủ */}
       <div className="max-w-7xl mx-auto px-4 py-6">
         <div className="w-full flex justify-center">
-          <AdSlot pcAd={adsData?.BH} mobileAd={adsData?.BH_320x50} className="my-6" />
+          <AdSlot
+            pcAd={adsData?.BH_Web_Billboard_Homepage_970x250}
+            mobileAd={adsData?.BH_320x50}
+            className="my-6"
+          />
         </div>
         {/* Utama */}
         <div className="mt-6 flex w-full flex-col gap-4 md:flex-row">
@@ -125,7 +129,7 @@ export default async function HomePage() {
             <UtamaSection data={utamaData} adsData={adsData?.BH_Mobile_Banner} />
           </div>
           <div className="flex-[1] min-w-0">
-            <AdSlot pcAd={adsData?.Ad_Before_Terkini} className="my-6" />
+            <AdSlot pcAd={adsData?.BH_300x250} className="my-6" />
             <SidebarTop terkini={terkiniResponse.docs} trending={trendingResponse.docs} />
           </div>
         </div>
@@ -162,7 +166,7 @@ export default async function HomePage() {
           </div>
           <div className="flex-[1] min-w-0">
             <div className="flex items-center justify-center">
-              <AdSlot pcAd={adsData?.Ad_Before_Poscast} className="my-6" />
+              <AdSlot pcAd={adsData?.BH_300x250_b} className="my-6" />
             </div>
             {/* Postcast */}
             <div>

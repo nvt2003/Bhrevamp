@@ -722,7 +722,7 @@ export interface Footer {
  */
 export interface AdsConfig {
   id: number;
-  BH?: {
+  BH_Web_Billboard_Homepage_970x250?: {
     active?: boolean | null;
     imageUrl?: string | null;
     link?: string | null;
@@ -739,7 +739,7 @@ export interface AdsConfig {
     customWidth?: number | null;
     customHeight?: number | null;
   };
-  Ad_Before_Terkini?: {
+  BH_300x250?: {
     active?: boolean | null;
     imageUrl?: string | null;
     link?: string | null;
@@ -756,7 +756,7 @@ export interface AdsConfig {
     customWidth?: number | null;
     customHeight?: number | null;
   };
-  Ad_Before_Poscast?: {
+  BH_300x250_b?: {
     active?: boolean | null;
     imageUrl?: string | null;
     link?: string | null;
@@ -1066,7 +1066,7 @@ export interface FooterSelect<T extends boolean = true> {
  * via the `definition` "ads-config_select".
  */
 export interface AdsConfigSelect<T extends boolean = true> {
-  BH?:
+  BH_Web_Billboard_Homepage_970x250?:
     | T
     | {
         active?: T;
@@ -1077,7 +1077,7 @@ export interface AdsConfigSelect<T extends boolean = true> {
         customWidth?: T;
         customHeight?: T;
       };
-  Ad_Before_Terkini?:
+  BH_300x250?:
     | T
     | {
         active?: T;
@@ -1088,7 +1088,7 @@ export interface AdsConfigSelect<T extends boolean = true> {
         customWidth?: T;
         customHeight?: T;
       };
-  Ad_Before_Poscast?:
+  BH_300x250_b?:
     | T
     | {
         active?: T;
