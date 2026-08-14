@@ -82,7 +82,9 @@ export default function VideoTerkiniSection({ data }: { data: any }) {
                       src={post.featuredImage.url}
                       alt={post.title}
                       fill
-                      className="w-full aspect-[9/16] object-cover group-hover:scale-105 transition-transform duration-300"
+                      loading="lazy"
+                      sizes="(max-width: 639px) 50vw, 33vw"
+                      className="object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                   )}
 
@@ -90,7 +92,14 @@ export default function VideoTerkiniSection({ data }: { data: any }) {
                   <div className="absolute top-2.5 right-2.5 z-20">
                     {logoUrl ? (
                       <div className="relative w-8 h-8 border border-white rounded overflow-hidden bg-white shadow-md">
-                        <Image src={logoUrl} alt="BH TV Logo" fill className="object-cover" />
+                        <Image
+                          src={logoUrl}
+                          alt="BH TV Logo"
+                          loading="lazy"
+                          fill
+                          sizes="(max-width: 50px) 5vw, 3vw"
+                          className="object-cover"
+                        />
                       </div>
                     ) : (
                       <div className="w-8 h-8 border border-white rounded-xs bg-yellow-400 flex flex-col items-center justify-center leading-none text-black font-extrabold shadow-md">

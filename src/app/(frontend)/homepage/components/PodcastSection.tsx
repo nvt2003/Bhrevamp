@@ -35,6 +35,7 @@ export default function PodcastSection({ data }: { data: any }) {
                       alt={post.title}
                       fill
                       loading="lazy"
+                      sizes="(max-width: 639px) 50vw, 33vw"
                       className="object-cover group-hover:scale-105 transition-transform duration-300 opacity-90"
                     />
                   )}
@@ -62,7 +63,13 @@ export default function PodcastSection({ data }: { data: any }) {
                   <div className="absolute bottom-2 left-2 z-10">
                     {logoUrl ? (
                       <div className="relative w-9 h-9 border-2 border-white rounded overflow-hidden bg-white shadow-md">
-                        <Image src={logoUrl} alt="Channel Logo" fill className="object-cover" />
+                        <Image
+                          src={logoUrl}
+                          alt="Channel Logo"
+                          fill
+                          sizes="(max-width: 50px) 5vw, 3vw"
+                          className="object-cover"
+                        />
                       </div>
                     ) : (
                       /* Badge Logo fallback đẹp chuẩn kiểu BH TV */
