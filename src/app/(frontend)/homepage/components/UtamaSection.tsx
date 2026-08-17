@@ -22,7 +22,7 @@ export default function UtamaSection({ data, adsData }: { data: any; adsData?: a
       <div className="block md:hidden">
         {/* Featured Main */}
         {featuredMain && (
-          <div>
+          <div className="relative">
             <div className="mb-4 aspect-[16/9] overflow-hidden rounded shadow-sm">
               <img
                 src={featuredMain.featuredImage?.url}
@@ -31,21 +31,21 @@ export default function UtamaSection({ data, adsData }: { data: any; adsData?: a
               />
             </div>
 
-            <div className="mb-2 flex items-center gap-2 text-sm">
-              <span className="font-bold text-[#D81B50]">{featuredMain.category?.name}</span>
+            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent p-4 pt-16">
+              <div className="mb-2 flex items-center gap-2 text-sm">
+                <span className="font-bold text-[#D81B50]">{featuredMain.category?.name}</span>
 
-              <span className="text-xs text-gray-500">
-                {formatRelativeTime(featuredMain.publishedAt)}
-              </span>
+                <span className="text-xs text-gray-200">
+                  {formatRelativeTime(featuredMain.publishedAt)}
+                </span>
+              </div>
+
+              <h1 className="mb-2 text-xl font-bold leading-tight text-white">
+                {featuredMain.title}
+              </h1>
+
+              <p className="line-clamp-2 text-sm text-gray-200">{featuredMain.summary}</p>
             </div>
-
-            <h1 className="mb-2 text-xl font-bold leading-tight dark:text-white">
-              {featuredMain.title}
-            </h1>
-
-            <p className="mb-4 line-clamp-2 text-sm text-gray-600 dark:text-gray-400">
-              {featuredMain.summary}
-            </p>
           </div>
         )}
         <AdSlot mobileAd={adsData} />
