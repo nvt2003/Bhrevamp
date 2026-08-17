@@ -86,9 +86,7 @@ export default function SihatSection({ data }: { data: any }) {
                   <h4 className="text-sm font-bold text-gray-900 leading-snug group-hover:underline line-clamp-2 mb-1.5">
                     {post.title}
                   </h4>
-                  <p className="text-xs text-gray-400 font-normal">
-                    {post.publishedAt || '9 minit lepas'}
-                  </p>
+                  <p className="text-xs text-gray-400 font-normal">{post.publishedAt}</p>
                 </div>
 
                 {/* Thumbnail nhỏ bên phải */}

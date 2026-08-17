@@ -69,7 +69,7 @@ export default function DuniaSection({ data }: { data: any }) {
                       {post.title}
                     </h4>
                     <span className="text-xs text-gray-400">
-                      {formatRelativeTime(post.duration)}
+                      {formatRelativeTime(post.publishedAt)}
                     </span>
                   </div>
                   <div className="relative w-28 aspect-[16/10] shrink-0 bg-slate-100 overflow-hidden">

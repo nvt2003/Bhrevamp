@@ -69,7 +69,9 @@ export default function SukanSection({ data }: { data: any }) {
                     <h4 className="text-sm font-bold line-clamp-3 group-hover:text-red-600 leading-snug mb-1">
                       {post.title}
                     </h4>
-                    <span className="text-xs text-gray-400">9 minit lepas</span>
+                    <span className="text-xs text-gray-400">
+                      {formatRelativeTime(post.publishedAt)}
+                    </span>
                   </div>
                   <div className="relative w-28 aspect-[16/10] shrink-0 bg-slate-100 overflow-hidden">
                     {post.featuredImage?.url && (
