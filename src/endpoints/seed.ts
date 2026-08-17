@@ -1579,3 +1579,20 @@ export async function seedHeader(payload: Payload) {
 
   console.log('Cập nhật dữ liệu Header Global thành công!')
 }
+async function main() {
+  const payload = await getPayload({
+    config: configPromise,
+  })
+
+  console.log('Starting seed')
+  await seedHeader(payload)
+  await seedPosts(payload)
+  await seedFooter(payload)
+
+  console.log('Seed completed')
+}
+
+main().catch((error) => {
+  console.error('❌ Seed failed:', error)
+  process.exit(1)
+})
