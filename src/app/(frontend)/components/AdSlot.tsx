@@ -75,11 +75,13 @@ export default function AdSlot({
               rel="noopener noreferrer"
               className="block w-full h-full"
             >
-              <img
-                src={adData.imageUrl}
-                alt="Advertisement"
-                className="w-full h-full object-cover"
-              />
+              {adData.imageUrl && (
+                <img
+                  src={adData.imageUrl}
+                  alt="Advertisement"
+                  className="w-full h-full object-cover"
+                />
+              )}
             </a>
           )}
         </div>
