@@ -1,20 +1,36 @@
 import { getPayload } from 'payload'
 import config from '@payload-config'
 
-export async function getHomePageData() {
-  const payload = await getPayload({ config })
+async function getHomePayload() {
+  return getPayload({ config })
+}
 
-  const homeData = await payload.findGlobal({
+// 1. Trending Keywords
+export async function getHomeTrending() {
+  const payload = await getHomePayload()
+
+  const data = await payload.findGlobal({
     slug: 'home-page',
     depth: 2,
     select: {
-      // 1. Trending Keywords
       trending_in_top: {
         keyword: true,
         order: true,
       },
+    },
+  })
 
-      // 2. KHỐI UTAMA
+  return data.trending_in_top
+}
+
+// 2. Utama
+export async function getHomeUtama() {
+  const payload = await getHomePayload()
+
+  const data = await payload.findGlobal({
+    slug: 'home-page',
+    depth: 2,
+    select: {
       utamaSection: {
         title: true,
         terkiniLimit: true,
@@ -33,7 +49,6 @@ export async function getHomePageData() {
           slug: true,
           featuredImage: {
             url: true,
-            alt: true,
           },
         },
         featuredBullet: {
@@ -49,8 +64,20 @@ export async function getHomePageData() {
           },
         },
       },
+    },
+  })
 
-      // 3. KHỐI DISYORKAN
+  return data.utamaSection
+}
+
+// 3. Disyorkan
+export async function getHomeDisyorkan() {
+  const payload = await getHomePayload()
+
+  const data = await payload.findGlobal({
+    slug: 'home-page',
+    depth: 2,
+    select: {
       disyorkanSection: {
         title: true,
         mainPost: {
@@ -70,8 +97,20 @@ export async function getHomePageData() {
           },
         },
       },
+    },
+  })
 
-      // 4. KHỐI RENCANA
+  return data.disyorkanSection
+}
+
+// 4. Rencana
+export async function getHomeRencana() {
+  const payload = await getHomePayload()
+
+  const data = await payload.findGlobal({
+    slug: 'home-page',
+    depth: 2,
+    select: {
       rencanaSection: {
         title: true,
         featuredPosts: {
@@ -91,8 +130,20 @@ export async function getHomePageData() {
           },
         },
       },
+    },
+  })
 
-      // 5. KHỐI SUKAN
+  return data.rencanaSection
+}
+
+// 5. Sukan
+export async function getHomeSukan() {
+  const payload = await getHomePayload()
+
+  const data = await payload.findGlobal({
+    slug: 'home-page',
+    depth: 2,
+    select: {
       sukanSection: {
         title: true,
         featuredPosts: {
@@ -112,8 +163,20 @@ export async function getHomePageData() {
           },
         },
       },
+    },
+  })
 
-      // 6. KHỐI DUNIA
+  return data.sukanSection
+}
+
+// 6. Dunia
+export async function getHomeDunia() {
+  const payload = await getHomePayload()
+
+  const data = await payload.findGlobal({
+    slug: 'home-page',
+    depth: 2,
+    select: {
       duniaSection: {
         title: true,
         featuredPosts: {
@@ -133,8 +196,20 @@ export async function getHomePageData() {
           },
         },
       },
+    },
+  })
 
-      // 7. KHỐI BISNES
+  return data.duniaSection
+}
+
+// 7. Bisnes
+export async function getHomeBisnes() {
+  const payload = await getHomePayload()
+
+  const data = await payload.findGlobal({
+    slug: 'home-page',
+    depth: 2,
+    select: {
       bisnesSection: {
         title: true,
         featuredPosts: {
@@ -154,8 +229,20 @@ export async function getHomePageData() {
           },
         },
       },
+    },
+  })
 
-      // 8. KHỐI HIBURAN
+  return data.bisnesSection
+}
+
+// 8. Hiburan
+export async function getHomeHiburan() {
+  const payload = await getHomePayload()
+
+  const data = await payload.findGlobal({
+    slug: 'home-page',
+    depth: 2,
+    select: {
       hiburanSection: {
         title: true,
         featuredPosts: {
@@ -175,8 +262,20 @@ export async function getHomePageData() {
           },
         },
       },
+    },
+  })
 
-      // 9. KHỐI GAYA HIDUP
+  return data.hiburanSection
+}
+
+// 9. Gaya Hidup
+export async function getHomeGayaHidup() {
+  const payload = await getHomePayload()
+
+  const data = await payload.findGlobal({
+    slug: 'home-page',
+    depth: 2,
+    select: {
       gayaHidupSection: {
         title: true,
         featuredPost: {
@@ -196,8 +295,20 @@ export async function getHomePageData() {
           },
         },
       },
+    },
+  })
 
-      // 10. KHỐI BH PLUS
+  return data.gayaHidupSection
+}
+
+// 10. BH Plus
+export async function getHomeBhPlus() {
+  const payload = await getHomePayload()
+
+  const data = await payload.findGlobal({
+    slug: 'home-page',
+    depth: 2,
+    select: {
       bhPlusSection: {
         title: true,
         featuredPosts: {
@@ -217,8 +328,20 @@ export async function getHomePageData() {
           },
         },
       },
+    },
+  })
 
-      // 11. KHỐI INFOGRAFIK
+  return data.bhPlusSection
+}
+
+// 11. Infografik
+export async function getHomeInfografik() {
+  const payload = await getHomePayload()
+
+  const data = await payload.findGlobal({
+    slug: 'home-page',
+    depth: 2,
+    select: {
       infografikSection: {
         title: true,
         linkUrl: true,
@@ -227,8 +350,20 @@ export async function getHomePageData() {
           alt: true,
         },
       },
+    },
+  })
 
-      // 12. KHỐI GALERI FOTO
+  return data.infografikSection
+}
+
+// 12. Galeri Foto
+export async function getHomeGaleriFoto() {
+  const payload = await getHomePayload()
+
+  const data = await payload.findGlobal({
+    slug: 'home-page',
+    depth: 2,
+    select: {
       galeriFotoSection: {
         title: true,
         galleryImages: {
@@ -240,8 +375,20 @@ export async function getHomePageData() {
           },
         },
       },
+    },
+  })
 
-      // 13. KHỐI PODCAST
+  return data.galeriFotoSection
+}
+
+// 13. Podcast
+export async function getHomePodcast() {
+  const payload = await getHomePayload()
+
+  const data = await payload.findGlobal({
+    slug: 'home-page',
+    depth: 2,
+    select: {
       podcastSection: {
         title: true,
         channelLogo: {
@@ -257,8 +404,20 @@ export async function getHomePageData() {
           },
         },
       },
+    },
+  })
 
-      // 14. KHỐI BH TV
+  return data.podcastSection
+}
+
+// 14. BH TV
+export async function getHomeBhTv() {
+  const payload = await getHomePayload()
+
+  const data = await payload.findGlobal({
+    slug: 'home-page',
+    depth: 2,
+    select: {
       bhTvSection: {
         title: true,
         channelLogo: {
@@ -282,8 +441,20 @@ export async function getHomePageData() {
           },
         },
       },
+    },
+  })
 
-      // 15. KHỐI VIDEO TERKINI
+  return data.bhTvSection
+}
+
+// 15. Video Terkini
+export async function getHomeVideoTerkini() {
+  const payload = await getHomePayload()
+
+  const data = await payload.findGlobal({
+    slug: 'home-page',
+    depth: 2,
+    select: {
       videoTerkiniSection: {
         title: true,
         channelLogo: {
@@ -299,8 +470,20 @@ export async function getHomePageData() {
           },
         },
       },
+    },
+  })
 
-      // 16. KHỐI SIHAT
+  return data.videoTerkiniSection
+}
+
+// 16. Sihat
+export async function getHomeSihat() {
+  const payload = await getHomePayload()
+
+  const data = await payload.findGlobal({
+    slug: 'home-page',
+    depth: 2,
+    select: {
       sihatSection: {
         title: true,
         moreText: true,
@@ -325,5 +508,5 @@ export async function getHomePageData() {
     },
   })
 
-  return homeData
+  return data.sihatSection
 }
