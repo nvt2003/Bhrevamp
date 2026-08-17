@@ -1,13 +1,13 @@
 import React from 'react'
 
 interface AdData {
-  active?: boolean
-  imageUrl?: string
-  link?: string
-  code?: string
-  sizePreset?: string
-  customWidth?: number
-  customHeight?: number
+  active?: boolean | null
+  imageUrl?: string | null
+  link?: string | null
+  code?: string | null
+  sizePreset?: string | null
+  customWidth?: number | null
+  customHeight?: number | null
 }
 interface AdSlotProps {
   pcAd?: AdData
