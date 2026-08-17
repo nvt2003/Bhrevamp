@@ -54,6 +54,7 @@ export default function BhTvSection({ data }: { data: any }) {
                     alt={mainVideo.title}
                     fill
                     loading="lazy"
+                    sizes="(max-width: 639px) 50vw, 25vw"
                     className="w-full aspect-[16/10] object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 )}
