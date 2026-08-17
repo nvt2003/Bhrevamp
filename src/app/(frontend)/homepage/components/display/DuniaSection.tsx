@@ -5,7 +5,6 @@ import { formatRelativeTime } from '@/utilities/formatTime'
 export default function DuniaSection({ data }: { data: any }) {
   if (!data) return null
   const { title = 'Dunia', featuredPosts = [], sidePosts = [] } = data
-  console.log(featuredPosts)
   return (
     <section className="my-8">
       {/* Header */}
