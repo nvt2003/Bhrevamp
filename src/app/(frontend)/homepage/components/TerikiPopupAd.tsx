@@ -28,7 +28,6 @@ export default function TerikiPopupAd({ data, targetRef }: TerikiPopupAdProps) {
       (entries) => {
         const [entry] = entries
         if (entry.isIntersecting) {
-          console.log('Đã lướt tới mục Teriki!')
           setIsVisible(true)
           // ngắt observer sau khi đã kích hoạt 1 lần (nếu chỉ muốn nảy ra 1 lần)
           observer.disconnect()
