@@ -12,8 +12,8 @@ export default function SidebarTop({
   trending,
   adData,
 }: {
-  terkini: any[]
-  trending: any[]
+  terkini: any
+  trending: any
   adData?: any
 }) {
   const sidebarRef = useRef<HTMLDivElement>(null)
