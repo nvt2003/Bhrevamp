@@ -4,9 +4,8 @@ import { formatRelativeTime } from '@/utilities/formatTime'
 
 export default function DuniaSection({ data }: { data: any }) {
   if (!data) return null
-
   const { title = 'Dunia', featuredPosts = [], sidePosts = [] } = data
-
+  console.log(featuredPosts)
   return (
     <section className="my-8">
       {/* Header */}
@@ -35,6 +34,7 @@ export default function DuniaSection({ data }: { data: any }) {
                         alt={post.title}
                         fill
                         loading="lazy"
+                        sizes="(max-width: 639px) 50vw, 33vw"
                         className="object-cover group-hover:scale-105 transition-transform duration-300"
                       />
                     )}
@@ -79,6 +79,7 @@ export default function DuniaSection({ data }: { data: any }) {
                         alt={post.title}
                         fill
                         loading="lazy"
+                        sizes="(max-width: 639px) 50vw, 33vw"
                         className="object-cover group-hover:scale-105 transition-transform duration-300"
                       />
                     )}

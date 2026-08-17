@@ -99,6 +99,7 @@ export default function BhTvSection({ data }: { data: any }) {
                         alt={post.title}
                         fill
                         loading="lazy"
+                        sizes="(max-width: 639px) 50vw, 33vw"
                         className="object-cover group-hover:scale-105 transition-transform duration-300"
                       />
                     )}
