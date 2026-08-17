@@ -1,16 +1,15 @@
-import { Suspense } from 'react'
+import { cache } from 'react'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 
-async function getHomePayload() {
-  return getPayload({ config })
-}
+/**
+ * Hàm core fetch dữ liệu HomePage sử dụng React cache().
+ * Tự động gộp các request trùng lặp trong cùng 1 lượt render trang chủ.
+ */
+const getRawHomePageData = cache(async () => {
+  const payload = await getPayload({ config })
 
-// 1. Trending Keywords
-export async function getHomeTrending() {
-  const payload = await getHomePayload()
-
-  const data = await payload.findGlobal({
+  return payload.findGlobal({
     slug: 'home-page',
     depth: 2,
     select: {
@@ -18,20 +17,6 @@ export async function getHomeTrending() {
         keyword: true,
         order: true,
       },
-    },
-  })
-
-  return data.trending_in_top
-}
-
-// 2. Utama
-export async function getHomeUtama() {
-  const payload = await getHomePayload()
-
-  const data = await payload.findGlobal({
-    slug: 'home-page',
-    depth: 2,
-    select: {
       utamaSection: {
         title: true,
         terkiniLimit: true,
@@ -50,6 +35,7 @@ export async function getHomeUtama() {
           slug: true,
           featuredImage: {
             url: true,
+            alt: true,
           },
         },
         featuredBullet: {
@@ -65,20 +51,6 @@ export async function getHomeUtama() {
           },
         },
       },
-    },
-  })
-
-  return data.utamaSection
-}
-
-// 3. Disyorkan
-export async function getHomeDisyorkan() {
-  const payload = await getHomePayload()
-
-  const data = await payload.findGlobal({
-    slug: 'home-page',
-    depth: 2,
-    select: {
       disyorkanSection: {
         title: true,
         mainPost: {
@@ -98,20 +70,6 @@ export async function getHomeDisyorkan() {
           },
         },
       },
-    },
-  })
-
-  return data.disyorkanSection
-}
-
-// 4. Rencana
-export async function getHomeRencana() {
-  const payload = await getHomePayload()
-
-  const data = await payload.findGlobal({
-    slug: 'home-page',
-    depth: 2,
-    select: {
       rencanaSection: {
         title: true,
         featuredPosts: {
@@ -131,20 +89,6 @@ export async function getHomeRencana() {
           },
         },
       },
-    },
-  })
-
-  return data.rencanaSection
-}
-
-// 5. Sukan
-export async function getHomeSukan() {
-  const payload = await getHomePayload()
-
-  const data = await payload.findGlobal({
-    slug: 'home-page',
-    depth: 2,
-    select: {
       sukanSection: {
         title: true,
         featuredPosts: {
@@ -164,20 +108,6 @@ export async function getHomeSukan() {
           },
         },
       },
-    },
-  })
-
-  return data.sukanSection
-}
-
-// 6. Dunia
-export async function getHomeDunia() {
-  const payload = await getHomePayload()
-
-  const data = await payload.findGlobal({
-    slug: 'home-page',
-    depth: 2,
-    select: {
       duniaSection: {
         title: true,
         featuredPosts: {
@@ -197,20 +127,6 @@ export async function getHomeDunia() {
           },
         },
       },
-    },
-  })
-
-  return data.duniaSection
-}
-
-// 7. Bisnes
-export async function getHomeBisnes() {
-  const payload = await getHomePayload()
-
-  const data = await payload.findGlobal({
-    slug: 'home-page',
-    depth: 2,
-    select: {
       bisnesSection: {
         title: true,
         featuredPosts: {
@@ -230,20 +146,6 @@ export async function getHomeBisnes() {
           },
         },
       },
-    },
-  })
-
-  return data.bisnesSection
-}
-
-// 8. Hiburan
-export async function getHomeHiburan() {
-  const payload = await getHomePayload()
-
-  const data = await payload.findGlobal({
-    slug: 'home-page',
-    depth: 2,
-    select: {
       hiburanSection: {
         title: true,
         featuredPosts: {
@@ -263,20 +165,6 @@ export async function getHomeHiburan() {
           },
         },
       },
-    },
-  })
-
-  return data.hiburanSection
-}
-
-// 9. Gaya Hidup
-export async function getHomeGayaHidup() {
-  const payload = await getHomePayload()
-
-  const data = await payload.findGlobal({
-    slug: 'home-page',
-    depth: 2,
-    select: {
       gayaHidupSection: {
         title: true,
         featuredPost: {
@@ -296,20 +184,6 @@ export async function getHomeGayaHidup() {
           },
         },
       },
-    },
-  })
-
-  return data.gayaHidupSection
-}
-
-// 10. BH Plus
-export async function getHomeBhPlus() {
-  const payload = await getHomePayload()
-
-  const data = await payload.findGlobal({
-    slug: 'home-page',
-    depth: 2,
-    select: {
       bhPlusSection: {
         title: true,
         featuredPosts: {
@@ -329,20 +203,6 @@ export async function getHomeBhPlus() {
           },
         },
       },
-    },
-  })
-
-  return data.bhPlusSection
-}
-
-// 11. Infografik
-export async function getHomeInfografik() {
-  const payload = await getHomePayload()
-
-  const data = await payload.findGlobal({
-    slug: 'home-page',
-    depth: 2,
-    select: {
       infografikSection: {
         title: true,
         linkUrl: true,
@@ -351,20 +211,6 @@ export async function getHomeInfografik() {
           alt: true,
         },
       },
-    },
-  })
-
-  return data.infografikSection
-}
-
-// 12. Galeri Foto
-export async function getHomeGaleriFoto() {
-  const payload = await getHomePayload()
-
-  const data = await payload.findGlobal({
-    slug: 'home-page',
-    depth: 2,
-    select: {
       galeriFotoSection: {
         title: true,
         galleryImages: {
@@ -376,20 +222,6 @@ export async function getHomeGaleriFoto() {
           },
         },
       },
-    },
-  })
-
-  return data.galeriFotoSection
-}
-
-// 13. Podcast
-export async function getHomePodcast() {
-  const payload = await getHomePayload()
-
-  const data = await payload.findGlobal({
-    slug: 'home-page',
-    depth: 2,
-    select: {
       podcastSection: {
         title: true,
         channelLogo: {
@@ -405,20 +237,6 @@ export async function getHomePodcast() {
           },
         },
       },
-    },
-  })
-
-  return data.podcastSection
-}
-
-// 14. BH TV
-export async function getHomeBhTv() {
-  const payload = await getHomePayload()
-
-  const data = await payload.findGlobal({
-    slug: 'home-page',
-    depth: 2,
-    select: {
       bhTvSection: {
         title: true,
         channelLogo: {
@@ -442,20 +260,6 @@ export async function getHomeBhTv() {
           },
         },
       },
-    },
-  })
-
-  return data.bhTvSection
-}
-
-// 15. Video Terkini
-export async function getHomeVideoTerkini() {
-  const payload = await getHomePayload()
-
-  const data = await payload.findGlobal({
-    slug: 'home-page',
-    depth: 2,
-    select: {
       videoTerkiniSection: {
         title: true,
         channelLogo: {
@@ -471,20 +275,6 @@ export async function getHomeVideoTerkini() {
           },
         },
       },
-    },
-  })
-
-  return data.videoTerkiniSection
-}
-
-// 16. Sihat
-export async function getHomeSihat() {
-  const payload = await getHomePayload()
-
-  const data = await payload.findGlobal({
-    slug: 'home-page',
-    depth: 2,
-    select: {
       sihatSection: {
         title: true,
         moreText: true,
@@ -508,6 +298,100 @@ export async function getHomeSihat() {
       },
     },
   })
+})
 
-  return data.sihatSection
+// 1. Trending Keywords
+export async function getHomeTrending() {
+  const data = await getRawHomePageData()
+  return data?.trending_in_top ?? null
+}
+
+// 2. Utama
+export async function getHomeUtama() {
+  const data = await getRawHomePageData()
+  return data?.utamaSection ?? null
+}
+
+// 3. Disyorkan
+export async function getHomeDisyorkan() {
+  const data = await getRawHomePageData()
+  return data?.disyorkanSection ?? null
+}
+
+// 4. Rencana
+export async function getHomeRencana() {
+  const data = await getRawHomePageData()
+  return data?.rencanaSection ?? null
+}
+
+// 5. Sukan
+export async function getHomeSukan() {
+  const data = await getRawHomePageData()
+  return data?.sukanSection ?? null
+}
+
+// 6. Dunia
+export async function getHomeDunia() {
+  const data = await getRawHomePageData()
+  return data?.duniaSection ?? null
+}
+
+// 7. Bisnes
+export async function getHomeBisnes() {
+  const data = await getRawHomePageData()
+  return data?.bisnesSection ?? null
+}
+
+// 8. Hiburan
+export async function getHomeHiburan() {
+  const data = await getRawHomePageData()
+  return data?.hiburanSection ?? null
+}
+
+// 9. Gaya Hidup
+export async function getHomeGayaHidup() {
+  const data = await getRawHomePageData()
+  return data?.gayaHidupSection ?? null
+}
+
+// 10. BH Plus
+export async function getHomeBhPlus() {
+  const data = await getRawHomePageData()
+  return data?.bhPlusSection ?? null
+}
+
+// 11. Infografik
+export async function getHomeInfografik() {
+  const data = await getRawHomePageData()
+  return data?.infografikSection ?? null
+}
+
+// 12. Galeri Foto
+export async function getHomeGaleriFoto() {
+  const data = await getRawHomePageData()
+  return data?.galeriFotoSection ?? null
+}
+
+// 13. Podcast
+export async function getHomePodcast() {
+  const data = await getRawHomePageData()
+  return data?.podcastSection ?? null
+}
+
+// 14. BH TV
+export async function getHomeBhTv() {
+  const data = await getRawHomePageData()
+  return data?.bhTvSection ?? null
+}
+
+// 15. Video Terkini
+export async function getHomeVideoTerkini() {
+  const data = await getRawHomePageData()
+  return data?.videoTerkiniSection ?? null
+}
+
+// 16. Sihat
+export async function getHomeSihat() {
+  const data = await getRawHomePageData()
+  return data?.sihatSection ?? null
 }
