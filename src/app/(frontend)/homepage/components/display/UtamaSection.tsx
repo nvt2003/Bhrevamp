@@ -1,7 +1,7 @@
 'use client'
 import React from 'react'
 import { formatRelativeTime } from '@/utilities/formatTime'
-import AdSlot from '../../components/AdSlot'
+import AdSlot from '../../../components/AdSlot'
 export default function UtamaSection({ data, adsData }: { data: any; adsData?: any }) {
   if (!data) return null
   const { featuredMain, featuredSide, featuredBullet, gridPosts, title } = data
