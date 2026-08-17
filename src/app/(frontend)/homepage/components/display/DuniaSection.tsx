@@ -2,11 +2,9 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { formatRelativeTime } from '@/utilities/formatTime'
 
-export default function SukanSection({ data }: { data: any }) {
+export default function DuniaSection({ data }: { data: any }) {
   if (!data) return null
-
-  const { title = 'Sukan', featuredPosts = [], sidePosts = [] } = data
-
+  const { title = 'Dunia', featuredPosts = [], sidePosts = [] } = data
   return (
     <section className="my-8">
       {/* Header */}
@@ -14,8 +12,8 @@ export default function SukanSection({ data }: { data: any }) {
         <h2 className="text-2xl font-bold border-b-2 border-red-600 -mb-2 pb-2 inline-block">
           {title}
         </h2>
-        <Link href="/sukan" className="text-sm font-semibold flex items-center hover:underline">
-          Lagi Sukan <span className="ml-1 text-red-600 font-bold">&gt;</span>
+        <Link href="/dunia" className="text-sm font-semibold flex items-center hover:underline">
+          Lagi Berita Dunia <span className="ml-1 text-red-600 font-bold">&gt;</span>
         </Link>
       </div>
 
@@ -35,12 +33,13 @@ export default function SukanSection({ data }: { data: any }) {
                         alt={post.title}
                         fill
                         loading="lazy"
-                        className="w-full aspect-[5/3] object-cover group-hover:scale-105 transition-transform duration-300"
+                        sizes="(max-width: 639px) 50vw, 33vw"
+                        className="object-cover group-hover:scale-105 transition-transform duration-300"
                       />
                     )}
                   </div>
                   <div className="text-xs text-red-600 font-bold uppercase mb-1 flex items-center gap-2">
-                    {post.category?.title || 'SUKAN'}
+                    {post.category?.title || 'DUNIA'}
                     <span className="text-gray-400 font-normal lowercase">
                       {formatRelativeTime(post.publishedAt)}
                     </span>
@@ -68,7 +67,9 @@ export default function SukanSection({ data }: { data: any }) {
                     <h4 className="text-sm font-bold line-clamp-3 group-hover:text-red-600 leading-snug mb-1">
                       {post.title}
                     </h4>
-                    <span className="text-xs text-gray-400">9 minit lepas</span>
+                    <span className="text-xs text-gray-400">
+                      {formatRelativeTime(post.publishedAt)}
+                    </span>
                   </div>
                   <div className="relative w-28 aspect-[16/10] shrink-0 bg-slate-100 overflow-hidden">
                     {post.featuredImage?.url && (
@@ -77,7 +78,8 @@ export default function SukanSection({ data }: { data: any }) {
                         alt={post.title}
                         fill
                         loading="lazy"
-                        className="w-full aspect-[5/3] object-cover group-hover:scale-105 transition-transform duration-300"
+                        sizes="(max-width: 639px) 50vw, 33vw"
+                        className="object-cover group-hover:scale-105 transition-transform duration-300"
                       />
                     )}
                   </div>

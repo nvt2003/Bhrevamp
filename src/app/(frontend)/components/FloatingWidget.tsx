@@ -13,7 +13,7 @@ export default function FloatingWidget() {
 
   return (
     // <div className="fixed top-50 right-6 z-50 flex flex-col items-end gap-5 max-w-[280px] sm:max-w-[320px]">
-    <div className="fixed top-50 right-0 z-50 flex w-[min(320px,100vw)] max-w-full flex-col items-end gap-5 overflow-visible sm:right-6">
+    <div className="fixed top-50 right-10 z-50 flex w-[50vw] max-w-full flex-col items-end gap-5 overflow-visible sm:right-6">
       {/* ================= 1. POPUP VIDEO/THUMBNAIL (GÓC TRÊN) ================= */}
       {showVideo && (
         // <div className="relative group animate-fade-in">
@@ -22,7 +22,7 @@ export default function FloatingWidget() {
           <button
             onClick={() => setShowVideo(false)}
             aria-label="Close video popup"
-            className="absolute -top-0 -right-0 z-10 flex h-7 w-7 items-center justify-center rounded-full border-2 border-white bg-gray-600/90 text-white shadow-md transition-all hover:bg-gray-800"
+            className="absolute -top-5 -right-5 z-10 flex h-7 w-7 items-center justify-center rounded-full border-2 border-white bg-gray-600/90 text-white shadow-md transition-all hover:bg-gray-800"
           >
             <X className="w-4 h-4 stroke-[3]" />
           </button>

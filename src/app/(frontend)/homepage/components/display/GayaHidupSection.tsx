@@ -16,7 +16,7 @@ export default function GayaHidupSection({ data }: { data: any }) {
         </h2>
         <Link
           href="/gaya-hidup"
-          className="text-sm font-semibold flex items-center hover:underline"
+          className="text-sm font-semibold text-gray-900 dark:text-white hover:text-red-600 flex items-center transition-colors"
         >
           Lagi Gaya Hidup <span className="ml-1 text-red-600 font-bold">&gt;</span>
         </Link>
@@ -33,7 +33,7 @@ export default function GayaHidupSection({ data }: { data: any }) {
                   alt={featuredPost.title}
                   fill
                   loading="lazy"
-                  className="relative aspect-[16/10] w-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  className="w-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
               )}
             </div>
@@ -64,7 +64,9 @@ export default function GayaHidupSection({ data }: { data: any }) {
                   <h4 className="text-sm font-bold line-clamp-3 group-hover:text-red-600 leading-snug mb-1">
                     {post.title}
                   </h4>
-                  <span className="text-xs text-gray-400">{formatRelativeTime(post.duration)}</span>
+                  <span className="text-xs text-gray-400">
+                    {formatRelativeTime(post.publishedAt)}
+                  </span>
                 </div>
                 <div className="relative w-24 aspect-[16/10] shrink-0 bg-slate-100 overflow-hidden">
                   {post.featuredImage?.url && (

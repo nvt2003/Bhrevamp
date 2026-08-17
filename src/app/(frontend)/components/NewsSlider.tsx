@@ -5,9 +5,10 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { Swiper, SwiperSlide } from 'swiper/react'
+import type { Swiper as SwiperType } from 'swiper'
 import { Navigation, Autoplay } from 'swiper/modules'
 import type { Media } from '@/payload-types'
-// Import CSS chuẩn của Swiper
+
 import 'swiper/css'
 import 'swiper/css/navigation'
 export interface HeaderSliderItem {
@@ -26,17 +27,16 @@ export default function NewsSlider({ sliders = [] }: { sliders?: any[] }) {
   if (!sliders || sliders.length === 0) {
     return null // Hoặc render khung trống tạm thời
   }
-  const prevRef = useRef<HTMLButtonElement>(null)
-  const nextRef = useRef<HTMLButtonElement>(null)
-
+  const swiperRef = useRef<SwiperType | null>(null)
   return (
     <section className="w-full bg-gray-100 dark:bg-[#444] py-3 my-2">
       <div className="max-w-7xl mx-auto px-4 relative flex items-center">
         {/* NÚT MŨI TÊN TRÁI */}
         <div className="absolute left-0 top-0 z-10 flex h-full w-24 p-4 items-center justify-start bg-gradient-to-r from-gray-200 dark:from-[#444] to-transparent">
           <button
-            ref={prevRef}
+            type="button"
             aria-label="Previous slide"
+            onClick={() => swiperRef.current?.slidePrev()}
             className="z-10 shrink-0 mr-2 w-5 h-5 md:w-9 md:h-9 rounded-md border-2 border-[#D31145] bg-white dark:bg-gray-900 text-red-600 flex items-center justify-center hover:bg-red-600 hover:text-white transition-colors shadow-sm disabled:opacity-30 disabled:cursor-not-allowed"
           >
             <ChevronLeft className="w-full text-[#D31145] h-full p-[1px] stroke-[2.5]" />
@@ -46,22 +46,17 @@ export default function NewsSlider({ sliders = [] }: { sliders?: any[] }) {
         {/* SWIPER CAROUSEL */}
         <div className="relative w-full overflow-hidden">
           <Swiper
-            modules={[Navigation, Autoplay]}
+            modules={[Autoplay]}
+            onSwiper={(swiper) => {
+              swiperRef.current = swiper
+            }}
             spaceBetween={16}
             slidesPerView={1}
             loop={true}
             autoplay={{ delay: 4000, disableOnInteraction: false }}
-            onInit={(swiper) => {
-              // Gắn ref nút bấm tùy chỉnh cho Swiper
-              if (swiper.params.navigation && typeof swiper.params.navigation !== 'boolean') {
-                swiper.params.navigation.prevEl = prevRef.current
-                swiper.params.navigation.nextEl = nextRef.current
-                swiper.navigation.init()
-                swiper.navigation.update()
-              }
-            }}
             breakpoints={{
-              640: { slidesPerView: 1.2 },
+              0: { slidesPerView: 1.2 },
+              640: { slidesPerView: 2 },
               1024: { slidesPerView: 3 },
               1280: { slidesPerView: 4 },
             }}
@@ -122,8 +117,9 @@ export default function NewsSlider({ sliders = [] }: { sliders?: any[] }) {
 
         <div className="absolute right-0 top-0 z-10 flex h-full w-24 p-4 items-center justify-end bg-gradient-to-l from-gray-200 dark:from-[#444] to-transparent">
           <button
-            ref={nextRef}
+            type="button"
             aria-label="Next slide"
+            onClick={() => swiperRef.current?.slideNext()}
             className="z-10 shrink-0 ml-2 w-5 h-5 md:w-9 md:h-9 rounded-md border-2 border-[#D31145] bg-white dark:bg-gray-900 text-red-600 flex items-center justify-center hover:bg-red-600 hover:text-white transition-colors shadow-sm disabled:opacity-30 disabled:cursor-not-allowed"
           >
             <ChevronRight className="w-full h-full p-[1px] stroke-[2.5] text-[#D31145]" />

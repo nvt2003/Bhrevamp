@@ -2,10 +2,10 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { formatRelativeTime } from '@/utilities/formatTime'
 
-export default function BhPlusSection({ data }: { data: any }) {
+export default function BisnesSection({ data }: { data: any }) {
   if (!data) return null
 
-  const { title = 'BH Plus', featuredPosts = [], subPosts = [] } = data
+  const { title = 'Bisnes', featuredPosts = [], subPosts = [] } = data
 
   return (
     <section className="my-8">
@@ -14,13 +14,13 @@ export default function BhPlusSection({ data }: { data: any }) {
         <h2 className="text-2xl font-bold border-b-2 border-red-600 -mb-2 pb-2 inline-block">
           {title}
         </h2>
-        <Link href="/bh-plus" className="text-sm font-semibold flex items-center hover:underline">
-          BH Plus <span className="ml-1 text-red-600 font-bold">&gt;</span>
+        <Link href="/bisnes" className="text-sm font-semibold flex items-center hover:underline">
+          Lagi Bisnes <span className="ml-1 text-red-600 font-bold">&gt;</span>
         </Link>
       </div>
 
       {/* Hàng Trên: 2 Bài Nổi Bật Chính */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         {featuredPosts.map((post: any) => {
           if (typeof post !== 'object') return null
           return (
@@ -33,6 +33,7 @@ export default function BhPlusSection({ data }: { data: any }) {
                       alt={post.title}
                       fill
                       loading="lazy"
+                      sizes="(max-width: 639px) 50vw, 25vw"
                       className="object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                   )}
@@ -52,12 +53,15 @@ export default function BhPlusSection({ data }: { data: any }) {
         })}
       </div>
 
-      {/* Hàng Dưới: 4 Bài Nhỏ Grid 2x2 */}
-      <div className="border-t border-gray-200 dark:border-gray-800 pt-4 grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
+      {/* Hàng Dưới: 4 Bài Nhỏ Xếp Dạng Grid 2 Cột, Có Đường Phân Cách ngang/dọc */}
+      <div className="border-t border-gray-200 dark:border-gray-800 pt-4 grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 divide-y md:divide-y-0">
         {subPosts.map((post: any) => {
           if (typeof post !== 'object') return null
           return (
-            <div key={post.id} className="border-b border-gray-100  dark:border-gray-800 pb-3">
+            <div
+              key={post.id}
+              className="pt-3 md:pt-0 border-b border-gray-100 dark:border-gray-800 pb-3"
+            >
               <Link
                 href={`/posts/${post.slug}`}
                 className="group flex gap-3 items-start justify-between"
@@ -66,7 +70,9 @@ export default function BhPlusSection({ data }: { data: any }) {
                   <h4 className="text-sm font-bold line-clamp-3 group-hover:text-red-600 leading-snug mb-1">
                     {post.title}
                   </h4>
-                  <span className="text-xs text-gray-400">9 minit lepas</span>
+                  <span className="text-xs text-gray-400">
+                    {formatRelativeTime(post.publishedAt)}
+                  </span>
                 </div>
                 <div className="relative w-28 aspect-[16/10] shrink-0 bg-slate-100 overflow-hidden">
                   {post.featuredImage?.url && (
@@ -75,6 +81,7 @@ export default function BhPlusSection({ data }: { data: any }) {
                       alt={post.title}
                       fill
                       loading="lazy"
+                      sizes="(max-width: 639px) 50vw, 25vw"
                       className="object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                   )}

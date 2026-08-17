@@ -10,7 +10,7 @@ const adSizeOptions = [
   { label: 'Medium Rectangle (300x250)', value: 'max-w-[300px] aspect-[300/250]' },
   { label: 'Mobile Banner (320x50)', value: 'max-w-[320px] aspect-[320/50]' },
   { label: 'Large Mobile Banner (320x100)', value: 'max-w-[320px] aspect-[320/100]' },
-  { label: 'Khác (Tự nhập kích thước)', value: 'custom' },
+  { label: 'Others', value: 'custom' },
 ]
 
 // const createAdFields = (defaultSizeValue: string): Field[] => [
