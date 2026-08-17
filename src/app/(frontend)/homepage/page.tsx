@@ -24,6 +24,16 @@ import VideoTerkiniSection from './components/VideoTerkiniSection'
 import SihatSection from './components/SihatSection'
 import AdSlot from '../components/AdSlot'
 import MobileStickyAd from './components/MobileStickyAd'
+import { getHomePageData } from './getHomePageData'
+import { Metadata } from 'next'
+// Cấu hình revalidate 60s để không cần query Database ở mỗi request
+export const revalidate = 60
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: 'Homepage',
+    description: 'News',
+  }
+}
 
 export default async function HomePage() {
   const payload = await getPayload({ config: configPromise })
@@ -60,73 +70,59 @@ export default async function HomePage() {
       payload.logger.error('Lỗi khi tự động seed')
     }
   }
+  const adsData = await payload.findGlobal({
+    slug: 'ads-config',
+    depth: 2,
+  })
 
-  // Fetch dữ liệu Global Trang Chủ
-  // const homeData = await payload.findGlobal({
-  //   slug: 'home-page',
-  //   depth: 2,
-  // })
+  // 1. Chạy tất cả các query độc lập SONG SONG cùng một lúc
+  // const [homeData, adsData] = await Promise.all([
+  //   payload.findGlobal({
+  //     slug: 'home-page',
+  //     depth: 2, // 💡 Mẹo: Nếu các section dưới chỉ cần ID/Slug, hãy hạ depth: 1 để tăng tốc
+  //   }),
+  //   payload.findGlobal({ slug: 'ads-config' as any }),
+  // ])
+
   // const utamaSection = homeData?.utamaSection
+
+  // // 3. Destructuring gọn gàng toàn bộ Section
+  // const {
+  //   trending_in_top: TrendingInTopData,
+  //   disyorkanSection: disyorkanData,
+  //   rencanaSection: rencanaData,
+  //   sukanSection: sukanData,
+  //   duniaSection: duniaData,
+  //   bisnesSection: bisnesData,
+  //   hiburanSection: hiburanData,
+  //   gayaHidupSection: gayaHidubData,
+  //   sihatSection: sihatData,
+  //   bhPlusSection: bhPlusData,
+  //   infografikSection: infografikdata,
+  //   galeriFotoSection: galeriFotoData,
+  //   podcastSection: podcatData,
+  //   bhTvSection: bhTvData,
+  //   videoTerkiniSection: videoTerkiniData,
+  // } = homeData || {}
+
   // const utamaData = {
   //   title: utamaSection?.title || 'Utama',
   //   featuredMain: utamaSection?.featuredMain,
-  //   featuredSide: (utamaSection?.featuredSide as any[]) || [],
-  //   featuredBullet: (utamaSection?.featuredBullet as any[]) || [],
-  //   gridPosts: (utamaSection?.gridPosts as any[]) || [],
+  //   featuredSide: utamaSection?.featuredSide || [],
+  //   featuredBullet: utamaSection?.featuredBullet || [],
+  //   gridPosts: utamaSection?.gridPosts || [],
   // }
-  // // Fetch Terkini
-  // const terkiniResponse = await payload.find({
-  //   collection: 'posts',
-  //   where: { status: { equals: 'published' } },
-  //   sort: '-publishedAt',
-  //   limit: utamaSection?.terkiniLimit || 5,
-  // })
-
-  // // Fetch Trending
-  // const trendingResponse = await payload.find({
-  //   collection: 'posts',
-  //   where: {
-  //     status: { equals: 'published' },
-  //     isTrending: { equals: true },
-  //   },
-  //   sort: '-publishedAt',
-  //   limit: utamaSection?.trendingLimit || 5,
-  // })
-  // const TrendingInTopData = homeData?.trending_in_top
-  // const disyorkanData = homeData?.disyorkanSection
-  // const rencanaData = homeData?.rencanaSection
-  // const sukanData = homeData?.sukanSection
-  // const duniaData = homeData?.duniaSection
-  // const bisnesData = homeData?.bisnesSection
-  // const hiburanData = homeData?.hiburanSection
-  // const gayaHidubData = homeData?.gayaHidupSection
-  // const sihatData = homeData?.sihatSection
-  // const bhPlusData = homeData?.bhPlusSection
-  // const infografikdata = homeData?.infografikSection
-  // const galeriFotoData = homeData?.galeriFotoSection
-  // const podcatData = homeData?.podcastSection
-  // const bhTvData = homeData?.bhTvSection
-  // const videoTerkiniData = homeData?.videoTerkiniSection
-
-  // const adsData = await payload.findGlobal({ slug: 'ads-config' as any })
-  // 1. Chạy tất cả các query độc lập SONG SONG cùng một lúc
-  const [homeData, adsData] = await Promise.all([
-    payload.findGlobal({
-      slug: 'home-page',
-      depth: 2, // 💡 Mẹo: Nếu các section dưới chỉ cần ID/Slug, hãy hạ depth: 1 để tăng tốc
-    }),
-    payload.findGlobal({ slug: 'ads-config' as any }),
-  ])
-
-  const utamaSection = homeData?.utamaSection
-
-  // 2. Fetch Terkini & Trending SONG SONG dựa trên limit lấy từ homeData
+  const homeData = await getHomePageData()
+  if (!homeData) {
+    return <div>No data!</div>
+  }
+  //Fetch Terkini & Trending SONG SONG dựa trên limit lấy từ homeData
   const [terkiniResponse, trendingResponse] = await Promise.all([
     payload.find({
       collection: 'posts',
       where: { status: { equals: 'published' } },
       sort: '-publishedAt',
-      limit: utamaSection?.terkiniLimit || 5,
+      limit: homeData.utamaSection?.terkiniLimit || 5,
     }),
     payload.find({
       collection: 'posts',
@@ -135,41 +131,15 @@ export default async function HomePage() {
         isTrending: { equals: true },
       },
       sort: '-publishedAt',
-      limit: utamaSection?.trendingLimit || 5,
+      limit: homeData.utamaSection?.trendingLimit || 5,
     }),
   ])
-
-  // 3. Destructuring gọn gàng toàn bộ Section
-  const {
-    trending_in_top: TrendingInTopData,
-    disyorkanSection: disyorkanData,
-    rencanaSection: rencanaData,
-    sukanSection: sukanData,
-    duniaSection: duniaData,
-    bisnesSection: bisnesData,
-    hiburanSection: hiburanData,
-    gayaHidupSection: gayaHidubData,
-    sihatSection: sihatData,
-    bhPlusSection: bhPlusData,
-    infografikSection: infografikdata,
-    galeriFotoSection: galeriFotoData,
-    podcastSection: podcatData,
-    bhTvSection: bhTvData,
-    videoTerkiniSection: videoTerkiniData,
-  } = homeData || {}
-
-  const utamaData = {
-    title: utamaSection?.title || 'Utama',
-    featuredMain: utamaSection?.featuredMain,
-    featuredSide: utamaSection?.featuredSide || [],
-    featuredBullet: utamaSection?.featuredBullet || [],
-    gridPosts: utamaSection?.gridPosts || [],
-  }
   return (
     <div className="min-h-screen">
       {/* Slide bài viết trượt ngang */}
       <NewsSlider sliders={headerData?.sliders ?? []} />
-      <TrendingBar data={TrendingInTopData} />
+      {homeData.trending_in_top && <TrendingBar data={homeData.trending_in_top} />}
+      {/* <TrendingBar data={TrendingInTopData} /> */}
       <FloatingWidget />
       <MobileStickyAd data={adsData?.BH_HP_Sticky_Leaderboard} />
       {/* Các phần nội dung khác của trang chủ */}
@@ -184,7 +154,7 @@ export default async function HomePage() {
         {/* Utama */}
         <div className="mt-6 flex w-full flex-col gap-4 md:flex-row">
           <div className="flex-[2] min-w-0">
-            <UtamaSection data={utamaData} adsData={adsData?.BH_Mobile_Banner} />
+            <UtamaSection data={homeData.utamaSection} adsData={adsData?.BH_Mobile_Banner} />
           </div>
           <div className="flex-[1] min-w-0">
             <AdSlot pcAd={adsData?.BH_300x250} className="my-6" />
@@ -197,33 +167,33 @@ export default async function HomePage() {
         </div>
         {/* Disyorkan */}
         <div className="flex mt-8">
-          <DisyorkanSection data={disyorkanData} />
+          <DisyorkanSection data={homeData.disyorkanSection} />
         </div>
         {/* Video Terkini */}
         <div className="flex mt-8">
-          <VideoTerkiniSection data={videoTerkiniData} />
+          <VideoTerkiniSection data={homeData.videoTerkiniSection} />
         </div>
         {/* Rencana */}
         <div className="flex mt-8">
-          <RencanaSection data={rencanaData} />
+          <RencanaSection data={homeData.rencanaSection} />
         </div>
         {/* BH TV */}
         <div className="flex mt-8">
-          <BhTvSection data={bhTvData} />
+          <BhTvSection data={homeData.bhTvSection} />
         </div>
         {/* Sukan */}
         <div className="flex mt-8">
-          <SukanSection data={sukanData} />
+          <SukanSection data={homeData.sukanSection} />
         </div>
         <div className="flex flex-col md:flex-row mt-8 gap-2">
           <div className="flex-[2] min-w-0 space-y-4">
             {/* Bisnes */}
             <div>
-              <BisnesSection data={bisnesData} />
+              <BisnesSection data={homeData.bisnesSection} />
             </div>
             {/* Hiburan */}
             <div>
-              <HiburanSection data={hiburanData} />
+              <HiburanSection data={homeData.hiburanSection} />
             </div>
           </div>
           <div className="flex-[1] min-w-0 space-y-4">
@@ -236,38 +206,38 @@ export default async function HomePage() {
             </div>
             {/* Postcast */}
             <div>
-              <PodcastSection data={podcatData} />
+              <PodcastSection data={homeData.podcastSection} />
             </div>
           </div>
         </div>
         {/* Dunia */}
         <div className="flex mt-8">
-          <DuniaSection data={duniaData} />
+          <DuniaSection data={homeData.duniaSection} />
         </div>
         <div className="grid grid-cols-1 gap-2 mt-8 lg:grid-cols-3">
           {/* Gaya Hidup */}
           <div className="order-1 min-w-0 lg:col-start-1 lg:row-start-1">
-            <GayaHidupSection data={gayaHidubData} />
+            <GayaHidupSection data={homeData.duniaSection} />
           </div>
 
           {/* Sihat */}
           <div className="order-2 min-w-0 lg:col-start-2 lg:row-start-1">
-            <SihatSection data={sihatData} />
+            <SihatSection data={homeData.sihatSection} />
           </div>
 
           {/* Bh Plus - chiếm 2 cột */}
           <div className="order-3 min-w-0 lg:col-span-2 lg:col-start-1 lg:row-start-2">
-            <BhPlusSection data={bhPlusData} />
+            <BhPlusSection data={homeData.bhPlusSection} />
           </div>
 
           {/* Infografik + Galeri Foto */}
           <div className="order-4 flex min-w-0 flex-col gap-2 lg:col-start-3 lg:row-span-2 lg:row-start-1">
             <div className="min-h-[300px] flex-1">
-              <InfografikSection data={infografikdata} />
+              <InfografikSection data={homeData.infografikSection} />
             </div>
 
             <div className="min-h-[300px] flex-1">
-              <GaleriFotoSection data={galeriFotoData} />
+              <GaleriFotoSection data={homeData.galeriFotoSection} />
             </div>
           </div>
         </div>
