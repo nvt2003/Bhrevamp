@@ -1,3 +1,4 @@
+import { slugify } from '@/utilities/slugify'
 import type { CollectionConfig } from 'payload'
 
 export const Posts: CollectionConfig = {
@@ -24,6 +25,17 @@ export const Posts: CollectionConfig = {
       required: true,
       unique: true,
       index: true,
+      hooks: {
+        beforeValidate: [
+          ({ value, data }) => {
+            // Nếu user tự nhập slug thì giữ nguyên
+            if (value) return value
+            if (!value && !data?.id && data?.title) {
+              return slugify(data.title)
+            }
+          },
+        ],
+      },
     },
 
     {
