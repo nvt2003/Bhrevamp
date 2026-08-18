@@ -2,6 +2,8 @@
 import React from 'react'
 import { formatRelativeTime } from '@/utilities/formatTime'
 import AdSlot from '../../../components/AdSlot'
+import Link from 'next/link'
+import { getPostUrl } from '@/lib/routing/getPostUrl'
 export default function UtamaSection({ data, adsData }: { data: any; adsData?: any }) {
   if (!data) return null
   const { featuredMain, featuredSide, featuredBullet, gridPosts, title } = data
@@ -87,7 +89,8 @@ export default function UtamaSection({ data, adsData }: { data: any; adsData?: a
           {/* Left Column: Side News Grid (4 items) */}
           <div className="md:col-span-4 grid grid-cols-1 gap-4">
             {featuredSide?.map((item: any) => (
-              <div
+              <Link
+                href={getPostUrl(item)}
                 key={item.id}
                 className="relative group overflow-hidden rounded shadow-sm aspect-[16/9]"
               >
@@ -107,12 +110,12 @@ export default function UtamaSection({ data, adsData }: { data: any; adsData?: a
                     {item.title}
                   </h3>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
 
           {/* Right Column: Main Feature & Bullets */}
-          <div className="md:col-span-8 flex flex-col gap-4">
+          <Link href={getPostUrl(featuredMain)} className="md:col-span-8 flex flex-col gap-4">
             {/* Main Featured Item */}
             {featuredMain && (
               <div>
@@ -153,13 +156,13 @@ export default function UtamaSection({ data, adsData }: { data: any; adsData?: a
                 </div>
               ))}
             </div>
-          </div>
+          </Link>
           {/* Grid Posts Section - Có Fallback xử lý lỗi ảnh */}
           {gridPosts && gridPosts.length > 0 && (
             <div className="w-full md:col-span-12 mt-10 pt-6 border-t border-gray-200 dark:border-black">
               <div className="w-full grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-8">
                 {gridPosts.map((item: any) => (
-                  <div key={item.id} className="w-full">
+                  <Link href={item} key={item.id} className="w-full">
                     <img
                       src={item.featuredImage?.url}
                       alt={item.featuredImage?.alt || item.title}
@@ -176,7 +179,7 @@ export default function UtamaSection({ data, adsData }: { data: any; adsData?: a
                     <p className=" font-semibold text-gray-800  dark:text-white group-hover:text-[#D81B50] transition-colors leading-snug">
                       {item.title}
                     </p>
-                  </div>
+                  </Link>
                 ))}
               </div>
             </div>

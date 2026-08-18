@@ -10,6 +10,7 @@ import { Navigation } from 'swiper/modules'
 
 import 'swiper/css'
 import 'swiper/css/navigation'
+import { getPostUrl } from '@/lib/routing/getPostUrl'
 
 export default function VideoTerkiniSection({ data }: { data: any }) {
   if (!data) return null
@@ -73,7 +74,7 @@ export default function VideoTerkiniSection({ data }: { data: any }) {
             return (
               <SwiperSlide key={post.id || index} className="!h-auto">
                 <Link
-                  href={`/posts/${post.slug}`}
+                  href={getPostUrl(post)}
                   className="group relative aspect-[9/16] w-full rounded-lg overflow-hidden bg-slate-900 block"
                 >
                   {/* Thumbnail Video Dọc */}

@@ -2,6 +2,8 @@
 import React, { useRef } from 'react'
 import { formatRelativeTime } from '@/utilities/formatTime'
 import TerikiPopupAd from './TerikiPopupAd'
+import Link from 'next/link'
+import { getPostUrl } from '@/lib/routing/getPostUrl'
 interface SidebarTopProps {
   terkini: any
   trending: any
@@ -28,7 +30,8 @@ export default function SidebarTop({
 
         <div className="divide-y divide-gray-200">
           {terkini?.map((item, index) => (
-            <div
+            <Link
+              href={getPostUrl(item)}
               key={item.id}
               className="py-3 flex gap-3 group cursor-pointer items-start dark:border-t dark:border-gray-800"
             >
@@ -54,7 +57,7 @@ export default function SidebarTop({
                   {index + 1}
                 </span>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
@@ -68,7 +71,8 @@ export default function SidebarTop({
 
         <div className="divide-y divide-gray-200">
           {trending?.map((item, index) => (
-            <div
+            <Link
+              href={getPostUrl(item)}
               key={item.id}
               className="py-3 flex items-start gap-4 group cursor-pointer dark:border-t dark:border-gray-800"
             >
@@ -86,7 +90,7 @@ export default function SidebarTop({
                   {formatRelativeTime(item.publishedAt)}
                 </span>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
         <TerikiPopupAd data={adData} targetRef={sidebarRef} />
