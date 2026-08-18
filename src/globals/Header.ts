@@ -1,4 +1,3 @@
-import { revalidateTag } from 'next/cache'
 import type { GlobalConfig } from 'payload'
 
 export const Header: GlobalConfig = {
@@ -32,8 +31,8 @@ export const Header: GlobalConfig = {
   ],
   hooks: {
     afterChange: [
-      () => {
-        // Xóa cache ngay lập tức khi Admin lưu thay đổi
+      async () => {
+        const { revalidateTag } = await import('next/cache')
         revalidateTag('global-header', 'max')
       },
     ],

@@ -1,4 +1,3 @@
-import { revalidateTag } from 'next/cache'
 import { GlobalConfig, Field } from 'payload'
 
 // interface AdFieldsData {
@@ -188,8 +187,8 @@ export const AdsConfig: GlobalConfig = {
   ],
   hooks: {
     afterChange: [
-      () => {
-        // Xóa cache trang chủ khi có bài viết mới được xuất bản/chỉnh sửa
+      async () => {
+        const { revalidateTag } = await import('next/cache')
         revalidateTag('ads-config', 'max')
       },
     ],
