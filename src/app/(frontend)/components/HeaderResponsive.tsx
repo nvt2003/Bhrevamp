@@ -1,11 +1,14 @@
 'use client'
 
 import React from 'react'
-import HeaderDesktop from './Header' // Component Header PC của bạn
-import NavbarDesktop from './Navbar' // Component Navbar PC của bạn
-import MobileHeader from './MobileHeader' // Component Mobile vừa viết
+import HeaderDesktop from './Header'
+import NavbarDesktop from './Navbar'
+import MobileHeader from './MobileHeader'
+import NewsSlider from './NewsSlider'
+import { getCachedHeader } from '@/lib/getHeader'
 
-export default function HeaderResponsive() {
+export default async function HeaderResponsive() {
+  const headerData = await getCachedHeader()
   return (
     <>
       {/* 1. GIAO DIỆN MOBILE (Chỉ hiện từ màn hình nhỏ đến dưới 768px - md) */}
@@ -18,6 +21,9 @@ export default function HeaderResponsive() {
         <HeaderDesktop />
         <NavbarDesktop />
       </div>
+
+      {/* Slide bài viết trượt ngang */}
+      <NewsSlider sliders={headerData?.sliders ?? []} />
     </>
   )
 }
