@@ -27,7 +27,7 @@ export default buildConfig({
     },
   },
   globals: [HomePage, Footer, AdsConfig, Header],
-  collections: [Users, Media, Categories, Sliders, Trending, Posts],
+  collections: [Users, Media, Categories, Posts],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

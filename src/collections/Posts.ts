@@ -1,3 +1,4 @@
+import { slugify } from '@/utilities/slugify'
 import type { CollectionConfig } from 'payload'
 
 export const Posts: CollectionConfig = {
@@ -21,9 +22,53 @@ export const Posts: CollectionConfig = {
     {
       name: 'slug',
       type: 'text',
-      required: true,
+      required: false,
       unique: true,
       index: true,
+      hooks: {
+        beforeValidate: [
+          ({ value, data }) => {
+            // Nếu user tự nhập slug thì giữ nguyên
+            if (value) return value
+            if (!value && !data?.id && data?.title) {
+              return slugify(data.title)
+            }
+          },
+        ],
+      },
+    },
+    {
+      name: 'postId',
+      type: 'number',
+      unique: true,
+      index: true,
+      admin: {
+        readOnly: true,
+        position: 'sidebar',
+      },
+
+      hooks: {
+        beforeValidate: [
+          async ({ value, operation, req }) => {
+            if (operation !== 'create' || value) {
+              return value
+            }
+
+            const result = await req.payload.find({
+              collection: 'posts',
+              limit: 1,
+              sort: '-postId',
+              select: {
+                postId: true,
+              },
+            })
+
+            const lastPostId = result.docs[0]?.postId ?? 1603358
+
+            return lastPostId + 1
+          },
+        ],
+      },
     },
 
     {

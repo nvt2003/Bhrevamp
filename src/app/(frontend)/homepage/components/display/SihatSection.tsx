@@ -4,6 +4,7 @@ import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { formatRelativeTime } from '@/utilities/formatTime'
+import { getPostUrl } from '@/lib/routing/getPostUrl'
 
 export default function SihatSection({ data }: { data: any }) {
   if (!data) return null
@@ -37,7 +38,7 @@ export default function SihatSection({ data }: { data: any }) {
       {/* 2. Bài viết chính (Featured Post) */}
       {featuredPost && (
         <div className="mb-6">
-          <Link href={`/posts/${featuredPost.slug}`} className="block">
+          <Link href={getPostUrl(featuredPost)} className="block">
             {/* Ảnh lớn bài chính */}
             <div className="relative w-full aspect-[16/10] rounded overflow-hidden bg-slate-900 mb-2.5">
               {featuredImgUrl && (
@@ -80,7 +81,7 @@ export default function SihatSection({ data }: { data: any }) {
 
           return (
             <article key={post.id || index} className="py-3 group">
-              <Link href={`/posts/${post.slug}`} className="flex items-start justify-between gap-3">
+              <Link href={getPostUrl(post)} className="flex items-start justify-between gap-3">
                 {/* Thông tin bài viết bên trái */}
                 <div className="flex-1 min-w-0">
                   <h4 className="text-sm font-bold text-gray-900 leading-snug group-hover:underline line-clamp-2 mb-1.5">

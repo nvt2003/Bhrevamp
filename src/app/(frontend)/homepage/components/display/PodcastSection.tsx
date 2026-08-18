@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import { getPostUrl } from '@/lib/routing/getPostUrl'
 
 export default function PodcastSection({ data }: { data: any }) {
   if (!data) return null
@@ -26,7 +27,7 @@ export default function PodcastSection({ data }: { data: any }) {
 
           return (
             <div key={post.id} className="flex flex-col">
-              <Link href={`/posts/${post.slug}`} className="group block">
+              <Link href={getPostUrl(post)} className="group block">
                 {/* Thumbnail Container */}
                 <div className="relative aspect-[16/9] w-full bg-slate-900 overflow-hidden mb-3">
                   {post.featuredImage?.url && (

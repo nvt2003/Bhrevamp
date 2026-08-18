@@ -70,8 +70,6 @@ export interface Config {
     users: User;
     media: Media;
     categories: Category;
-    sliders: Slider;
-    trending: Trending;
     posts: Post;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
@@ -83,8 +81,6 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
-    sliders: SlidersSelect<false> | SlidersSelect<true>;
-    trending: TrendingSelect<false> | TrendingSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -213,37 +209,7 @@ export interface Category {
   id: number;
   name: string;
   slug: string;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "sliders".
- */
-export interface Slider {
-  id: number;
-  title: string;
-  category: string;
-  /**
-   * Link when click on
-   */
-  slug: string;
-  image: number | Media;
-  /**
-   * Ascending
-   */
-  order?: number | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "trending".
- */
-export interface Trending {
-  id: number;
-  keyword: string;
-  order?: number | null;
+  parent?: (number | null) | Category;
   updatedAt: string;
   createdAt: string;
 }
@@ -254,7 +220,8 @@ export interface Trending {
 export interface Post {
   id: number;
   title: string;
-  slug: string;
+  slug?: string | null;
+  postId?: number | null;
   excerpt?: string | null;
   content: {
     root: {
@@ -321,14 +288,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'categories';
         value: number | Category;
-      } | null)
-    | ({
-        relationTo: 'sliders';
-        value: number | Slider;
-      } | null)
-    | ({
-        relationTo: 'trending';
-        value: number | Trending;
       } | null)
     | ({
         relationTo: 'posts';
@@ -457,29 +416,7 @@ export interface MediaSelect<T extends boolean = true> {
 export interface CategoriesSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "sliders_select".
- */
-export interface SlidersSelect<T extends boolean = true> {
-  title?: T;
-  category?: T;
-  slug?: T;
-  image?: T;
-  order?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "trending_select".
- */
-export interface TrendingSelect<T extends boolean = true> {
-  keyword?: T;
-  order?: T;
+  parent?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -490,6 +427,7 @@ export interface TrendingSelect<T extends boolean = true> {
 export interface PostsSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
+  postId?: T;
   excerpt?: T;
   content?: T;
   featuredImage?: T;
@@ -867,22 +805,10 @@ export interface AdsConfig {
  */
 export interface Header {
   id: number;
-  sliders?:
-    | {
-        title: string;
-        category: string;
-        /**
-         * Link when click on
-         */
-        slug: string;
-        image: number | Media;
-        /**
-         * Ascending
-         */
-        order?: number | null;
-        id?: string | null;
-      }[]
-    | null;
+  /**
+   * Chọn các bài viết sẽ hiển thị trên Slider của Header
+   */
+  sliders?: (number | Post)[] | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1185,16 +1111,7 @@ export interface AdsConfigSelect<T extends boolean = true> {
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
-  sliders?:
-    | T
-    | {
-        title?: T;
-        category?: T;
-        slug?: T;
-        image?: T;
-        order?: T;
-        id?: T;
-      };
+  sliders?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
