@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import { getPayload, Payload } from 'payload'
 import configPromise from '@payload-config'
 
@@ -1580,6 +1581,7 @@ export async function seedHeader(payload: Payload) {
   console.log('Cập nhật dữ liệu Header Global thành công!')
 }
 async function main() {
+  console.log('PAYLOAD_SECRET exists:', !!process.env.PAYLOAD_SECRET)
   const payload = await getPayload({
     config: configPromise,
   })
@@ -1593,6 +1595,6 @@ async function main() {
 }
 
 main().catch((error) => {
-  console.error('❌ Seed failed:', error)
+  console.error('Seed failed:', error)
   process.exit(1)
 })
