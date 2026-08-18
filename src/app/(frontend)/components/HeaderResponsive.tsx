@@ -5,10 +5,7 @@ import HeaderDesktop from './Header'
 import NavbarDesktop from './Navbar'
 import MobileHeader from './MobileHeader'
 import NewsSlider from './NewsSlider'
-import { getCachedHeader } from '@/lib/getHeader'
-
-export default async function HeaderResponsive() {
-  const headerData = await getCachedHeader()
+export default function HeaderResponsive({ headerData }: any) {
   return (
     <>
       {/* 1. GIAO DIỆN MOBILE (Chỉ hiện từ màn hình nhỏ đến dưới 768px - md) */}
