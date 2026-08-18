@@ -192,4 +192,13 @@ export const Posts: CollectionConfig = {
       ],
     },
   ],
+  hooks: {
+    afterChange: [
+      async () => {
+        const { revalidateTag } = await import('next/cache')
+
+        revalidateTag('home-page', 'max')
+      },
+    ],
+  },
 }

@@ -185,4 +185,12 @@ export const AdsConfig: GlobalConfig = {
       ],
     },
   ],
+  hooks: {
+    afterChange: [
+      async () => {
+        const { revalidateTag } = await import('next/cache')
+        revalidateTag('ads-config', 'max')
+      },
+    ],
+  },
 }

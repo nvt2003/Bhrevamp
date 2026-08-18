@@ -29,4 +29,12 @@ export const Header: GlobalConfig = {
     },
     */
   ],
+  hooks: {
+    afterChange: [
+      async () => {
+        const { revalidateTag } = await import('next/cache')
+        revalidateTag('global-header', 'max')
+      },
+    ],
+  },
 }

@@ -1,9 +1,6 @@
 import React, { Suspense } from 'react'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
-import Link from 'next/link'
-import NewsSlider from '../components/NewsSlider'
-import { seedPosts, seedFooter, seedHeader } from '@/endpoints/seed'
 import TrendingBar from '../components/TrendingBar'
 import FloatingWidget from '../components/FloatingWidget'
 import UtamaSection from './components/display/UtamaSection'
@@ -27,8 +24,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function HomePage() {
   const payload = await getPayload({ config: configPromise })
 
-  const [headerData, adsData, trending_in_top, utama] = await Promise.all([
-    payload.findGlobal({ slug: 'header', depth: 2 }),
+  const [adsData, trending_in_top, utama] = await Promise.all([
     payload.findGlobal({ slug: 'ads-config', depth: 2 }),
     getHomeTrending(),
     getHomeUtama(),
@@ -54,8 +50,6 @@ export default async function HomePage() {
   ])
   return (
     <div className="min-h-screen">
-      {/* Slide bài viết trượt ngang */}
-      <NewsSlider sliders={headerData?.sliders ?? []} />
       {trending_in_top && <TrendingBar data={trending_in_top} />}
       <FloatingWidget />
       <MobileStickyAd data={adsData?.BH_HP_Sticky_Leaderboard} />
