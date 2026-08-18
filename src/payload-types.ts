@@ -805,22 +805,10 @@ export interface AdsConfig {
  */
 export interface Header {
   id: number;
-  sliders?:
-    | {
-        title: string;
-        category: string;
-        /**
-         * Link when click on
-         */
-        slug: string;
-        image: number | Media;
-        /**
-         * Ascending
-         */
-        order?: number | null;
-        id?: string | null;
-      }[]
-    | null;
+  /**
+   * Chọn các bài viết sẽ hiển thị trên Slider của Header
+   */
+  sliders?: (number | Post)[] | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1123,16 +1111,7 @@ export interface AdsConfigSelect<T extends boolean = true> {
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
-  sliders?:
-    | T
-    | {
-        title?: T;
-        category?: T;
-        slug?: T;
-        image?: T;
-        order?: T;
-        id?: T;
-      };
+  sliders?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

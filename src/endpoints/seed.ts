@@ -1499,6 +1499,8 @@ export async function seedFooter(payload: Payload) {
 
 export async function seedHeader(payload: Payload) {
   console.log('Đang cập nhật dữ liệu Header Global...')
+
+  // 1. Lấy map danh mục slug -> id từ database
   const categoryMap: Record<string, number> = {}
 
   for (const cat of categoriesToSeed) {
@@ -1515,40 +1517,40 @@ export async function seedHeader(payload: Payload) {
       categoryMap[cat.slug] = Number(existingCategory.docs[0].id)
     }
   }
-  // 1. Chuẩn bị danh sách Sliders xuất hiện trên thanh Carousel Header
+
+  // 2. Danh sách dữ liệu mẫu cho Slider
   const slidersData = [
     {
       title: "Stacy 'terbang' di Sabah",
-      category: 'Hiburan',
-      slug: makeSlug("Stacy 'terbang' di Sabah"),
+      categorySlug: 'hiburan',
       imgSeed: 'stacy-sabah',
     },
     {
       title: 'Komputer riba serba pintar permudah sambungan iPhone, Windows',
-      category: 'Bisnes',
-      slug: makeSlug('Komputer riba serba pintar permudah sambungan iPhone, Windows'),
+      categorySlug: 'bisnes',
       imgSeed: 'laptop-phone',
     },
     {
       title: 'Khelif perlu pulangkan pingat - Kremlin',
-      category: 'Sukan',
-      slug: makeSlug('Khelif perlu pulangkan pingat - Kremlin'),
+      categorySlug: 'sukan',
       imgSeed: 'khelif-boxer',
     },
     {
       title: 'Perang Israel-Iran tidak mengubah nasib Gaza',
-      category: 'Nasional',
-      slug: makeSlug('Perang Israel-Iran tidak mengubah nasib Gaza'),
+      categorySlug: 'dunia', // hoặc 'nasional'
       imgSeed: 'gaza-war',
     },
   ]
-  const createdSliders = []
 
+  const createdPostIds: number[] = []
+
+  // 3. Tạo các bài viết Posts và lưu danh sách ID
   for (let i = 0; i < slidersData.length; i++) {
     const item = slidersData[i]
 
-    console.log(`Đang tạo Slider ${i + 1}: ${item.title}`)
+    console.log(`Đang tạo bài viết Slider ${i + 1}: ${item.title}`)
 
+    // 3.1. Upload media
     const imgId = await createMediaFromUrl(
       payload,
       `https://picsum.photos/seed/${item.imgSeed}/1200/600`,
@@ -1560,24 +1562,63 @@ export async function seedHeader(payload: Payload) {
       console.error(`Không thể tạo image cho slider: ${item.title}`)
       continue
     }
-    createdSliders.push({
-      title: item.title,
-      category: item.category,
-      slug: item.slug,
-      image: imgId,
-      order: i,
+
+    // 3.2. Tìm categoryId tương ứng, fallback về category mặc định nếu không tìm thấy
+    const categoryId = categoryMap[item.categorySlug] || Object.values(categoryMap)[0]
+
+    // 3.3. Tạo bài viết Post trong Payload
+    const post = await payload.create({
+      collection: 'posts',
+      data: {
+        title: item.title,
+        category: categoryId,
+        featuredImage: imgId,
+        status: 'published',
+        publishedAt: new Date().toISOString(),
+        slug: makeSlug(item.title),
+        content: createDummyContent(item.title),
+      },
+      draft: false,
+      overrideAccess: true,
     })
+
+    createdPostIds.push(Number(post.id))
   }
 
-  // 3. Update Global Header
+  // 4. Update Global Header bằng mảng bài viết (Relationship)
+  // Lưu ý: Phụ thuộc vào cách bạn khai báo field `sliders` trong Header Global Config:
+
   await payload.updateGlobal({
     slug: 'header',
     data: {
-      sliders: createdSliders,
+      sliders: createdPostIds,
     },
     overrideAccess: true,
   })
+  // TRƯỜNG HỢP A: Nếu sliders trong Header Config là Relationship `hasMany: true`
+  // await payload.updateGlobal({
+  //   slug: 'header',
+  //   data: {
+  //     sliders: createdPostIds,
+  //   },
+  //   overrideAccess: true,
+  // })
 
+  /* 
+  // TRƯỜNG HỢP B: Nếu sliders trong Header Config là `array` chứa field `post` (và `order`)
+  const slidersArray = createdPostIds.map((postId, index) => ({
+    post: postId,
+    order: index,
+  }))
+
+  await payload.updateGlobal({
+    slug: 'header',
+    data: {
+      sliders: slidersArray,
+    },
+    overrideAccess: true,
+  })
+  */
   console.log('Cập nhật dữ liệu Header Global thành công!')
 }
 async function main() {

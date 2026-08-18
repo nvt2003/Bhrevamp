@@ -11,17 +11,8 @@ import type { Media } from '@/payload-types'
 
 import 'swiper/css'
 import 'swiper/css/navigation'
-export interface HeaderSliderItem {
-  id?: string
-  title: string
-  category: string
-  slug: string
-  image?: Media | string
-  order?: number
-}
-interface NewsSliderProps {
-  sliders?: HeaderSliderItem[]
-}
+import { getPostUrl } from '@/lib/routing/getPostUrl'
+
 export default function NewsSlider({ sliders = [] }: { sliders?: any[] }) {
   // kiểm tra tạo slide chưa
   if (!sliders || sliders.length === 0) {
@@ -66,16 +57,13 @@ export default function NewsSlider({ sliders = [] }: { sliders?: any[] }) {
               if (!item) return null
 
               // Lấy URL ảnh linh hoạt (hỗ trợ cả Object Media từ Payload hoặc string URL truyền trực tiếp)
-              const imageUrl =
-                item.image?.sizes?.thumbnail?.url ||
-                item.image?.url ||
-                (typeof item.image === 'string' ? item.image : '')
+              const imageUrl = item.featuredImage?.url || ''
 
               // Lấy alt text
-              const imageAlt = item.image?.alt || item.title || 'Slider image'
+              const imageAlt = item.featuredImage?.alt || item.title || 'Slider image'
 
               // Format slug/link
-              const href = item.slug?.startsWith('/') ? item.slug : `/posts/${item.slug || ''}`
+              const href = getPostUrl(item)
 
               return (
                 <SwiperSlide key={item.id || index}>
@@ -100,7 +88,10 @@ export default function NewsSlider({ sliders = [] }: { sliders?: any[] }) {
                     {/* Nội dung */}
                     <div className="flex flex-col justify-center overflow-hidden pr-1">
                       <span className="text-[11px] font-bold text-[#D81B50] uppercase tracking-wider">
-                        {item.category}
+                        {/* {item.category} */}
+                        {item.category && (
+                          <span className="badge-category">{item.category.name}</span>
+                        )}
                       </span>
                       <h3 className="text-xs font-semibold text-gray-800 dark:text-gray-200 line-clamp-2 leading-tight group-hover:text-red-600 transition-colors mt-0.5">
                         {item.title}
