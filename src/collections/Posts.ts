@@ -1,4 +1,5 @@
 import { slugify } from '@/utilities/slugify'
+import { revalidateTag } from 'next/cache'
 import type { CollectionConfig } from 'payload'
 
 export const Posts: CollectionConfig = {
@@ -192,4 +193,12 @@ export const Posts: CollectionConfig = {
       ],
     },
   ],
+  hooks: {
+    afterChange: [
+      () => {
+        // Xóa cache trang chủ khi có bài viết mới được xuất bản/chỉnh sửa
+        revalidateTag('home-utama', 'max')
+      },
+    ],
+  },
 }
