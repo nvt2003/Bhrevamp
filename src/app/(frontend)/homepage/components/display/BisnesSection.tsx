@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { formatRelativeTime } from '@/utilities/formatTime'
+import { getPostUrl } from '@/lib/routing/getPostUrl'
 
 export default function BisnesSection({ data }: { data: any }) {
   if (!data) return null
@@ -25,7 +26,7 @@ export default function BisnesSection({ data }: { data: any }) {
           if (typeof post !== 'object') return null
           return (
             <div key={post.id} className="flex flex-col">
-              <Link href={`/posts/${post.slug}`} className="group block">
+              <Link href={getPostUrl(post)} className="group block">
                 <div className="relative aspect-[16/10] w-full bg-slate-100 overflow-hidden mb-3">
                   {post.featuredImage?.url && (
                     <Image

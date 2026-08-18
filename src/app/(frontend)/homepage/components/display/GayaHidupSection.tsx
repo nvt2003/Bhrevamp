@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { formatRelativeTime } from '@/utilities/formatTime'
+import { getPostUrl } from '@/lib/routing/getPostUrl'
 
 export default function GayaHidupSection({ data }: { data: any }) {
   if (!data) return null
@@ -25,7 +26,7 @@ export default function GayaHidupSection({ data }: { data: any }) {
       {/* Bài Nổi Bật Phía Trên (Ảnh Lớn) */}
       {featuredPost && typeof featuredPost === 'object' && (
         <div className="mb-6">
-          <Link href={`/posts/${featuredPost.slug}`} className="group block">
+          <Link href={getPostUrl(featuredPost)} className="group block">
             <div className="relative aspect-[16/10] w-full bg-slate-100 overflow-hidden mb-3">
               {featuredPost.featuredImage?.url && (
                 <Image

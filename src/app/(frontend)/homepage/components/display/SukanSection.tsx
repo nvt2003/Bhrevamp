@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { formatRelativeTime } from '@/utilities/formatTime'
+import { getPostUrl } from '@/lib/routing/getPostUrl'
 
 export default function SukanSection({ data }: { data: any }) {
   if (!data) return null
@@ -27,7 +28,7 @@ export default function SukanSection({ data }: { data: any }) {
             if (typeof post !== 'object') return null
             return (
               <div key={post.id} className="flex flex-col">
-                <Link href={`/posts/${post.slug}`} className="group block">
+                <Link href={getPostUrl(post)} className="group block">
                   <div className="relative aspect-[16/10] w-full bg-slate-100 overflow-hidden mb-3">
                     {post.featuredImage?.url && (
                       <Image
@@ -64,7 +65,7 @@ export default function SukanSection({ data }: { data: any }) {
                 key={post.id}
                 className={`dark:border-t border-gray-200 dark:border-gray-800 py-3 ${idx === 0 ? 'pt-0' : ''}`}
               >
-                <Link href={`/posts/${post.slug}`} className="group flex gap-3 items-start">
+                <Link href={getPostUrl(post)} className="group flex gap-3 items-start">
                   <div className="flex-1">
                     <h4 className="text-sm font-bold line-clamp-3 group-hover:text-red-600 leading-snug mb-1">
                       {post.title}

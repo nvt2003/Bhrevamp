@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { formatRelativeTime } from '@/utilities/formatTime'
+import { getPostUrl } from '@/lib/routing/getPostUrl'
 
 export default function BhTvSection({ data }: { data: any }) {
   if (!data) return null
@@ -46,7 +47,7 @@ export default function BhTvSection({ data }: { data: any }) {
         {/* BÊN TRÁI: Video Chính Lớn (Col 5) */}
         {mainVideo && typeof mainVideo === 'object' && (
           <div className="lg:col-span-5 flex flex-col">
-            <Link href={`/posts/${mainVideo.slug}`} className="group block">
+            <Link href={getPostUrl(mainVideo)} className="group block">
               <div className="relative aspect-[16/10] w-full bg-slate-900 overflow-hidden mb-3 rounded-xs">
                 {mainVideo.featuredImage?.url && (
                   <Image
@@ -90,7 +91,7 @@ export default function BhTvSection({ data }: { data: any }) {
 
             return (
               <div key={post.id} className="flex flex-col">
-                <Link href={`/posts/${post.slug}`} className="group block">
+                <Link href={getPostUrl(post)} className="group block">
                   {/* Thumbnail có Logo Badge */}
                   <div className="relative aspect-[16/10] w-full bg-slate-900 overflow-hidden mb-2 rounded-xs">
                     {post.featuredImage?.url && (
