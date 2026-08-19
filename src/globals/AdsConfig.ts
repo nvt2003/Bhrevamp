@@ -128,19 +128,19 @@ export const AdsConfig: GlobalConfig = {
             {
               name: 'BH_Web_Billboard_Homepage_970x250',
               type: 'group',
-              label: 'Ad 1',
+              label: 'BH_Web_Billboard_Homepage_970x250',
               fields: createAdFields('max-w-[970px] aspect-[970/90]'),
             },
             {
               name: 'BH_300x250',
               type: 'group',
-              label: 'Ad 2',
+              label: 'BH_300x250',
               fields: createAdFields('max-w-[300px] aspect-[300/250]'),
             },
             {
               name: 'BH_300x250_b',
               type: 'group',
-              label: 'Ad 3',
+              label: 'BH_300x250_b',
               fields: createAdFields('max-w-[300px] aspect-[300/250]'),
             },
           ],
