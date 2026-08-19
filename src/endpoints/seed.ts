@@ -156,6 +156,9 @@ export const seedPosts = async (payload: Payload) => {
     },
     draft: true,
     overrideAccess: true,
+    context: {
+      skipRevalidation: true,
+    },
   })
 
   // 4. Tạo bài viết Featured Main (Tin lớn nổi bật bên phải)
