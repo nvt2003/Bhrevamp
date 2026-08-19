@@ -31,7 +31,11 @@ export const Header: GlobalConfig = {
   ],
   hooks: {
     afterChange: [
-      async () => {
+      async ({ req }) => {
+        // Chỉ revalidate khi request đến từ Next.js
+        if (req.context?.skipRevalidation) {
+          return
+        }
         const { revalidateTag } = await import('next/cache')
         revalidateTag('global-header', 'max')
       },

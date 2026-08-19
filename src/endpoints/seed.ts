@@ -102,32 +102,7 @@ export const seedPosts = async (payload: Payload) => {
     return
   }
 
-  console.log('Đang khởi tạo dữ liệu mẫu cho Categories và Posts...')
-
-  const categoryMap: Record<string, number> = {}
-
-  for (const cat of categoriesToSeed) {
-    const existing = await payload.find({
-      collection: 'categories',
-      where: {
-        slug: {
-          equals: cat.slug,
-        },
-      },
-    })
-
-    if (existing.docs.length > 0) {
-      // Nếu đã có thì lấy luôn ID
-      categoryMap[cat.slug] = existing.docs[0].id as number
-    } else {
-      const createdCat = await payload.create({
-        collection: 'categories',
-        data: { name: String(cat.name).trim(), slug: String(cat.slug).trim().toLowerCase() },
-        overrideAccess: true,
-      })
-      categoryMap[cat.slug] = Number(createdCat.id)
-    }
-  }
+  console.log('Đang khởi tạo dữ liệu mẫu cho Posts...')
 
   // 3. Tạo các bài viết dạng Bullet List trước (cho phần tin nhanh không ảnh)
   console.log('Đang tạo các tin Bullet List...')
@@ -145,6 +120,9 @@ export const seedPosts = async (payload: Payload) => {
     },
     draft: true,
     overrideAccess: true,
+    context: {
+      skipRevalidation: true,
+    },
   })
 
   const bullet2 = await payload.create({
@@ -161,6 +139,9 @@ export const seedPosts = async (payload: Payload) => {
     },
     draft: true,
     overrideAccess: true,
+    context: {
+      skipRevalidation: true,
+    },
   })
 
   const bullet3 = await payload.create({
@@ -202,6 +183,9 @@ export const seedPosts = async (payload: Payload) => {
     },
     draft: true,
     overrideAccess: true,
+    context: {
+      skipRevalidation: true,
+    },
   })
 
   // 5. Tạo danh sách tin Sidebar bên trái (Dạng ảnh nhỏ xếp dọc)
@@ -238,6 +222,9 @@ export const seedPosts = async (payload: Payload) => {
       },
       draft: true,
       overrideAccess: true,
+      context: {
+        skipRevalidation: true,
+      },
     })
     createdSidePosts.push(Number(post.id))
   }
@@ -316,6 +303,9 @@ export const seedPosts = async (payload: Payload) => {
       },
       draft: true,
       overrideAccess: true,
+      context: {
+        skipRevalidation: true,
+      },
     })
     createdGridPosts.push(Number(post.id))
   }
@@ -378,6 +368,9 @@ export const seedPosts = async (payload: Payload) => {
       },
       draft: true,
       overrideAccess: true,
+      context: {
+        skipRevalidation: true,
+      },
     })
   }
   // --- TẠO BÀI DÙNG CHO DISYORKAN ---
@@ -403,6 +396,9 @@ export const seedPosts = async (payload: Payload) => {
     },
     draft: true,
     overrideAccess: true,
+    context: {
+      skipRevalidation: true,
+    },
   })
 
   // 6 bài nhỏ
@@ -444,6 +440,9 @@ export const seedPosts = async (payload: Payload) => {
       },
       draft: true,
       overrideAccess: true,
+      context: {
+        skipRevalidation: true,
+      },
     })
     createdDisyorkanSubIds.push(Number(post.id))
   }
@@ -484,6 +483,9 @@ export const seedPosts = async (payload: Payload) => {
       },
       draft: true,
       overrideAccess: true,
+      context: {
+        skipRevalidation: true,
+      },
     })
     createdRencanaFeaturedIds.push(Number(post.id))
   }
@@ -530,6 +532,9 @@ export const seedPosts = async (payload: Payload) => {
       },
       draft: true,
       overrideAccess: true,
+      context: {
+        skipRevalidation: true,
+      },
     })
     createdRencanaSideIds.push(Number(post.id))
   }
@@ -570,6 +575,9 @@ export const seedPosts = async (payload: Payload) => {
       },
       draft: true,
       overrideAccess: true,
+      context: {
+        skipRevalidation: true,
+      },
     })
     createdSukanFeaturedIds.push(Number(post.id))
   }
@@ -616,6 +624,9 @@ export const seedPosts = async (payload: Payload) => {
       },
       draft: true,
       overrideAccess: true,
+      context: {
+        skipRevalidation: true,
+      },
     })
     createdSukanSideIds.push(Number(post.id))
   }
@@ -656,6 +667,9 @@ export const seedPosts = async (payload: Payload) => {
       },
       draft: true,
       overrideAccess: true,
+      context: {
+        skipRevalidation: true,
+      },
     })
     createdDuniaFeaturedIds.push(Number(post.id))
   }
@@ -702,6 +716,9 @@ export const seedPosts = async (payload: Payload) => {
       },
       draft: true,
       overrideAccess: true,
+      context: {
+        skipRevalidation: true,
+      },
     })
     createdDuniaSideIds.push(Number(post.id))
   }
@@ -742,6 +759,9 @@ export const seedPosts = async (payload: Payload) => {
       },
       draft: true,
       overrideAccess: true,
+      context: {
+        skipRevalidation: true,
+      },
     })
     createdBisnesFeaturedIds.push(Number(post.id))
   }
@@ -788,6 +808,9 @@ export const seedPosts = async (payload: Payload) => {
       },
       draft: true,
       overrideAccess: true,
+      context: {
+        skipRevalidation: true,
+      },
     })
     createdBisnesSubIds.push(Number(post.id))
   }
@@ -828,6 +851,9 @@ export const seedPosts = async (payload: Payload) => {
       },
       draft: true,
       overrideAccess: true,
+      context: {
+        skipRevalidation: true,
+      },
     })
     createdHiburanFeaturedIds.push(Number(post.id))
   }
@@ -874,6 +900,9 @@ export const seedPosts = async (payload: Payload) => {
       },
       draft: true,
       overrideAccess: true,
+      context: {
+        skipRevalidation: true,
+      },
     })
     createdHiburanSubIds.push(Number(post.id))
   }
@@ -900,6 +929,9 @@ export const seedPosts = async (payload: Payload) => {
     },
     draft: true,
     overrideAccess: true,
+    context: {
+      skipRevalidation: true,
+    },
   })
 
   // 2. 4 Bài danh sách phía dưới
@@ -944,6 +976,9 @@ export const seedPosts = async (payload: Payload) => {
       },
       draft: true,
       overrideAccess: true,
+      context: {
+        skipRevalidation: true,
+      },
     })
     createdGayaHidupSubIds.push(Number(post.id))
   }
@@ -984,6 +1019,9 @@ export const seedPosts = async (payload: Payload) => {
       },
       draft: true,
       overrideAccess: true,
+      context: {
+        skipRevalidation: true,
+      },
     })
     createdBhPlusFeaturedIds.push(Number(post.id))
   }
@@ -1030,6 +1068,9 @@ export const seedPosts = async (payload: Payload) => {
       },
       draft: true,
       overrideAccess: true,
+      context: {
+        skipRevalidation: true,
+      },
     })
     createdBhPlusSubIds.push(Number(post.id))
   }
@@ -1110,6 +1151,9 @@ export const seedPosts = async (payload: Payload) => {
       },
       draft: true,
       overrideAccess: true,
+      context: {
+        skipRevalidation: true,
+      },
     })
     createdPodcastIds.push(Number(post.id))
   }
@@ -1145,6 +1189,9 @@ export const seedPosts = async (payload: Payload) => {
     },
     draft: true,
     overrideAccess: true,
+    context: {
+      skipRevalidation: true,
+    },
   })
 
   // 3. 6 Video nhỏ bên phải
@@ -1198,6 +1245,9 @@ export const seedPosts = async (payload: Payload) => {
       },
       draft: true,
       overrideAccess: true,
+      context: {
+        skipRevalidation: true,
+      },
     })
     createdSubVideoIds.push(Number(post.id))
   }
@@ -1269,6 +1319,9 @@ export const seedPosts = async (payload: Payload) => {
 
       draft: true,
       overrideAccess: true,
+      context: {
+        skipRevalidation: true,
+      },
     })
     createdVideoTerkiniIds.push(Number(post.id))
   }
@@ -1324,6 +1377,9 @@ export const seedPosts = async (payload: Payload) => {
       },
       draft: true,
       overrideAccess: true,
+      context: {
+        skipRevalidation: true,
+      },
     })
 
     if (item.isMain) {
@@ -1500,24 +1556,6 @@ export async function seedFooter(payload: Payload) {
 export async function seedHeader(payload: Payload) {
   console.log('Đang cập nhật dữ liệu Header Global...')
 
-  // 1. Lấy map danh mục slug -> id từ database
-  const categoryMap: Record<string, number> = {}
-
-  for (const cat of categoriesToSeed) {
-    const existingCategory = await payload.find({
-      collection: 'categories',
-      where: {
-        slug: {
-          equals: cat.slug,
-        },
-      },
-    })
-
-    if (existingCategory.docs.length > 0) {
-      categoryMap[cat.slug] = Number(existingCategory.docs[0].id)
-    }
-  }
-
   // 2. Danh sách dữ liệu mẫu cho Slider
   const slidersData = [
     {
@@ -1580,6 +1618,9 @@ export async function seedHeader(payload: Payload) {
       },
       draft: false,
       overrideAccess: true,
+      context: {
+        skipRevalidation: true,
+      },
     })
 
     createdPostIds.push(Number(post.id))
@@ -1594,6 +1635,9 @@ export async function seedHeader(payload: Payload) {
       sliders: createdPostIds,
     },
     overrideAccess: true,
+    context: {
+      skipRevalidation: true,
+    },
   })
   // TRƯỜNG HỢP A: Nếu sliders trong Header Config là Relationship `hasMany: true`
   // await payload.updateGlobal({
@@ -1621,11 +1665,40 @@ export async function seedHeader(payload: Payload) {
   */
   console.log('Cập nhật dữ liệu Header Global thành công!')
 }
+
+const categoryMap: Record<string, number> = {}
 async function main() {
   console.log('PAYLOAD_SECRET exists:', !!process.env.PAYLOAD_SECRET)
   const payload = await getPayload({
     config: configPromise,
   })
+
+  for (const cat of categoriesToSeed) {
+    const existing = await payload.find({
+      collection: 'categories',
+      where: {
+        slug: {
+          equals: cat.slug,
+        },
+      },
+    })
+
+    if (existing.docs.length > 0) {
+      // Nếu đã có thì lấy luôn ID
+      categoryMap[cat.slug] = existing.docs[0].id as number
+    } else {
+      const createdCat = await payload.create({
+        collection: 'categories',
+        data: { name: String(cat.name).trim(), slug: String(cat.slug).trim().toLowerCase() },
+        draft: true,
+        overrideAccess: true,
+        context: {
+          skipRevalidation: true,
+        },
+      })
+      categoryMap[cat.slug] = Number(createdCat.id)
+    }
+  }
 
   console.log('Starting seed')
   await seedHeader(payload)
