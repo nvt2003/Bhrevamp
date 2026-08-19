@@ -664,7 +664,7 @@ export interface AdsConfig {
     active?: boolean | null;
     imageUrl?: string | null;
     link?: string | null;
-    code?: string | null;
+    'code html'?: string | null;
     sizePreset?:
       | (
           | 'max-w-[970px] aspect-[970/90]'
@@ -681,7 +681,7 @@ export interface AdsConfig {
     active?: boolean | null;
     imageUrl?: string | null;
     link?: string | null;
-    code?: string | null;
+    'code html'?: string | null;
     sizePreset?:
       | (
           | 'max-w-[970px] aspect-[970/90]'
@@ -698,7 +698,7 @@ export interface AdsConfig {
     active?: boolean | null;
     imageUrl?: string | null;
     link?: string | null;
-    code?: string | null;
+    'code html'?: string | null;
     sizePreset?:
       | (
           | 'max-w-[970px] aspect-[970/90]'
@@ -715,7 +715,7 @@ export interface AdsConfig {
     active?: boolean | null;
     imageUrl?: string | null;
     link?: string | null;
-    code?: string | null;
+    'code html'?: string | null;
     sizePreset?:
       | (
           | 'max-w-[970px] aspect-[970/90]'
@@ -732,7 +732,7 @@ export interface AdsConfig {
     active?: boolean | null;
     imageUrl?: string | null;
     link?: string | null;
-    code?: string | null;
+    'code html'?: string | null;
     sizePreset?:
       | (
           | 'max-w-[970px] aspect-[970/90]'
@@ -749,7 +749,7 @@ export interface AdsConfig {
     active?: boolean | null;
     imageUrl?: string | null;
     link?: string | null;
-    code?: string | null;
+    'code html'?: string | null;
     sizePreset?:
       | (
           | 'max-w-[970px] aspect-[970/90]'
@@ -766,7 +766,7 @@ export interface AdsConfig {
     active?: boolean | null;
     imageUrl?: string | null;
     link?: string | null;
-    code?: string | null;
+    'code html'?: string | null;
     sizePreset?:
       | (
           | 'max-w-[970px] aspect-[970/90]'
@@ -783,7 +783,7 @@ export interface AdsConfig {
     active?: boolean | null;
     imageUrl?: string | null;
     link?: string | null;
-    code?: string | null;
+    'code html'?: string | null;
     sizePreset?:
       | (
           | 'max-w-[970px] aspect-[970/90]'
@@ -1020,7 +1020,7 @@ export interface AdsConfigSelect<T extends boolean = true> {
         active?: T;
         imageUrl?: T;
         link?: T;
-        code?: T;
+        'code html'?: T;
         sizePreset?: T;
         customWidth?: T;
         customHeight?: T;
@@ -1031,7 +1031,7 @@ export interface AdsConfigSelect<T extends boolean = true> {
         active?: T;
         imageUrl?: T;
         link?: T;
-        code?: T;
+        'code html'?: T;
         sizePreset?: T;
         customWidth?: T;
         customHeight?: T;
@@ -1042,7 +1042,7 @@ export interface AdsConfigSelect<T extends boolean = true> {
         active?: T;
         imageUrl?: T;
         link?: T;
-        code?: T;
+        'code html'?: T;
         sizePreset?: T;
         customWidth?: T;
         customHeight?: T;
@@ -1053,7 +1053,7 @@ export interface AdsConfigSelect<T extends boolean = true> {
         active?: T;
         imageUrl?: T;
         link?: T;
-        code?: T;
+        'code html'?: T;
         sizePreset?: T;
         customWidth?: T;
         customHeight?: T;
@@ -1064,7 +1064,7 @@ export interface AdsConfigSelect<T extends boolean = true> {
         active?: T;
         imageUrl?: T;
         link?: T;
-        code?: T;
+        'code html'?: T;
         sizePreset?: T;
         customWidth?: T;
         customHeight?: T;
@@ -1075,7 +1075,7 @@ export interface AdsConfigSelect<T extends boolean = true> {
         active?: T;
         imageUrl?: T;
         link?: T;
-        code?: T;
+        'code html'?: T;
         sizePreset?: T;
         customWidth?: T;
         customHeight?: T;
@@ -1086,7 +1086,7 @@ export interface AdsConfigSelect<T extends boolean = true> {
         active?: T;
         imageUrl?: T;
         link?: T;
-        code?: T;
+        'code html'?: T;
         sizePreset?: T;
         customWidth?: T;
         customHeight?: T;
@@ -1097,7 +1097,7 @@ export interface AdsConfigSelect<T extends boolean = true> {
         active?: T;
         imageUrl?: T;
         link?: T;
-        code?: T;
+        'code html'?: T;
         sizePreset?: T;
         customWidth?: T;
         customHeight?: T;
