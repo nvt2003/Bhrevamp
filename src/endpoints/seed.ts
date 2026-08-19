@@ -1701,8 +1701,8 @@ async function main() {
   }
 
   console.log('Starting seed')
-  await seedHeader(payload)
   await seedPosts(payload)
+  await seedHeader(payload)
   await seedFooter(payload)
 
   console.log('Seed completed')
