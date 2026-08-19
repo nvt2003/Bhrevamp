@@ -6,8 +6,10 @@ import { fileURLToPath } from 'url'
 
 import config from '@/payload.config'
 import './styles.css'
+import { redirect } from 'next/navigation'
 
 export default async function HomePage() {
+  redirect('/homepage')
   const headers = await getHeaders()
   const payloadConfig = await config
   const payload = await getPayload({ config: payloadConfig })
