@@ -25,7 +25,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
       <body className="bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 min-h-screen">
         {/* <Header />
         <Navbar /> */}
-        <HeaderResponsive header={headerData} />
+        <HeaderResponsive data={headerData} />
         <main>{children}</main>
         <Footer data={footerData} />
       </body>

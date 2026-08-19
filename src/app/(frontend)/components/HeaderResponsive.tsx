@@ -5,7 +5,7 @@ import HeaderDesktop from './Header'
 import NavbarDesktop from './Navbar'
 import MobileHeader from './MobileHeader'
 import NewsSlider from './NewsSlider'
-export default function HeaderResponsive({ headerData }: any) {
+export default function HeaderResponsive({ data }: { data: any }) {
   return (
     <>
       {/* 1. GIAO DIỆN MOBILE (Chỉ hiện từ màn hình nhỏ đến dưới 768px - md) */}
@@ -20,7 +20,7 @@ export default function HeaderResponsive({ headerData }: any) {
       </div>
 
       {/* Slide bài viết trượt ngang */}
-      <NewsSlider sliders={headerData?.sliders ?? []} />
+      <NewsSlider sliders={data?.sliders ?? []} />
     </>
   )
 }
