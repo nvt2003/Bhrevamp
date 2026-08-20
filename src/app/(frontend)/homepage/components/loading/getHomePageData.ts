@@ -18,6 +18,15 @@ const getRawHomePageData = cache(async () => {
         keyword: true,
         order: true,
       },
+      video_popup_widget: {
+        enable: true,
+        video_url: true,
+        is_live: true,
+        thumbnail: {
+          url: true,
+          alt: true,
+        },
+      },
       utamaSection: {
         title: true,
         terkiniLimit: true,
@@ -309,6 +318,15 @@ export const getHomeHeaderAndUtamaData = unstable_cache(
       depth: 2,
       select: {
         trending_in_top: { keyword: true, order: true },
+        video_popup_widget: {
+          enable: true,
+          video_url: true,
+          is_live: true,
+          thumbnail: {
+            url: true,
+            alt: true,
+          },
+        },
         utamaSection: {
           title: true,
           terkiniLimit: true,
@@ -707,4 +725,9 @@ export async function getHomeVideoTerkini() {
 export async function getHomeSihat() {
   const data = await getHomeThirdData()
   return data?.sihatSection ?? null
+}
+
+export async function getVideoWidgets() {
+  const data = await getHomeHeaderAndUtamaData()
+  return data?.video_popup_widget ?? null
 }

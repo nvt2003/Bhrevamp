@@ -500,6 +500,17 @@ export interface HomePage {
         id?: string | null;
       }[]
     | null;
+  video_popup_widget?: {
+    enable?: boolean | null;
+    /**
+     * Use url from youTube and others web allow display video with link
+     */
+    video_url?: string | null;
+    /**
+     * Display if video url is invalid
+     */
+    thumbnail?: (number | null) | Media;
+  };
   utamaSection?: {
     title?: string | null;
     featuredMain?: (number | null) | Post;
@@ -823,6 +834,13 @@ export interface HomePageSelect<T extends boolean = true> {
         keyword?: T;
         order?: T;
         id?: T;
+      };
+  video_popup_widget?:
+    | T
+    | {
+        enable?: T;
+        video_url?: T;
+        thumbnail?: T;
       };
   utamaSection?:
     | T

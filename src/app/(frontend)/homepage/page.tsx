@@ -7,7 +7,11 @@ import UtamaSection from './components/display/UtamaSection'
 import SidebarTop from './components/display/SidebarTop'
 import AdSlot from '../components/AdSlot'
 import MobileStickyAd from './components/display/MobileStickyAd'
-import { getHomeTrending, getHomeUtama } from './components/loading/getHomePageData'
+import {
+  getHomeTrending,
+  getHomeUtama,
+  getVideoWidgets,
+} from './components/loading/getHomePageData'
 import { Metadata } from 'next'
 import HomeSecondarySections from './components/loading/HomeSecondarySections'
 import HomeThirdSections from './components/loading/HomeThirdSections'
@@ -24,12 +28,13 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function HomePage() {
   const payload = await getPayload({ config: configPromise })
 
-  const [adsData, trending_in_top, utama] = await Promise.all([
+  const [adsData, widgetData, trending_in_top, utama] = await Promise.all([
     payload.findGlobal({ slug: 'ads-config', depth: 2 }),
+    getVideoWidgets(),
     getHomeTrending(),
     getHomeUtama(),
   ])
-
+  console.log(widgetData)
   //Fetch Terkini & Trending SONG SONG dựa trên limit lấy từ homeData
   const [terkiniResponse, trendingResponse] = await Promise.all([
     payload.find({
@@ -51,7 +56,7 @@ export default async function HomePage() {
   return (
     <div className="min-h-screen">
       {trending_in_top && <TrendingBar data={trending_in_top} />}
-      <FloatingWidget />
+      <FloatingWidget data={widgetData} />
       <MobileStickyAd data={adsData?.BH_HP_Sticky_Leaderboard} />
       {/* Các phần nội dung khác của trang chủ */}
       <div className="max-w-7xl mx-auto px-4 py-6">
