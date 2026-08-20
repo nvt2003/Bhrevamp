@@ -21,9 +21,9 @@ export default function SukanSection({ data }: { data: any }) {
       </div>
 
       {/* Main Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
         {/* Cột Trái & Giữa: 2 Bài Ảnh Lớn (8/12 cột) */}
-        <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-4">
           {featuredPosts.map((post: any) => {
             if (typeof post !== 'object') return null
             return (

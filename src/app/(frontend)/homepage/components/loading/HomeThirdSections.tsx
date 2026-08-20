@@ -17,7 +17,7 @@ export default function HomeThirdSections({ adsData }: any) {
   return (
     <>
       {/* Bisnes + Hiburan + Podcast */}
-      <div className="flex flex-col md:flex-row mt-8 gap-2">
+      <div className="flex flex-col md:flex-row mt-8 gap-4">
         <div className="flex-[2] min-w-0 space-y-4">
           <Suspense fallback={<HomeSectionSkeleton />}>
             <div>
@@ -57,7 +57,7 @@ export default function HomeThirdSections({ adsData }: any) {
       </Suspense>
 
       {/* Gaya Hidup + Sihat + BH Plus + Infografik + Galeri Foto */}
-      <div className="grid grid-cols-1 gap-2 mt-8 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 mt-8 lg:grid-cols-3">
         {/* Gaya Hidup */}
         <div className="order-1 min-w-0 lg:col-start-1 lg:row-start-1">
           <Suspense fallback={<HomeSectionSkeleton />}>
