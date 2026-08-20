@@ -12,10 +12,31 @@ export default function BhTvSection({ data }: { data: any }) {
   // Reusable Component Badge Logo góc trái
   const BhtvLogoBadge = () => (
     <>
-      <div
-        className="absolute bottom-0 left-0 w-20 h-12 bg-gradient-to-tr from-red-600 via-red-600 to-transparent pointer-events-none z-10"
+      {/* <div
+        className="absolute bottom-0 left-0 w-20 h-20 bg-gradient-to-tr from-red-600 via-red-600 to-transparent pointer-events-none z-10"
         style={{ clipPath: 'polygon(0 100%, 100% 100%, 0 0)' }}
-      />
+      /> */}
+      {/* Vệt đỏ góc dưới bên trái có viền trắng cạnh huyền (Đỏ rõ hơn) */}
+      <div className="absolute bottom-0 left-0 w-20 h-20 pointer-events-none z-10">
+        <svg
+          className="w-full h-full overflow-visible"
+          viewBox="0 0 80 80"
+          preserveAspectRatio="none"
+        >
+          <defs>
+            <linearGradient id="redGradientMoreRed" x1="0%" y1="100%" x2="100%" y2="0%">
+              {/* Tăng độ đục lên 0.85 để màu đỏ đậm và rõ hơn */}
+              <stop offset="0%" stopColor="rgba(220, 38, 38, 0.7)" />
+              <stop offset="60%" stopColor="rgba(220, 38, 38, 0.7)" />
+              <stop offset="100%" stopColor="transparent" />
+            </linearGradient>
+          </defs>
+          {/* Tam giác màu đỏ */}
+          <polygon points="0,80 80,80 0,0" fill="url(#redGradientMoreRed)" />
+          {/* Viền trắng cạnh huyền */}
+          <line x1="0" y1="0" x2="80" y2="80" stroke="white" strokeWidth="2" />
+        </svg>
+      </div>
       <div className="absolute bottom-1.5 left-1.5 z-20">
         {logoUrl ? (
           <div className="relative w-7 h-7 border border-white rounded overflow-hidden bg-white shadow-xs">
