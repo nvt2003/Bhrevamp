@@ -545,12 +545,12 @@ export const HomePage: GlobalConfig = {
       ],
     },
     // ==========================================
-    // GAYA HIDUP / SIHAT SECTION
+    // SIHAT SECTION
     // ==========================================
     {
-      name: 'sihatSection', // Hoặc 'gayaHidupSection' tùy tên bạn đặt trong schema
+      name: 'sihatSection',
       type: 'group',
-      label: 'Chuyên mục Sihat / Gaya Hidup',
+      label: 'Sihat',
       fields: [
         {
           name: 'title',
