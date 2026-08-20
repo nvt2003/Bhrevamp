@@ -28,6 +28,40 @@ export const HomePage: GlobalConfig = {
         },
       ],
     },
+    // ================= CẤU HÌNH POPUP VIDEO FLOATING =================
+    {
+      name: 'video_popup_widget',
+      type: 'group',
+      label: 'Popup Video Floating Settings',
+      fields: [
+        {
+          name: 'enable',
+          type: 'checkbox',
+          label: 'Display Popup Video',
+          defaultValue: true,
+        },
+        {
+          name: 'video_url',
+          type: 'text',
+          label: 'Url Video (YouTube, Vimeo, MP4 direct link...)',
+          admin: {
+            placeholder: 'https://www.youtube.com/watch?v=...',
+            description: 'Use url from youTube and others web allow display video with link',
+            condition: (_, siblingData) => Boolean(siblingData?.enable),
+          },
+        },
+        {
+          name: 'thumbnail',
+          type: 'upload',
+          relationTo: 'media',
+          label: 'Thumbnail / Poster (no required)',
+          admin: {
+            description: 'Display if video url is invalid',
+            condition: (_, siblingData) => Boolean(siblingData?.enable),
+          },
+        },
+      ],
+    },
 
     // -------------------------------------------------------------
     // KHỐI 1: UTAMA + SIDEBAR (TERKINI & TRENDING)
