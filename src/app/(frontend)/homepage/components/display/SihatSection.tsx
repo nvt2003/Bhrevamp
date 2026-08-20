@@ -14,7 +14,7 @@ export default function SihatSection({ data }: { data: any }) {
     moreLink = '/sihat',
     moreText = 'Lagi Sihat',
     featuredPost,
-    posts = [],
+    subPosts = [],
   } = data
 
   const featuredImgUrl =
@@ -75,7 +75,7 @@ export default function SihatSection({ data }: { data: any }) {
 
       {/* 3. Danh sách các bài phụ nằm ngang phía dưới (Sub-posts) */}
       <div className="divide-y divide-gray-200 border-t border-gray-200 dark:border-gray-800">
-        {posts.map((post: any, index: number) => {
+        {subPosts.map((post: any, index: number) => {
           if (typeof post !== 'object') return null
           const imgUrl = typeof post.featuredImage === 'object' ? post.featuredImage?.url : null
 
