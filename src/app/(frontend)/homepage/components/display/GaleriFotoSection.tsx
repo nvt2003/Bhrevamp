@@ -10,8 +10,9 @@ export default function GaleriFotoSection({ data }: { data: any }) {
     <section className="my-8 max-w-md mx-auto lg:max-w-none">
       {/* Header */}
       <div className="flex items-center justify-between pb-2 mb-4">
-        <h2 className="text-2xl font-bold border-b-2 border-red-600 -mb-2 pb-2 inline-block">
+        <h2 className="text-2xl font-bold -mb-2 pb-2 inline-block">
           {title}
+          <div className="w-10 h-1 bg-rose-600 mt-1 rounded"></div>
         </h2>
         <Link href="/galeri" className="text-sm font-semibold flex items-center hover:underline">
           Lagi Galeri <span className="ml-1 text-red-600 font-bold">&gt;</span>

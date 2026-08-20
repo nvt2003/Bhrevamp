@@ -27,7 +27,7 @@ export default function SidebarTop({
           <h2 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
             Terkini
           </h2>
-          <div className="w-10 h-1 bg-[#D81B50] mt-1"></div>
+          <div className="w-10 h-1 bg-rose-600 mt-1 rounded"></div>
         </div>
 
         <div className="divide-y divide-gray-200">
@@ -70,7 +70,7 @@ export default function SidebarTop({
           <h2 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
             Trending
           </h2>
-          <div className="w-10 h-1 bg-[#D81B50] mt-1"></div>
+          <div className="w-10 h-1 bg-rose-600 mt-1 rounded"></div>
         </div>
 
         <div className="divide-y divide-gray-200">
