@@ -104,7 +104,7 @@ export default function BhPlusSection({ data }: { data: any }) {
       {/* ================= DESKTOP ================= */}
       <div className="hidden md:block">
         {/* Hàng Trên: 2 Bài Nổi Bật Chính */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           {featuredPosts.map((post: any) => {
             if (typeof post !== 'object') return null
             return (

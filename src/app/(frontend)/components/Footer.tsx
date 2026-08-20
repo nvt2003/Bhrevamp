@@ -112,7 +112,7 @@ export default function Footer({ data }: { data: any }) {
         <div className="border-t border-gray-600 my-6" />
 
         {/* --- Middle Row: Link Columns --- */}
-        <div className="grid grid-cols-2 md:grid-cols-4 md:grid-flow-row grid-flow-col grid-rows-2 md:grid-rows-1 gap-4 justify-items-center">
+        <div className="grid grid-cols-2 md:grid-cols-5 md:grid-flow-row grid-flow-col grid-rows-2 md:grid-rows-1 gap-4 justify-items-center">
           {columns?.map((col: any, colIdx: number) => (
             <div key={colIdx} className="space-y-2">
               {col.title && (
