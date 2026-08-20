@@ -6,11 +6,32 @@ import { unstable_cache } from 'next/cache'
 export const getCachedHeader = unstable_cache(
   async () => {
     const payload = await getPayload({ config: configPromise })
-    const headerData = await payload.findGlobal({
+
+    return payload.findGlobal({
       slug: 'header',
-      depth: 2,
+      depth: 3,
+      select: {
+        sliders: {
+          title: true,
+          slug: true,
+
+          category: {
+            name: true,
+            slug: true,
+
+            parent: {
+              name: true,
+              slug: true,
+            },
+          },
+
+          featuredImage: {
+            url: true,
+            alt: true,
+          },
+        },
+      },
     })
-    return headerData
   },
   ['global-header-data'], // Key cache duy nhất
   {
