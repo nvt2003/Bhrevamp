@@ -24,8 +24,10 @@ export default function SidebarTop({
       {/* 1. TERKINI (NẰM TRÊN - CÓ ẢNH VÀ SỐ ĐÈ LÊN ẢNH) */}
       <div ref={sidebarRef} className="relative">
         <div className="mb-4">
-          <h2 className="text-2xl font-bold tracking-tight text-gray-900">Terkini</h2>
-          <div className="w-10 h-1 bg-[#D81B50] mt-1"></div>
+          <h2 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+            Terkini
+          </h2>
+          <div className="w-10 h-1 bg-rose-600 mt-1 rounded"></div>
         </div>
 
         <div className="divide-y divide-gray-200">
@@ -65,8 +67,10 @@ export default function SidebarTop({
       {/* 2. TRENDING (NẰM DƯỚI - SỐ NẰM TRÊN BÊN TRÁI TIÊU ĐỀ) */}
       <div>
         <div className="mb-4">
-          <h2 className="text-2xl font-bold tracking-tight text-gray-900">Trending</h2>
-          <div className="w-10 h-1 bg-[#D81B50] mt-1"></div>
+          <h2 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+            Trending
+          </h2>
+          <div className="w-10 h-1 bg-rose-600 mt-1 rounded"></div>
         </div>
 
         <div className="divide-y divide-gray-200">

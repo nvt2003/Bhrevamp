@@ -47,15 +47,28 @@ export default function Header() {
   useEffect(() => {
     const formatDate = () => {
       const now = new Date()
-      const options: Intl.DateTimeFormatOptions = {
-        weekday: 'long',
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-      }
-      setCurrentDate(now.toLocaleDateString('vi-VN', options))
+      // const options: Intl.DateTimeFormatOptions = {
+      //   weekday: 'long',
+      //   day: 'numeric',
+      //   month: 'long',
+      //   year: 'numeric',
+      //   hour: '2-digit',
+      //   minute: '2-digit',
+      // }
+      // setCurrentDate(now.toLocaleDateString('vi-VN', options))
+      const formattedDate = now
+        .toLocaleString('id-ID', {
+          weekday: 'short',
+          day: '2-digit',
+          month: 'short',
+          year: 'numeric',
+          hour: 'numeric',
+          minute: '2-digit',
+          hour12: true,
+        })
+        .replace(/\s([AP]M)/, '$1')
+
+      setCurrentDate(formattedDate)
     }
 
     formatDate()
@@ -99,7 +112,7 @@ export default function Header() {
         {/* CỘT PHẢI */}
         <div className="flex flex-col items-end gap-2 w-full md:w-auto">
           <div className="text-xs font-medium text-gray-500 dark:text-gray-400 capitalize">
-            {currentDate || 'Đang tải...'}
+            {currentDate || 'Loading...'}
           </div>
 
           <div className="flex items-center gap-3">

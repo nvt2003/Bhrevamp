@@ -12,8 +12,9 @@ export default function PodcastSection({ data }: { data: any }) {
     <section className="my-8 max-w-md mx-auto lg:max-w-none">
       {/* Header */}
       <div className="flex items-center justify-between pb-2 mb-4">
-        <h2 className="text-2xl font-bold border-b-2 border-red-600 -mb-2 pb-2 inline-block">
+        <h2 className="text-2xl font-bold -mb-2 pb-2 inline-block">
           {title}
+          <div className="w-10 h-1 bg-rose-600 mt-1 rounded"></div>
         </h2>
         <Link href="/podcast" className="text-sm font-semibold flex items-center hover:underline">
           Lagi BH TV <span className="ml-1 text-red-600 font-bold">&gt;</span>
@@ -55,11 +56,30 @@ export default function PodcastSection({ data }: { data: any }) {
                   </div>
 
                   {/* Vệt đỏ trang trí góc dưới bên trái (Red Ribbon Effect) */}
-                  <div
-                    className="absolute bottom-0 left-0 w-28 h-16 bg-gradient-to-tr from-red-600 via-red-600 to-transparent clip-triangle pointer-events-none"
+                  {/* <div
+                    className="absolute bottom-0 left-0 w-25 h-20 bg-gradient-to-tr from-red-600 via-red-600 to-transparent clip-triangle pointer-events-none"
                     style={{ clipPath: 'polygon(0 100%, 100% 100%, 0 0)' }}
-                  />
-
+                  /> */}
+                  {/* Vệt đỏ trang trí góc dưới bên trái có viền trắng cạnh huyền */}
+                  <div className="absolute bottom-0 left-0 w-25 h-20 pointer-events-none">
+                    <svg
+                      className="w-full h-full overflow-visible"
+                      viewBox="0 0 100 80"
+                      preserveAspectRatio="none"
+                    >
+                      <defs>
+                        <linearGradient id="redGradient" x1="0%" y1="100%" x2="100%" y2="0%">
+                          <stop offset="0%" stopColor="rgba(220, 38, 38, 0.7)" />
+                          <stop offset="50%" stopColor="rgba(220, 38, 38, 0.7)" />
+                          <stop offset="100%" stopColor="transparent" />
+                        </linearGradient>
+                      </defs>
+                      {/* Vệt màu đỏ */}
+                      <polygon points="0,80 100,80 0,0" fill="url(#redGradient)" />
+                      {/* Viền trắng ở cạnh huyền */}
+                      <line x1="0" y1="0" x2="100" y2="80" stroke="white" strokeWidth="2" />
+                    </svg>
+                  </div>
                   {/* Logo Badge ở góc dưới bên trái */}
                   <div className="absolute bottom-2 left-2 z-10">
                     {logoUrl ? (

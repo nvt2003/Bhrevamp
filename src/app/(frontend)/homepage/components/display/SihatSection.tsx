@@ -24,8 +24,9 @@ export default function SihatSection({ data }: { data: any }) {
     <section className="my-8 max-w-md mx-auto lg:max-w-none">
       {/* 1. Header */}
       <div className="flex items-center justify-between pb-2 mb-4">
-        <h2 className="text-2xl font-bold border-b-2 border-red-600 -mb-2 pb-2 inline-block text-gray-900  dark:text-white">
+        <h2 className="text-2xl font-bold -mb-2 pb-2 inline-block text-gray-900  dark:text-white">
           {title}
+          <div className="w-10 h-1 bg-rose-600 mt-1 rounded"></div>
         </h2>
         <Link
           href={moreLink}

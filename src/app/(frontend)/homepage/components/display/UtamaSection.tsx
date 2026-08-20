@@ -15,7 +15,7 @@ export default function UtamaSection({ data, adsData }: { data: any; adsData?: a
         <div className="text-xl md:text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
           {title || 'Utama'}
         </div>
-        <div className="w-10 h-1 bg-rose-600 mt-1"></div>
+        <div className="w-10 h-1 bg-rose-600 mt-1 rounded"></div>
       </div>
 
       {/* =========================================================
