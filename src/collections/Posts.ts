@@ -1,4 +1,4 @@
-import { slugify } from '@/utilities/slugify'
+import { slugify } from '@/lib/utilities/slugify'
 import type { CollectionConfig } from 'payload'
 
 export const Posts: CollectionConfig = {
