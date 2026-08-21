@@ -15,7 +15,7 @@ export default function HeaderResponsive({ data }: { data: any }) {
 
       {/* 2. GIAO DIỆN DESKTOP (Chỉ hiện từ màn hình md = 768px trở lên) */}
       <div className="hidden md:block">
-        <HeaderDesktop />
+        <HeaderDesktop data={data} />
         <NavbarDesktop />
       </div>
 

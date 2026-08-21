@@ -1628,7 +1628,44 @@ export async function seedHeader(payload: Payload) {
 
     createdPostIds.push(Number(post.id))
   }
+  const fallbackHtml = `
+<a href="/" class="flex items-center gap-3 group">
+  <div class="w-12 h-12 bg-gray-100 dark:bg-gray-800 border border-dashed border-gray-400 dark:border-gray-600 rounded flex flex-col items-center justify-center text-gray-400 group-hover:border-red-600 transition-colors">
+    
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <rect width="18" height="18" x="3" y="3" rx="2"/>
+      <circle cx="9" cy="9" r="2"/>
+      <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
+    </svg>
 
+    <span class="text-[9px] font-mono leading-none mt-1">
+      LOGO
+    </span>
+  </div>
+
+  <div class="flex flex-col">
+    <div class="flex items-center gap-2">
+      <span class="font-sans font-black text-xl md:text-2xl uppercase tracking-tight text-[#D81B50]">
+        MEDIA RUJUKAN MASSA
+      </span>
+    </div>
+
+    <p class="text-xs font-bold text-gray-600 mt-0.5">
+      Portal berita dan akhbar No. 1 di Malaysia
+    </p>
+  </div>
+</a>
+`
   // 4. Update Global Header bằng mảng bài viết (Relationship)
   // Lưu ý: Phụ thuộc vào cách bạn khai báo field `sliders` trong Header Global Config:
 
@@ -1636,6 +1673,7 @@ export async function seedHeader(payload: Payload) {
     slug: 'header',
     data: {
       sliders: createdPostIds,
+      fallback_html: fallbackHtml,
     },
     overrideAccess: true,
     context: {

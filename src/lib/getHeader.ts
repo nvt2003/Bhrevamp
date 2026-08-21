@@ -30,6 +30,23 @@ export const getCachedHeader = unstable_cache(
             alt: true,
           },
         },
+        logo: {
+          url: true,
+          alt: true,
+        },
+        title_image: {
+          url: true,
+          alt: true,
+        },
+        fallback_html: true,
+        social_links: {
+          facebook: true,
+          twitter: true,
+          instagram: true,
+          youtube: true,
+          linkedin: true,
+          tiktok: true,
+        },
       },
     })
   },

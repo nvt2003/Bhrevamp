@@ -817,9 +817,26 @@ export interface AdsConfig {
 export interface Header {
   id: number;
   /**
-   * Chọn các bài viết sẽ hiển thị trên Slider của Header
+   * Choose posts will display on Slider of Header
    */
   sliders?: (number | Post)[] | null;
+  logo?: (number | null) | Media;
+  /**
+   * Brand Image, display next to Logo
+   */
+  title_image?: (number | null) | Media;
+  /**
+   * Nhập đoạn mã HTML/JSX hiển thị tiêu đề tạm thời khi chưa tải ảnh lên
+   */
+  fallback_html?: string | null;
+  social_links?: {
+    facebook?: string | null;
+    twitter?: string | null;
+    instagram?: string | null;
+    youtube?: string | null;
+    linkedin?: string | null;
+    tiktok?: string | null;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1130,6 +1147,19 @@ export interface AdsConfigSelect<T extends boolean = true> {
  */
 export interface HeaderSelect<T extends boolean = true> {
   sliders?: T;
+  logo?: T;
+  title_image?: T;
+  fallback_html?: T;
+  social_links?:
+    | T
+    | {
+        facebook?: T;
+        twitter?: T;
+        instagram?: T;
+        youtube?: T;
+        linkedin?: T;
+        tiktok?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
