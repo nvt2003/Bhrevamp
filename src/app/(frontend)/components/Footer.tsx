@@ -53,9 +53,9 @@ export default function Footer({ data }: { data: any }) {
               />
             )}
           </div>
-          <div className="flex gap-2">
+          <div className="flex flex-col gap-2">
             {/* Social Icons */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center justify-between gap-2">
               {socialLinks?.map((item: any, idx: number) => {
                 const IconComponent = Icons[item.platform as keyof typeof Icons]
                 return (
