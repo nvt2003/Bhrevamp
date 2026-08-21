@@ -1,50 +1,208 @@
+import { slugify } from '@/lib/utilities/slugify'
 import type { CollectionConfig } from 'payload'
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
+
   admin: {
     useAsTitle: 'title',
+    defaultColumns: ['title', 'category', 'status', 'publishedAt'],
   },
+
   fields: [
+    // =========================
+    // THÔNG TIN CƠ BẢN
+    // =========================
     {
       name: 'title',
       type: 'text',
       required: true,
     },
+
     {
       name: 'slug',
       type: 'text',
-      required: true,
+      required: false,
       unique: true,
+      index: true,
+      hooks: {
+        beforeValidate: [
+          ({ value, data }) => {
+            // Nếu user tự nhập slug thì giữ nguyên
+            if (value) return value
+            if (!value && !data?.id && data?.title) {
+              return slugify(data.title)
+            }
+          },
+        ],
+      },
     },
+    {
+      name: 'postId',
+      type: 'number',
+      unique: true,
+      index: true,
+      admin: {
+        readOnly: true,
+        position: 'sidebar',
+      },
+
+      hooks: {
+        beforeValidate: [
+          async ({ value, operation, req }) => {
+            if (operation !== 'create' || value) {
+              return value
+            }
+
+            const result = await req.payload.find({
+              collection: 'posts',
+              limit: 1,
+              sort: '-postId',
+              select: {
+                postId: true,
+              },
+            })
+
+            const lastPostId = result.docs[0]?.postId ?? 1603358
+
+            return lastPostId + 1
+          },
+        ],
+      },
+    },
+
     {
       name: 'excerpt',
       type: 'textarea',
     },
+
+    {
+      name: 'content',
+      type: 'richText',
+      required: true,
+    },
+
+    // =========================
+    // ẢNH
+    // =========================
     {
       name: 'featuredImage',
       type: 'upload',
       relationTo: 'media',
     },
+
+    // =========================
+    // PHÂN LOẠI
+    // =========================
     {
       name: 'category',
       type: 'relationship',
       relationTo: 'categories',
       required: true,
+      index: true,
     },
+
+    // {
+    //   name: 'tags',
+    //   type: 'relationship',
+    //   relationTo: 'tags',
+    //   hasMany: true,
+    // },
+
+    // =========================
+    // TÁC GIẢ
+    // =========================
+    // {
+    //   name: 'author',
+    //   type: 'relationship',
+    //   relationTo: 'users',
+    // },
+
+    // =========================
+    // TRẠNG THÁI
+    // =========================
+    {
+      name: 'status',
+      type: 'select',
+      defaultValue: 'draft',
+      required: true,
+      options: [
+        {
+          label: 'Draft',
+          value: 'draft',
+        },
+        {
+          label: 'Published',
+          value: 'published',
+        },
+      ],
+      index: true,
+    },
+
+    {
+      name: 'publishedAt',
+      type: 'date',
+      index: true,
+    },
+
+    // =========================
+    // TRANG CHỦ
+    // =========================
     {
       name: 'isFeatured',
       type: 'checkbox',
       defaultValue: false,
     },
     {
-      name: 'publishedAt',
-      type: 'date',
+      name: 'isTrending',
+      type: 'checkbox',
+      label: 'Bài viết Trending',
+      defaultValue: false,
       admin: {
-        date: {
-          pickerAppearance: 'dayAndTime',
-        },
+        position: 'sidebar',
       },
     },
+
+    // =========================
+    // SEO
+    // =========================
+    {
+      name: 'seo',
+      type: 'group',
+      fields: [
+        {
+          name: 'title',
+          type: 'text',
+        },
+        {
+          name: 'description',
+          type: 'textarea',
+        },
+        {
+          name: 'image',
+          type: 'upload',
+          relationTo: 'media',
+        },
+        {
+          name: 'relatedPosts',
+          type: 'relationship',
+          relationTo: 'posts',
+          hasMany: true,
+        },
+      ],
+    },
   ],
+  hooks: {
+    afterChange: [
+      async ({ req }) => {
+        // Chỉ revalidate khi request đến từ Next.js
+        if (req.context?.skipRevalidation) {
+          return
+        }
+        const { revalidateTag } = await import('next/cache')
+
+        revalidateTag('home-page', 'max')
+      },
+    ],
+  },
 }

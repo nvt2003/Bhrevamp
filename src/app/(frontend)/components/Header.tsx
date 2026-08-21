@@ -40,22 +40,38 @@ const TikTokIcon = ({ className = 'w-3.5 h-3.5' }: { className?: string }) => (
   </svg>
 )
 
-export default function Header() {
+export default function Header({ data }: { data: any }) {
   const [theme, setTheme] = useState<'light' | 'dark'>('light')
   const [currentDate, setCurrentDate] = useState('')
-
+  const logoUrl = data?.logo?.url
+  const titleImageUrl = data?.title_image?.url
+  const fallbackHtml = data?.fallback_html
+  const sociaLinks = data?.social_links
   useEffect(() => {
     const formatDate = () => {
       const now = new Date()
-      const options: Intl.DateTimeFormatOptions = {
-        weekday: 'long',
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-      }
-      setCurrentDate(now.toLocaleDateString('vi-VN', options))
+      // const options: Intl.DateTimeFormatOptions = {
+      //   weekday: 'long',
+      //   day: 'numeric',
+      //   month: 'long',
+      //   year: 'numeric',
+      //   hour: '2-digit',
+      //   minute: '2-digit',
+      // }
+      // setCurrentDate(now.toLocaleDateString('vi-VN', options))
+      const formattedDate = now
+        .toLocaleString('id-ID', {
+          weekday: 'short',
+          day: '2-digit',
+          month: 'short',
+          year: 'numeric',
+          hour: 'numeric',
+          minute: '2-digit',
+          hour12: true,
+        })
+        .replace(/\s([AP]M)/, '$1')
+
+      setCurrentDate(formattedDate)
     }
 
     formatDate()
@@ -75,10 +91,10 @@ export default function Header() {
   }
 
   return (
-    <header className="w-full border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 transition-colors duration-200">
+    <header className="w-full border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-[#444] transition-colors duration-200">
       <div className="max-w-7xl mx-auto px-4 py-3 flex flex-col md:flex-row items-center justify-between gap-4">
         {/* LOGO PLACEHOLDER */}
-        <Link href="/" className="flex items-center gap-3 group">
+        {/* <Link href="/" className="flex items-center gap-3 group">
           <div className="w-12 h-12 bg-gray-100 dark:bg-gray-800 border border-dashed border-gray-400 dark:border-gray-600 rounded flex flex-col items-center justify-center text-gray-400 group-hover:border-red-600 transition-colors">
             <ImageIcon className="w-5 h-5" />
             <span className="text-[9px] font-mono leading-none mt-1">LOGO</span>
@@ -86,58 +102,82 @@ export default function Header() {
 
           <div className="flex flex-col">
             <div className="flex items-center gap-2">
-              <span className="font-sans font-black text-xl md:text-2xl dark:text-white uppercase tracking-tight text-[#D81B50]">
+              <span className="font-sans font-black text-xl md:text-2xl uppercase tracking-tight text-[#D81B50]">
                 MEDIA RUJUKAN MASSA
               </span>
             </div>
-            <p className="text-xs font-medium text-gray-600 dark:text-gray-400 mt-0.5">
-              Portal berita dan akhbar No. 1
+            <p className="text-xs font-bold text-gray-60 mt-0.5">
+              Portal berita dan akhbar No. 1 di Malaysia
             </p>
           </div>
-        </Link>
-
+        </Link> */}
+        {titleImageUrl ? (
+          <Link href="/" className="flex items-center gap-3 group">
+            {logoUrl && (
+              <img
+                src={logoUrl}
+                alt={data?.logo?.alt || 'Logo'}
+                className="w-12 h-12 object-contain"
+              />
+            )}
+            <img
+              src={titleImageUrl}
+              alt={data?.title_image?.alt || 'Title Image'}
+              className="h-auto max-h-12 object-contain"
+            />
+          </Link>
+        ) : fallbackHtml ? (
+          /* 2. Trường hợp KHÔNG có Title Image: Render đoạn Fallback HTML */
+          <div dangerouslySetInnerHTML={{ __html: fallbackHtml }} />
+        ) : (
+          /* 3. Dự phòng cuối cùng nếu cả Title Image và Fallback HTML đều trống */
+          <Link href="/" className="font-bold text-xl uppercase">
+            {data?.site_title || 'Logo'}
+          </Link>
+        )}
         {/* CỘT PHẢI */}
         <div className="flex flex-col items-end gap-2 w-full md:w-auto">
           <div className="text-xs font-medium text-gray-500 dark:text-gray-400 capitalize">
-            {currentDate || 'Đang tải...'}
+            {currentDate || 'Loading...'}
           </div>
 
           <div className="flex items-center gap-3">
             {/* SOCIAL ICONS */}
             <div className="flex items-center gap-1.5 text-gray-700 dark:text-gray-300">
               <a
-                href="#"
-                className="p-1.5 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-red-600 hover:text-white transition-colors"
+                href={sociaLinks.facebook}
+                className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-red-600 hover:text-white transition-colors"
               >
                 <FacebookIcon />
               </a>
               <a
-                href="#"
-                className="p-1.5 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-red-600 hover:text-white transition-colors"
+                href={sociaLinks.twitter}
+
+                className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-red-600 hover:text-white transition-colors"
               >
                 <XTwitterIcon />
               </a>
               <a
-                href="#"
-                className="p-1.5 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-red-600 hover:text-white transition-colors"
+                href={sociaLinks.instagram}
+                className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-red-600 hover:text-white transition-colors"
               >
                 <InstagramIcon />
               </a>
               <a
-                href="#"
-                className="p-1.5 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-red-600 hover:text-white transition-colors"
+                href={sociaLinks.youtube}
+                className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-red-600 hover:text-white transition-colors"
               >
                 <YoutubeIcon />
               </a>
               <a
-                href="#"
-                className="p-1.5 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-red-600 hover:text-white transition-colors"
+                href={sociaLinks.linkedin}
+                className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-red-600 hover:text-white transition-colors"
               >
                 <LinkedinIcon />
               </a>
               <a
-                href="#"
-                className="p-1.5 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-red-600 hover:text-white transition-colors"
+                href={sociaLinks.tiktok}
+                className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-red-600 hover:text-white transition-colors"
               >
                 <TikTokIcon />
               </a>

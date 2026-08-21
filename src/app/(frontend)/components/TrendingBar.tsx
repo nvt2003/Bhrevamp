@@ -3,26 +3,7 @@
 import React from 'react'
 import Link from 'next/link'
 
-// Dữ liệu mẫu chuẩn theo hình ảnh
-const sampleTrending = [
-  { id: '1', keyword: 'Accounts', slug: 'accounts' },
-  { id: '2', keyword: '1MDB scandal', slug: '1mdb-scandal' },
-  { id: '3', keyword: 'Election 2024', slug: 'election-2024' },
-  { id: '4', keyword: 'Floods', slug: 'floods' },
-  { id: '5', keyword: 'New year 2025', slug: 'new-year-2025' },
-]
-
-interface TrendingItem {
-  id: string
-  keyword: string
-  slug: string
-}
-
-export default function TrendingBar({
-  trendingList = sampleTrending,
-}: {
-  trendingList?: TrendingItem[]
-}) {
+export default function TrendingBar({ data }: { data: any }) {
   return (
     <section className="w-full bg-white dark:bg-gray-950 border-b border-gray-100 dark:border-gray-800 py-2.5">
       <div className="max-w-7xl mx-auto px-4 flex items-center gap-3 overflow-x-auto no-scrollbar">
@@ -33,7 +14,7 @@ export default function TrendingBar({
 
         {/* DANH SÁCH KEYWORDS NẰM NGANG */}
         <div className="flex items-center gap-6 overflow-x-auto whitespace-nowrap no-scrollbar">
-          {trendingList.map((item) => (
+          {data.map((item: any) => (
             <Link
               key={item.id}
               href={`/search?q=${encodeURIComponent(item.keyword)}`}

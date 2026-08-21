@@ -71,8 +71,6 @@ export interface Config {
     media: Media;
     categories: Category;
     posts: Post;
-    sliders: Slider;
-    trending: Trending;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -84,8 +82,6 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
-    sliders: SlidersSelect<false> | SlidersSelect<true>;
-    trending: TrendingSelect<false> | TrendingSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -95,8 +91,18 @@ export interface Config {
     defaultIDType: number;
   };
   fallbackLocale: null;
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    'home-page': HomePage;
+    footer: Footer;
+    'ads-config': AdsConfig;
+    header: Header;
+  };
+  globalsSelect: {
+    'home-page': HomePageSelect<false> | HomePageSelect<true>;
+    footer: FooterSelect<false> | FooterSelect<true>;
+    'ads-config': AdsConfigSelect<false> | AdsConfigSelect<true>;
+    header: HeaderSelect<false> | HeaderSelect<true>;
+  };
   locale: null;
   widgets: {
     collections: CollectionsWidget;
@@ -168,6 +174,32 @@ export interface Media {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
+  sizes?: {
+    thumbnail?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    card?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    tablet?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -177,6 +209,7 @@ export interface Category {
   id: number;
   name: string;
   slug: string;
+  parent?: (number | null) | Category;
   updatedAt: string;
   createdAt: string;
 }
@@ -187,43 +220,36 @@ export interface Category {
 export interface Post {
   id: number;
   title: string;
-  slug: string;
+  slug?: string | null;
+  postId?: number | null;
   excerpt?: string | null;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
   featuredImage?: (number | null) | Media;
   category: number | Category;
-  isFeatured?: boolean | null;
+  status: 'draft' | 'published';
   publishedAt?: string | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "sliders".
- */
-export interface Slider {
-  id: number;
-  title: string;
-  category: string;
-  /**
-   * Link when click on
-   */
-  slug: string;
-  image: number | Media;
-  /**
-   * Ascending
-   */
-  order?: number | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "trending".
- */
-export interface Trending {
-  id: number;
-  keyword: string;
-  order?: number | null;
+  isFeatured?: boolean | null;
+  isTrending?: boolean | null;
+  seo?: {
+    title?: string | null;
+    description?: string | null;
+    image?: (number | null) | Media;
+    relatedPosts?: (number | Post)[] | null;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -266,14 +292,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'posts';
         value: number | Post;
-      } | null)
-    | ({
-        relationTo: 'sliders';
-        value: number | Slider;
-      } | null)
-    | ({
-        relationTo: 'trending';
-        value: number | Trending;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -356,6 +374,40 @@ export interface MediaSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+  sizes?:
+    | T
+    | {
+        thumbnail?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        card?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        tablet?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -364,6 +416,7 @@ export interface MediaSelect<T extends boolean = true> {
 export interface CategoriesSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
+  parent?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -374,34 +427,23 @@ export interface CategoriesSelect<T extends boolean = true> {
 export interface PostsSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
+  postId?: T;
   excerpt?: T;
+  content?: T;
   featuredImage?: T;
   category?: T;
-  isFeatured?: T;
+  status?: T;
   publishedAt?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "sliders_select".
- */
-export interface SlidersSelect<T extends boolean = true> {
-  title?: T;
-  category?: T;
-  slug?: T;
-  image?: T;
-  order?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "trending_select".
- */
-export interface TrendingSelect<T extends boolean = true> {
-  keyword?: T;
-  order?: T;
+  isFeatured?: T;
+  isTrending?: T;
+  seo?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+        relatedPosts?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }
@@ -444,6 +486,683 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home-page".
+ */
+export interface HomePage {
+  id: number;
+  trending_in_top?:
+    | {
+        keyword: string;
+        order?: number | null;
+        id?: string | null;
+      }[]
+    | null;
+  video_popup_widget?: {
+    enable?: boolean | null;
+    /**
+     * Use url from youTube and others web allow display video with link
+     */
+    video_url?: string | null;
+    /**
+     * Display if video url is invalid
+     */
+    thumbnail?: (number | null) | Media;
+  };
+  utamaSection?: {
+    title?: string | null;
+    featuredMain?: (number | null) | Post;
+    featuredSide?: (number | Post)[] | null;
+    featuredBullet?: (number | Post)[] | null;
+    gridPosts?: (number | Post)[] | null;
+    terkiniLimit?: number | null;
+    trendingLimit?: number | null;
+  };
+  disyorkanSection?: {
+    title?: string | null;
+    mainPost?: (number | null) | Post;
+    subPosts?: (number | Post)[] | null;
+  };
+  rencanaSection?: {
+    title?: string | null;
+    featuredPosts?: (number | Post)[] | null;
+    sidePosts?: (number | Post)[] | null;
+  };
+  sukanSection?: {
+    title?: string | null;
+    featuredPosts?: (number | Post)[] | null;
+    sidePosts?: (number | Post)[] | null;
+  };
+  duniaSection?: {
+    title?: string | null;
+    featuredPosts?: (number | Post)[] | null;
+    sidePosts?: (number | Post)[] | null;
+  };
+  bisnesSection?: {
+    title?: string | null;
+    featuredPosts?: (number | Post)[] | null;
+    subPosts?: (number | Post)[] | null;
+  };
+  hiburanSection?: {
+    title?: string | null;
+    featuredPosts?: (number | Post)[] | null;
+    subPosts?: (number | Post)[] | null;
+  };
+  gayaHidupSection?: {
+    title?: string | null;
+    featuredPost?: (number | null) | Post;
+    subPosts?: (number | Post)[] | null;
+  };
+  bhPlusSection?: {
+    title?: string | null;
+    featuredPosts?: (number | Post)[] | null;
+    infografikSection?: {
+      title?: string | null;
+      featuredImage?: (number | null) | Media;
+      linkUrl?: string | null;
+    };
+    galeriFotoSection?: {
+      title?: string | null;
+      galleryImages?:
+        | {
+            image: number | Media;
+            caption?: string | null;
+            id?: string | null;
+          }[]
+        | null;
+    };
+    subPosts?: (number | Post)[] | null;
+  };
+  infografikSection?: {
+    title?: string | null;
+    featuredImage?: (number | null) | Media;
+    linkUrl?: string | null;
+  };
+  galeriFotoSection?: {
+    title?: string | null;
+    galleryImages?:
+      | {
+          image: number | Media;
+          caption?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  podcastSection?: {
+    title?: string | null;
+    channelLogo?: (number | null) | Media;
+    videos?: (number | Post)[] | null;
+  };
+  bhTvSection?: {
+    title?: string | null;
+    channelLogo?: (number | null) | Media;
+    mainVideo?: (number | null) | Post;
+    subVideos?: (number | Post)[] | null;
+  };
+  videoTerkiniSection?: {
+    title?: string | null;
+    channelLogo?: (number | null) | Media;
+    videos?: (number | Post)[] | null;
+  };
+  sihatSection: {
+    title: string;
+    moreText?: string | null;
+    moreLink?: string | null;
+    /**
+     * Chọn 1 bài viết chính hiển thị ảnh lớn ở trên cùng
+     */
+    featuredPost?: (number | null) | Post;
+    /**
+     * Chọn danh sách các bài viết nhỏ hiển thị bên dưới (thường là 4 bài)
+     */
+    subPosts?: (number | Post)[] | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer".
+ */
+export interface Footer {
+  id: number;
+  logo: number | Media;
+  socialLinks?:
+    | {
+        platform: 'facebook' | 'twitter' | 'whatsapp' | 'youtube' | 'tiktok' | 'linkedin';
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
+  appStoreLinks?: {
+    appStoreUrl?: string | null;
+    googlePlayUrl?: string | null;
+  };
+  columns?:
+    | {
+        title?: string | null;
+        links?:
+          | {
+              label: string;
+              url: string;
+              newTab?: boolean | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  copyrightText?: string | null;
+  bottomLinks?:
+    | {
+        label: string;
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ads-config".
+ */
+export interface AdsConfig {
+  id: number;
+  BH_Web_Billboard_Homepage_970x250?: {
+    active?: boolean | null;
+    imageUrl?: string | null;
+    link?: string | null;
+    'code html'?: string | null;
+    sizePreset?:
+      | (
+          | 'max-w-[970px] aspect-[970/90]'
+          | 'max-w-[300px] aspect-[300/250]'
+          | 'max-w-[320px] aspect-[320/50]'
+          | 'max-w-[320px] aspect-[320/100]'
+          | 'custom'
+        )
+      | null;
+    customWidth?: number | null;
+    customHeight?: number | null;
+  };
+  BH_300x250?: {
+    active?: boolean | null;
+    imageUrl?: string | null;
+    link?: string | null;
+    'code html'?: string | null;
+    sizePreset?:
+      | (
+          | 'max-w-[970px] aspect-[970/90]'
+          | 'max-w-[300px] aspect-[300/250]'
+          | 'max-w-[320px] aspect-[320/50]'
+          | 'max-w-[320px] aspect-[320/100]'
+          | 'custom'
+        )
+      | null;
+    customWidth?: number | null;
+    customHeight?: number | null;
+  };
+  BH_300x250_b?: {
+    active?: boolean | null;
+    imageUrl?: string | null;
+    link?: string | null;
+    'code html'?: string | null;
+    sizePreset?:
+      | (
+          | 'max-w-[970px] aspect-[970/90]'
+          | 'max-w-[300px] aspect-[300/250]'
+          | 'max-w-[320px] aspect-[320/50]'
+          | 'max-w-[320px] aspect-[320/100]'
+          | 'custom'
+        )
+      | null;
+    customWidth?: number | null;
+    customHeight?: number | null;
+  };
+  BH_320x50?: {
+    active?: boolean | null;
+    imageUrl?: string | null;
+    link?: string | null;
+    'code html'?: string | null;
+    sizePreset?:
+      | (
+          | 'max-w-[970px] aspect-[970/90]'
+          | 'max-w-[300px] aspect-[300/250]'
+          | 'max-w-[320px] aspect-[320/50]'
+          | 'max-w-[320px] aspect-[320/100]'
+          | 'custom'
+        )
+      | null;
+    customWidth?: number | null;
+    customHeight?: number | null;
+  };
+  BH_HP_Sticky_Leaderboard?: {
+    active?: boolean | null;
+    imageUrl?: string | null;
+    link?: string | null;
+    'code html'?: string | null;
+    sizePreset?:
+      | (
+          | 'max-w-[970px] aspect-[970/90]'
+          | 'max-w-[300px] aspect-[300/250]'
+          | 'max-w-[320px] aspect-[320/50]'
+          | 'max-w-[320px] aspect-[320/100]'
+          | 'custom'
+        )
+      | null;
+    customWidth?: number | null;
+    customHeight?: number | null;
+  };
+  BH_Mobile_Banner?: {
+    active?: boolean | null;
+    imageUrl?: string | null;
+    link?: string | null;
+    'code html'?: string | null;
+    sizePreset?:
+      | (
+          | 'max-w-[970px] aspect-[970/90]'
+          | 'max-w-[300px] aspect-[300/250]'
+          | 'max-w-[320px] aspect-[320/50]'
+          | 'max-w-[320px] aspect-[320/100]'
+          | 'custom'
+        )
+      | null;
+    customWidth?: number | null;
+    customHeight?: number | null;
+  };
+  BH_Mobile_Banner_b?: {
+    active?: boolean | null;
+    imageUrl?: string | null;
+    link?: string | null;
+    'code html'?: string | null;
+    sizePreset?:
+      | (
+          | 'max-w-[970px] aspect-[970/90]'
+          | 'max-w-[300px] aspect-[300/250]'
+          | 'max-w-[320px] aspect-[320/50]'
+          | 'max-w-[320px] aspect-[320/100]'
+          | 'custom'
+        )
+      | null;
+    customWidth?: number | null;
+    customHeight?: number | null;
+  };
+  BH_Multisize_HouseAds?: {
+    active?: boolean | null;
+    imageUrl?: string | null;
+    link?: string | null;
+    'code html'?: string | null;
+    sizePreset?:
+      | (
+          | 'max-w-[970px] aspect-[970/90]'
+          | 'max-w-[300px] aspect-[300/250]'
+          | 'max-w-[320px] aspect-[320/50]'
+          | 'max-w-[320px] aspect-[320/100]'
+          | 'custom'
+        )
+      | null;
+    customWidth?: number | null;
+    customHeight?: number | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header".
+ */
+export interface Header {
+  id: number;
+  /**
+   * Choose posts will display on Slider of Header
+   */
+  sliders?: (number | Post)[] | null;
+  logo?: (number | null) | Media;
+  /**
+   * Brand Image, display next to Logo
+   */
+  title_image?: (number | null) | Media;
+  /**
+   * Nhập đoạn mã HTML/JSX hiển thị tiêu đề tạm thời khi chưa tải ảnh lên
+   */
+  fallback_html?: string | null;
+  social_links?: {
+    facebook?: string | null;
+    twitter?: string | null;
+    instagram?: string | null;
+    youtube?: string | null;
+    linkedin?: string | null;
+    tiktok?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home-page_select".
+ */
+export interface HomePageSelect<T extends boolean = true> {
+  trending_in_top?:
+    | T
+    | {
+        keyword?: T;
+        order?: T;
+        id?: T;
+      };
+  video_popup_widget?:
+    | T
+    | {
+        enable?: T;
+        video_url?: T;
+        thumbnail?: T;
+      };
+  utamaSection?:
+    | T
+    | {
+        title?: T;
+        featuredMain?: T;
+        featuredSide?: T;
+        featuredBullet?: T;
+        gridPosts?: T;
+        terkiniLimit?: T;
+        trendingLimit?: T;
+      };
+  disyorkanSection?:
+    | T
+    | {
+        title?: T;
+        mainPost?: T;
+        subPosts?: T;
+      };
+  rencanaSection?:
+    | T
+    | {
+        title?: T;
+        featuredPosts?: T;
+        sidePosts?: T;
+      };
+  sukanSection?:
+    | T
+    | {
+        title?: T;
+        featuredPosts?: T;
+        sidePosts?: T;
+      };
+  duniaSection?:
+    | T
+    | {
+        title?: T;
+        featuredPosts?: T;
+        sidePosts?: T;
+      };
+  bisnesSection?:
+    | T
+    | {
+        title?: T;
+        featuredPosts?: T;
+        subPosts?: T;
+      };
+  hiburanSection?:
+    | T
+    | {
+        title?: T;
+        featuredPosts?: T;
+        subPosts?: T;
+      };
+  gayaHidupSection?:
+    | T
+    | {
+        title?: T;
+        featuredPost?: T;
+        subPosts?: T;
+      };
+  bhPlusSection?:
+    | T
+    | {
+        title?: T;
+        featuredPosts?: T;
+        infografikSection?:
+          | T
+          | {
+              title?: T;
+              featuredImage?: T;
+              linkUrl?: T;
+            };
+        galeriFotoSection?:
+          | T
+          | {
+              title?: T;
+              galleryImages?:
+                | T
+                | {
+                    image?: T;
+                    caption?: T;
+                    id?: T;
+                  };
+            };
+        subPosts?: T;
+      };
+  infografikSection?:
+    | T
+    | {
+        title?: T;
+        featuredImage?: T;
+        linkUrl?: T;
+      };
+  galeriFotoSection?:
+    | T
+    | {
+        title?: T;
+        galleryImages?:
+          | T
+          | {
+              image?: T;
+              caption?: T;
+              id?: T;
+            };
+      };
+  podcastSection?:
+    | T
+    | {
+        title?: T;
+        channelLogo?: T;
+        videos?: T;
+      };
+  bhTvSection?:
+    | T
+    | {
+        title?: T;
+        channelLogo?: T;
+        mainVideo?: T;
+        subVideos?: T;
+      };
+  videoTerkiniSection?:
+    | T
+    | {
+        title?: T;
+        channelLogo?: T;
+        videos?: T;
+      };
+  sihatSection?:
+    | T
+    | {
+        title?: T;
+        moreText?: T;
+        moreLink?: T;
+        featuredPost?: T;
+        subPosts?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer_select".
+ */
+export interface FooterSelect<T extends boolean = true> {
+  logo?: T;
+  socialLinks?:
+    | T
+    | {
+        platform?: T;
+        url?: T;
+        id?: T;
+      };
+  appStoreLinks?:
+    | T
+    | {
+        appStoreUrl?: T;
+        googlePlayUrl?: T;
+      };
+  columns?:
+    | T
+    | {
+        title?: T;
+        links?:
+          | T
+          | {
+              label?: T;
+              url?: T;
+              newTab?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  copyrightText?: T;
+  bottomLinks?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ads-config_select".
+ */
+export interface AdsConfigSelect<T extends boolean = true> {
+  BH_Web_Billboard_Homepage_970x250?:
+    | T
+    | {
+        active?: T;
+        imageUrl?: T;
+        link?: T;
+        'code html'?: T;
+        sizePreset?: T;
+        customWidth?: T;
+        customHeight?: T;
+      };
+  BH_300x250?:
+    | T
+    | {
+        active?: T;
+        imageUrl?: T;
+        link?: T;
+        'code html'?: T;
+        sizePreset?: T;
+        customWidth?: T;
+        customHeight?: T;
+      };
+  BH_300x250_b?:
+    | T
+    | {
+        active?: T;
+        imageUrl?: T;
+        link?: T;
+        'code html'?: T;
+        sizePreset?: T;
+        customWidth?: T;
+        customHeight?: T;
+      };
+  BH_320x50?:
+    | T
+    | {
+        active?: T;
+        imageUrl?: T;
+        link?: T;
+        'code html'?: T;
+        sizePreset?: T;
+        customWidth?: T;
+        customHeight?: T;
+      };
+  BH_HP_Sticky_Leaderboard?:
+    | T
+    | {
+        active?: T;
+        imageUrl?: T;
+        link?: T;
+        'code html'?: T;
+        sizePreset?: T;
+        customWidth?: T;
+        customHeight?: T;
+      };
+  BH_Mobile_Banner?:
+    | T
+    | {
+        active?: T;
+        imageUrl?: T;
+        link?: T;
+        'code html'?: T;
+        sizePreset?: T;
+        customWidth?: T;
+        customHeight?: T;
+      };
+  BH_Mobile_Banner_b?:
+    | T
+    | {
+        active?: T;
+        imageUrl?: T;
+        link?: T;
+        'code html'?: T;
+        sizePreset?: T;
+        customWidth?: T;
+        customHeight?: T;
+      };
+  BH_Multisize_HouseAds?:
+    | T
+    | {
+        active?: T;
+        imageUrl?: T;
+        link?: T;
+        'code html'?: T;
+        sizePreset?: T;
+        customWidth?: T;
+        customHeight?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header_select".
+ */
+export interface HeaderSelect<T extends boolean = true> {
+  sliders?: T;
+  logo?: T;
+  title_image?: T;
+  fallback_html?: T;
+  social_links?:
+    | T
+    | {
+        facebook?: T;
+        twitter?: T;
+        instagram?: T;
+        youtube?: T;
+        linkedin?: T;
+        tiktok?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
