@@ -46,7 +46,7 @@ export default function Header({ data }: { data: any }) {
   const logoUrl = data?.logo?.url
   const titleImageUrl = data?.title_image?.url
   const fallbackHtml = data?.fallback_html
-  console.log(data)
+  const sociaLinks = data?.social_links
   useEffect(() => {
     const formatDate = () => {
       const now = new Date()
@@ -145,38 +145,38 @@ export default function Header({ data }: { data: any }) {
             {/* SOCIAL ICONS */}
             <div className="flex items-center gap-1.5 text-gray-700 dark:text-gray-300">
               <a
-                href="#"
+                href={sociaLinks.facebook}
                 className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-red-600 hover:text-white transition-colors"
               >
                 <FacebookIcon />
               </a>
               <a
-                href="#"
+                href={sociaLinks.twitter}
 
                 className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-red-600 hover:text-white transition-colors"
               >
                 <XTwitterIcon />
               </a>
               <a
-                href="#"
+                href={sociaLinks.instagram}
                 className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-red-600 hover:text-white transition-colors"
               >
                 <InstagramIcon />
               </a>
               <a
-                href="#"
+                href={sociaLinks.youtube}
                 className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-red-600 hover:text-white transition-colors"
               >
                 <YoutubeIcon />
               </a>
               <a
-                href="#"
+                href={sociaLinks.linkedin}
                 className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-red-600 hover:text-white transition-colors"
               >
                 <LinkedinIcon />
               </a>
               <a
-                href="#"
+                href={sociaLinks.tiktok}
                 className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-red-600 hover:text-white transition-colors"
               >
                 <TikTokIcon />
