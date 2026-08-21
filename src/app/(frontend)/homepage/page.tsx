@@ -34,7 +34,7 @@ export default async function HomePage() {
     getHomeTrending(),
     getHomeUtama(),
   ])
-  console.log(widgetData)
+
   //Fetch Terkini & Trending SONG SONG dựa trên limit lấy từ homeData
   const [terkiniResponse, trendingResponse] = await Promise.all([
     payload.find({

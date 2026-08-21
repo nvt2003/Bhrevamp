@@ -1,6 +1,6 @@
 'use client'
 import React from 'react'
-import { formatRelativeTime } from '@/utilities/formatTime'
+import { formatRelativeTime } from '@/lib/utilities/formatTime'
 import AdSlot from '../../../components/AdSlot'
 import Link from 'next/link'
 import { getPostUrl } from '@/lib/routing/getPostUrl'

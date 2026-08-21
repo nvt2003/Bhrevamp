@@ -3,7 +3,7 @@
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { formatRelativeTime } from '@/utilities/formatTime'
+import { formatRelativeTime } from '@/lib/utilities/formatTime'
 import { getPostUrl } from '@/lib/routing/getPostUrl'
 
 export default function SihatSection({ data }: { data: any }) {

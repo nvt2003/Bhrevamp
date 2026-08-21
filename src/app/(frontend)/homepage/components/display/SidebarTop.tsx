@@ -1,6 +1,6 @@
 'use client'
 import React, { useRef } from 'react'
-import { formatRelativeTime } from '@/utilities/formatTime'
+import { formatRelativeTime } from '@/lib/utilities/formatTime'
 import TerikiPopupAd from './TerikiPopupAd'
 import Link from 'next/link'
 import { getPostUrl } from '@/lib/routing/getPostUrl'
