@@ -101,9 +101,16 @@ export const AdsConfig: GlobalConfig = {
             {
               name: 'BH_320x50',
               type: 'group',
-              label: '',
+              label: 'BH_320x50',
               fields: createAdFields('max-w-[320px] aspect-[320/50]'),
             },
+            {
+              name: 'BH_300x250_Mobile',
+              type: 'group',
+              label: 'BH_300x250_Mobile',
+              fields: createAdFields('max-w-[320px] aspect-[320/50]'),
+            },
+
             {
               name: 'BH_HP_Sticky_Leaderboard',
               type: 'group',
@@ -125,7 +132,7 @@ export const AdsConfig: GlobalConfig = {
             {
               name: 'BH_Multisize_HouseAds',
               type: 'group',
-              label: '',
+              label: 'BH_Multisize_HouseAds',
               fields: createAdFields('max-w-[970px] aspect-[970/90]'),
             },
           ],
