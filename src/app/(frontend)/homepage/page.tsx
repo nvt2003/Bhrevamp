@@ -90,7 +90,7 @@ export default async function HomePage() {
         </Suspense>
 
         <Suspense fallback={<HomeSectionSkeleton />}>
-          <HomeThirdSections />
+          <HomeThirdSections adsData={adsData} />
         </Suspense>
       </div>
     </div>
