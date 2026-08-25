@@ -73,7 +73,11 @@ export default async function HomePage() {
             <UtamaSection data={utama} adsData={adsData?.BH_Mobile_Banner} />
           </div>
           <div className="flex-[1] min-w-0">
-            <AdSlot pcAd={adsData?.BH_300x250} className="my-6" />
+            <AdSlot
+              pcAd={adsData?.BH_300x250}
+              mobileAd={adsData?.BH_300x250_Mobile}
+              className="my-6"
+            />
             <SidebarTop
               terkini={terkiniResponse.docs}
               trending={trendingResponse.docs}
@@ -86,7 +90,7 @@ export default async function HomePage() {
         </Suspense>
 
         <Suspense fallback={<HomeSectionSkeleton />}>
-          <HomeThirdSections />
+          <HomeThirdSections adsData={adsData} />
         </Suspense>
       </div>
     </div>

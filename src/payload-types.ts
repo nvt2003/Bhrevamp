@@ -739,6 +739,23 @@ export interface AdsConfig {
     customWidth?: number | null;
     customHeight?: number | null;
   };
+  BH_300x250_Mobile?: {
+    active?: boolean | null;
+    imageUrl?: string | null;
+    link?: string | null;
+    'code html'?: string | null;
+    sizePreset?:
+      | (
+          | 'max-w-[970px] aspect-[970/90]'
+          | 'max-w-[300px] aspect-[300/250]'
+          | 'max-w-[320px] aspect-[320/50]'
+          | 'max-w-[320px] aspect-[320/100]'
+          | 'custom'
+        )
+      | null;
+    customWidth?: number | null;
+    customHeight?: number | null;
+  };
   BH_HP_Sticky_Leaderboard?: {
     active?: boolean | null;
     imageUrl?: string | null;
@@ -1083,6 +1100,17 @@ export interface AdsConfigSelect<T extends boolean = true> {
         customHeight?: T;
       };
   BH_320x50?:
+    | T
+    | {
+        active?: T;
+        imageUrl?: T;
+        link?: T;
+        'code html'?: T;
+        sizePreset?: T;
+        customWidth?: T;
+        customHeight?: T;
+      };
+  BH_300x250_Mobile?:
     | T
     | {
         active?: T;
