@@ -23,6 +23,12 @@ export default function AdSlot({
   defaultFallbackSize = 'max-w-[300px] aspect-[300/225]',
 }: AdSlotProps) {
   const resolveAdStyle = (ad?: AdData) => {
+    if (ad?.active !== true)
+      return {
+        className: '',
+        style: {},
+        label: '',
+      }
     if (!ad) return { className: defaultFallbackSize, style: {}, label: '300x225' }
 
     // Trường hợp 1: Chọn Tự nhập số Width / Height
@@ -53,6 +59,7 @@ export default function AdSlot({
   }
 
   const renderAdContent = (adData?: AdData) => {
+    if (adData?.active !== true) return <></>
     const { className: sizeClass, style: sizeStyle, label } = resolveAdStyle(adData)
     const hasContent = adData?.active && (adData?.code || adData?.imageUrl)
 

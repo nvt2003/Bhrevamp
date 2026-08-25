@@ -1406,6 +1406,9 @@ export const seedPosts = async (payload: Payload) => {
   await payload.updateGlobal({
     slug: 'home-page',
     data: {
+      video_popup_widget: {
+        thumbnail: bhTvLogoImg,
+      },
       utamaSection: {
         title: 'Utama',
         featuredMain: mainPost.id,
@@ -1491,12 +1494,10 @@ export const seedPosts = async (payload: Payload) => {
   })
   console.log('Khởi tạo toàn bộ dữ liệu Posts thành công!')
 }
-export async function seedFooter(payload: Payload) {
+export async function seedFooter(payload: Payload, logoId: any) {
   console.log('Khởi tạo toàn bộ dữ liệu footer!')
   payload.logger.info('— Seeding Footer...')
 
-  const logoUrl = 'https://picsum.photos/200/80'
-  const logoId = await createMediaFromUrl(payload, logoUrl, 'bh-online-logo.jpg', 'BH Online Logo')
   // 2. Cập nhật dữ liệu cho Global 'footer'
   await payload.updateGlobal({
     slug: 'footer',
@@ -1556,7 +1557,7 @@ export async function seedFooter(payload: Payload) {
   console.log('Khởi tạo toàn bộ dữ liệu footer thành công!')
 }
 
-export async function seedHeader(payload: Payload) {
+export async function seedHeader(payload: Payload, logoId: any) {
   console.log('Đang cập nhật dữ liệu Header Global...')
 
   // 2. Danh sách dữ liệu mẫu cho Slider
@@ -1673,6 +1674,7 @@ export async function seedHeader(payload: Payload) {
     slug: 'header',
     data: {
       sliders: createdPostIds,
+      logo: logoId,
       fallback_html: fallbackHtml,
     },
     overrideAccess: true,
@@ -1705,6 +1707,69 @@ export async function seedHeader(payload: Payload) {
   })
   */
   console.log('Cập nhật dữ liệu Header Global thành công!')
+}
+export async function seedAdsConfig(payload: Payload) {
+  console.log('Đang cập nhật dữ liệu Ads Config Global...')
+
+  await payload.updateGlobal({
+    slug: 'ads-config',
+    data: {
+      // TAB 1: DESKTOP
+      BH_Web_Billboard_Homepage_970x250: {
+        active: true,
+        imageUrl: 'https://placehold.co/970x250/2563eb/ffffff?text=DESKTOP+BILLBOARD+970x250',
+        link: 'https://example.com',
+      },
+      BH_300x250: {
+        active: true,
+        imageUrl: 'https://placehold.co/300x250/dc2626/ffffff?text=DESKTOP+300x250+A',
+        link: 'https://example.com',
+      },
+      BH_300x250_b: {
+        active: true,
+        imageUrl: 'https://placehold.co/300x250/16a34a/ffffff?text=DESKTOP+300x250+B',
+        link: 'https://example.com',
+      },
+
+      // TAB 2: MOBILE
+      BH_320x50: {
+        active: true,
+        imageUrl: 'https://placehold.co/320x50/d97706/ffffff?text=MOBILE+320x50',
+        link: 'https://example.com',
+      },
+      BH_300x250_Mobile: {
+        active: true,
+        imageUrl: 'https://placehold.co/300x250/9333ea/ffffff?text=MOBILE+300x250',
+        link: 'https://example.com',
+      },
+      BH_HP_Sticky_Leaderboard: {
+        active: true,
+        imageUrl: 'https://placehold.co/320x50/0891b2/ffffff?text=STICKY+LEADERBOARD',
+        link: 'https://example.com',
+      },
+      BH_Mobile_Banner: {
+        active: true,
+        imageUrl: 'https://placehold.co/320x100/4f46e5/ffffff?text=MOBILE+BANNER+A',
+        link: 'https://example.com',
+      },
+      BH_Mobile_Banner_b: {
+        active: true,
+        imageUrl: 'https://placehold.co/320x100/ca8a04/ffffff?text=MOBILE+BANNER+B',
+        link: 'https://example.com',
+      },
+      BH_Multisize_HouseAds: {
+        active: true,
+        imageUrl: 'https://placehold.co/970x90/0d9488/ffffff?text=MULTISIZE+HOUSE+ADS',
+        link: 'https://example.com',
+      },
+    },
+    overrideAccess: true,
+    context: {
+      skipRevalidation: true,
+    },
+  })
+
+  console.log('Cập nhật dữ liệu Ads Config Global thành công!')
 }
 
 const categoryMap: Record<string, number> = {}
@@ -1741,11 +1806,14 @@ async function main() {
     }
   }
 
+  const logoUrl = 'https://picsum.photos/200/80'
+  const logoId = await createMediaFromUrl(payload, logoUrl, 'bh-online-logo.jpg', 'BH Online Logo')
+
   console.log('Starting seed')
   await seedPosts(payload)
-  await seedHeader(payload)
-  await seedFooter(payload)
-
+  await seedHeader(payload, logoId)
+  await seedFooter(payload, logoId)
+  seedAdsConfig(payload)
   console.log('Seed completed')
 }
 

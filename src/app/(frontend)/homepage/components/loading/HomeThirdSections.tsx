@@ -13,7 +13,7 @@ import HomeInfografik from './HomeInfografik'
 import HomeGaleriFoto from './HomeGaleriFoto'
 import AdSlot from '@/app/(frontend)/components/AdSlot'
 
-export default function HomeThirdSections({ adsData }: any) {
+export default function HomeThirdSections({ adsData }: { adsData: any }) {
   return (
     <>
       {/* Bisnes + Hiburan + Podcast */}
@@ -34,11 +34,7 @@ export default function HomeThirdSections({ adsData }: any) {
 
         <div className="flex-[1] min-w-0 space-y-4">
           <div className="flex items-center justify-center">
-            <AdSlot
-              pcAd={adsData?.BH_300x250_b}
-              mobileAd={adsData?.BH_Mobile_Banner_b}
-              className="my-6"
-            />
+            <AdSlot pcAd={adsData?.BH_300x250_b} className="my-6" />
           </div>
 
           <Suspense fallback={<HomeSectionSkeleton />}>
