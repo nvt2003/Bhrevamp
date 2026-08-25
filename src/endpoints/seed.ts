@@ -1406,6 +1406,9 @@ export const seedPosts = async (payload: Payload) => {
   await payload.updateGlobal({
     slug: 'home-page',
     data: {
+      video_popup_widget: {
+        thumbnail: bhTvLogoImg,
+      },
       utamaSection: {
         title: 'Utama',
         featuredMain: mainPost.id,
@@ -1706,6 +1709,69 @@ export async function seedHeader(payload: Payload) {
   */
   console.log('Cập nhật dữ liệu Header Global thành công!')
 }
+export async function seedAdsConfig(payload: Payload) {
+  console.log('Đang cập nhật dữ liệu Ads Config Global...')
+
+  await payload.updateGlobal({
+    slug: 'ads-config',
+    data: {
+      // TAB 1: DESKTOP
+      BH_Web_Billboard_Homepage_970x250: {
+        active: true,
+        imageUrl: 'https://placehold.co/970x250/2563eb/ffffff?text=DESKTOP+BILLBOARD+970x250',
+        link: 'https://example.com',
+      },
+      BH_300x250: {
+        active: true,
+        imageUrl: 'https://placehold.co/300x250/dc2626/ffffff?text=DESKTOP+300x250+A',
+        link: 'https://example.com',
+      },
+      BH_300x250_b: {
+        active: true,
+        imageUrl: 'https://placehold.co/300x250/16a34a/ffffff?text=DESKTOP+300x250+B',
+        link: 'https://example.com',
+      },
+
+      // TAB 2: MOBILE
+      BH_320x50: {
+        active: true,
+        imageUrl: 'https://placehold.co/320x50/d97706/ffffff?text=MOBILE+320x50',
+        link: 'https://example.com',
+      },
+      BH_300x250_Mobile: {
+        active: true,
+        imageUrl: 'https://placehold.co/300x250/9333ea/ffffff?text=MOBILE+300x250',
+        link: 'https://example.com',
+      },
+      BH_HP_Sticky_Leaderboard: {
+        active: true,
+        imageUrl: 'https://placehold.co/320x50/0891b2/ffffff?text=STICKY+LEADERBOARD',
+        link: 'https://example.com',
+      },
+      BH_Mobile_Banner: {
+        active: true,
+        imageUrl: 'https://placehold.co/320x100/4f46e5/ffffff?text=MOBILE+BANNER+A',
+        link: 'https://example.com',
+      },
+      BH_Mobile_Banner_b: {
+        active: true,
+        imageUrl: 'https://placehold.co/320x100/ca8a04/ffffff?text=MOBILE+BANNER+B',
+        link: 'https://example.com',
+      },
+      BH_Multisize_HouseAds: {
+        active: true,
+        imageUrl: 'https://placehold.co/970x90/0d9488/ffffff?text=MULTISIZE+HOUSE+ADS',
+        link: 'https://example.com',
+      },
+    },
+    overrideAccess: true,
+    context: {
+      skipRevalidation: true,
+    },
+  })
+
+  console.log('Cập nhật dữ liệu Ads Config Global thành công!')
+}
 
 const categoryMap: Record<string, number> = {}
 async function main() {
@@ -1745,7 +1811,7 @@ async function main() {
   await seedPosts(payload)
   await seedHeader(payload)
   await seedFooter(payload)
-
+  seedAdsConfig(payload)
   console.log('Seed completed')
 }
 
