@@ -1494,12 +1494,10 @@ export const seedPosts = async (payload: Payload) => {
   })
   console.log('Khởi tạo toàn bộ dữ liệu Posts thành công!')
 }
-export async function seedFooter(payload: Payload) {
+export async function seedFooter(payload: Payload, logoId: any) {
   console.log('Khởi tạo toàn bộ dữ liệu footer!')
   payload.logger.info('— Seeding Footer...')
 
-  const logoUrl = 'https://picsum.photos/200/80'
-  const logoId = await createMediaFromUrl(payload, logoUrl, 'bh-online-logo.jpg', 'BH Online Logo')
   // 2. Cập nhật dữ liệu cho Global 'footer'
   await payload.updateGlobal({
     slug: 'footer',
@@ -1559,7 +1557,7 @@ export async function seedFooter(payload: Payload) {
   console.log('Khởi tạo toàn bộ dữ liệu footer thành công!')
 }
 
-export async function seedHeader(payload: Payload) {
+export async function seedHeader(payload: Payload, logoId: any) {
   console.log('Đang cập nhật dữ liệu Header Global...')
 
   // 2. Danh sách dữ liệu mẫu cho Slider
@@ -1676,6 +1674,7 @@ export async function seedHeader(payload: Payload) {
     slug: 'header',
     data: {
       sliders: createdPostIds,
+      logo: logoId,
       fallback_html: fallbackHtml,
     },
     overrideAccess: true,
@@ -1807,10 +1806,13 @@ async function main() {
     }
   }
 
+  const logoUrl = 'https://picsum.photos/200/80'
+  const logoId = await createMediaFromUrl(payload, logoUrl, 'bh-online-logo.jpg', 'BH Online Logo')
+
   console.log('Starting seed')
   await seedPosts(payload)
-  await seedHeader(payload)
-  await seedFooter(payload)
+  await seedHeader(payload, logoId)
+  await seedFooter(payload, logoId)
   seedAdsConfig(payload)
   console.log('Seed completed')
 }
