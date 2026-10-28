@@ -36,7 +36,8 @@ export default buildConfig({
     pool: {
       connectionString: process.env.DATABASE_URI || '',
       ssl: {
-        ca: fs.readFileSync(path.resolve(process.cwd(), 'certs/supabase-ca.crt'), 'utf8'),
+        //ca: fs.readFileSync(path.resolve(process.cwd(), 'certs/supabase-ca.crt'), 'utf8'),
+        ca: process.env.PG_CA_CERT,
         rejectUnauthorized: true,
       },
     },
