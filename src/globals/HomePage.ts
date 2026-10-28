@@ -1,14 +1,14 @@
 import type { GlobalConfig } from 'payload'
 export const HomePage: GlobalConfig = {
   slug: 'home-page',
-  label: 'Homepage',
+  label: 'Cài đặt trang chủ',
   access: { read: () => true },
   fields: [
     //Danh sách Trending Keywords
     {
       name: 'trending_in_top',
       type: 'array',
-      label: 'Trending Keywords',
+      label: 'Từ khoá Trending (Hiển thị trên Top Bar)',
       labels: {
         singular: 'Keyword',
         plural: 'Keywords',
@@ -32,21 +32,22 @@ export const HomePage: GlobalConfig = {
     {
       name: 'video_popup_widget',
       type: 'group',
-      label: 'Popup Video Floating Settings',
+      label: 'Cài đặt video nổi (Popup Video Floating)',
       fields: [
         {
           name: 'enable',
           type: 'checkbox',
-          label: 'Display Popup Video',
+          label: 'Hiển thị video nổi (Popup Video Floating)',
           defaultValue: true,
         },
         {
           name: 'video_url',
           type: 'text',
-          label: 'Url Video (YouTube, Vimeo, MP4 direct link...)',
+          label: 'Đường dẫn video (YouTube, Vimeo, v.v.)',
           admin: {
             placeholder: 'https://www.youtube.com/watch?v=...',
-            description: 'Use url from youTube and others web allow display video with link',
+            description:
+              'Sử dụng URL từ YouTube và các trang web khác cho phép hiển thị video với liên kết',
             condition: (_, siblingData) => Boolean(siblingData?.enable),
           },
         },
@@ -54,9 +55,9 @@ export const HomePage: GlobalConfig = {
           name: 'thumbnail',
           type: 'upload',
           relationTo: 'media',
-          label: 'Thumbnail / Poster (no required)',
+          label: 'Ảnh thumbnail video nổi (Popup Video Floating)',
           admin: {
-            description: 'Display if video url is invalid',
+            description: 'Hiển thị nếu URL video không hợp lệ, không thể phát video',
             condition: (_, siblingData) => Boolean(siblingData?.enable),
           },
         },
@@ -69,12 +70,13 @@ export const HomePage: GlobalConfig = {
     {
       name: 'utamaSection',
       type: 'group',
-      label: 'Khối Utama & Sidebar Top',
+      label: 'Phần chính & Sidebar Top',
       fields: [
         {
           name: 'title',
+          label: 'Tiêu đề',
           type: 'text',
-          defaultValue: 'Utama',
+          defaultValue: 'Chính',
         },
         {
           name: 'featuredMain',
@@ -102,20 +104,20 @@ export const HomePage: GlobalConfig = {
           type: 'relationship',
           relationTo: 'posts',
           hasMany: true,
-          label: 'Bài dạng Grid bên dưới Utama',
+          label: 'Bài dạng Grid bên dưới phần chính',
         },
         // Sidebar Config
         {
           name: 'terkiniLimit',
           type: 'number',
           defaultValue: 5,
-          label: 'Số lượng bài Terkini (Cột phải - có ảnh)',
+          label: 'Số lượng hiển thị bài báo mới (Cột phải - có ảnh)',
         },
         {
           name: 'trendingLimit',
           type: 'number',
           defaultValue: 5,
-          label: 'Số lượng bài Trending (Cột phải - dạng list)',
+          label: 'Số lượng bài báo trending (Cột phải - dạng danh sách)',
         },
       ],
     },
@@ -126,12 +128,12 @@ export const HomePage: GlobalConfig = {
     {
       name: 'disyorkanSection',
       type: 'group',
-      label: 'Khối Disyorkan (Đề xuất)',
+      label: 'Phần đề xuất',
       fields: [
         {
           name: 'title',
           type: 'text',
-          defaultValue: 'Disyorkan',
+          defaultValue: 'Đề xuất',
         },
         {
           name: 'mainPost',
@@ -155,12 +157,12 @@ export const HomePage: GlobalConfig = {
     {
       name: 'rencanaSection',
       type: 'group',
-      label: 'Khối Rencana',
+      label: 'Chuyên mục',
       fields: [
         {
           name: 'title',
           type: 'text',
-          defaultValue: 'Rencana',
+          defaultValue: 'Chuyên mục',
         },
         {
           name: 'featuredPosts',
@@ -186,12 +188,12 @@ export const HomePage: GlobalConfig = {
     {
       name: 'sukanSection',
       type: 'group',
-      label: 'Khối Sukan',
+      label: 'Thể thao',
       fields: [
         {
           name: 'title',
           type: 'text',
-          defaultValue: 'Sukan',
+          defaultValue: 'Thể thao',
         },
         {
           name: 'featuredPosts',
@@ -217,12 +219,12 @@ export const HomePage: GlobalConfig = {
     {
       name: 'duniaSection',
       type: 'group',
-      label: 'Khối Dunia',
+      label: 'Thế giới',
       fields: [
         {
           name: 'title',
           type: 'text',
-          defaultValue: 'Dunia',
+          defaultValue: 'Thế giới',
         },
         {
           name: 'featuredPosts',
@@ -248,12 +250,12 @@ export const HomePage: GlobalConfig = {
     {
       name: 'bisnesSection',
       type: 'group',
-      label: 'Khối Bisnes',
+      label: 'Kinh tế',
       fields: [
         {
           name: 'title',
           type: 'text',
-          defaultValue: 'Bisnes',
+          defaultValue: 'Kinh tế',
         },
         {
           name: 'featuredPosts',
@@ -279,12 +281,12 @@ export const HomePage: GlobalConfig = {
     {
       name: 'hiburanSection',
       type: 'group',
-      label: 'Khối Hiburan',
+      label: 'Giải trí',
       fields: [
         {
           name: 'title',
           type: 'text',
-          defaultValue: 'Hiburan',
+          defaultValue: 'Giải trí',
         },
         {
           name: 'featuredPosts',
@@ -310,12 +312,12 @@ export const HomePage: GlobalConfig = {
     {
       name: 'gayaHidupSection',
       type: 'group',
-      label: 'Khối Gaya Hidup',
+      label: 'Phong cách sống',
       fields: [
         {
           name: 'title',
           type: 'text',
-          defaultValue: 'Gaya Hidup',
+          defaultValue: 'Phong cách sống',
         },
         {
           name: 'featuredPost',
@@ -339,12 +341,12 @@ export const HomePage: GlobalConfig = {
     {
       name: 'bhPlusSection',
       type: 'group',
-      label: 'Khối BH Plus',
+      label: 'Độc quyền',
       fields: [
         {
           name: 'title',
           type: 'text',
-          defaultValue: 'BH Plus',
+          defaultValue: 'Độc quyền',
         },
         {
           name: 'featuredPosts',
@@ -360,12 +362,12 @@ export const HomePage: GlobalConfig = {
         {
           name: 'infografikSection',
           type: 'group',
-          label: 'Khối Infografik',
+          label: 'Đồ hoạ thông tin (Infografik)',
           fields: [
             {
               name: 'title',
               type: 'text',
-              defaultValue: 'Infografik',
+              defaultValue: 'Đồ hoạ thông tin (Infografik)',
             },
             {
               name: 'featuredImage',
@@ -387,12 +389,12 @@ export const HomePage: GlobalConfig = {
         {
           name: 'galeriFotoSection',
           type: 'group',
-          label: 'Khối Galeri Foto',
+          label: 'Bộ sưu tập ảnh',
           fields: [
             {
               name: 'title',
               type: 'text',
-              defaultValue: 'Galeri Foto',
+              defaultValue: 'Bộ sưu tập ảnh',
             },
             {
               name: 'galleryImages',
@@ -431,12 +433,12 @@ export const HomePage: GlobalConfig = {
     {
       name: 'infografikSection',
       type: 'group',
-      label: 'Khối Infografik',
+      label: 'Đồ hoạ thông tin (Infografik)',
       fields: [
         {
           name: 'title',
           type: 'text',
-          defaultValue: 'Infografik',
+          defaultValue: 'Đồ hoạ thông tin (Infografik)',
         },
         {
           name: 'featuredImage',
@@ -458,12 +460,12 @@ export const HomePage: GlobalConfig = {
     {
       name: 'galeriFotoSection',
       type: 'group',
-      label: 'Khối Galeri Foto',
+      label: 'Bộ sưu tập ảnh',
       fields: [
         {
           name: 'title',
           type: 'text',
-          defaultValue: 'Galeri Foto',
+          defaultValue: 'Bộ sưu tập ảnh',
         },
         {
           name: 'galleryImages',
@@ -492,7 +494,7 @@ export const HomePage: GlobalConfig = {
     {
       name: 'podcastSection',
       type: 'group',
-      label: 'Khối Podcast',
+      label: 'Podcast',
       fields: [
         {
           name: 'title',
@@ -521,7 +523,7 @@ export const HomePage: GlobalConfig = {
     {
       name: 'bhTvSection',
       type: 'group',
-      label: 'Khối BH TV',
+      label: 'BH TV',
       fields: [
         {
           name: 'title',
@@ -556,12 +558,12 @@ export const HomePage: GlobalConfig = {
     {
       name: 'videoTerkiniSection',
       type: 'group',
-      label: 'Khối Video Terkini',
+      label: 'Video mới nhất',
       fields: [
         {
           name: 'title',
           type: 'text',
-          defaultValue: 'Video Terkini',
+          defaultValue: 'Video mới nhất',
         },
         {
           name: 'channelLogo',
@@ -584,26 +586,26 @@ export const HomePage: GlobalConfig = {
     {
       name: 'sihatSection',
       type: 'group',
-      label: 'Sihat',
+      label: 'Sức khoẻ',
       fields: [
         {
           name: 'title',
           type: 'text',
           label: 'Tiêu đề Section',
-          defaultValue: 'Sihat',
+          defaultValue: 'Sức khoẻ',
           required: true,
         },
         {
           name: 'moreText',
           type: 'text',
           label: 'Text nút Xem thêm',
-          defaultValue: 'Lagi Sihat',
+          defaultValue: 'Xem thêm mục sức khoẻ',
         },
         {
           name: 'moreLink',
           type: 'text',
           label: 'Đường dẫn Xem thêm',
-          defaultValue: '/sihat',
+          defaultValue: '/suc-khoe',
         },
         // 1. Bài viết chính (Featured Post - 1 bài)
         {

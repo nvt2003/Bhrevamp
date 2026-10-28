@@ -17,8 +17,8 @@ export default function DisyorkanSection({ data }: { data: any }) {
 
           <div className="w-10 h-1 bg-rose-600 mt-1 rounded"></div>
         </h2>
-        <Link href="/disyorkan" className="text-sm font-semibold flex items-center hover:underline">
-          Lagi Disyorkan <span className="ml-1 text-red-600 font-bold">&gt;</span>
+        <Link href="/de-xuat" className="text-sm font-semibold flex items-center hover:underline">
+          Xem thêm đề xuất <span className="ml-1 text-red-600 font-bold">&gt;</span>
         </Link>
       </div>
 

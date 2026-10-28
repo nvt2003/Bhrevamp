@@ -16,8 +16,8 @@ export default function BisnesSection({ data }: { data: any }) {
           {title}
           <div className="w-10 h-1 bg-rose-600 mt-1 rounded"></div>
         </h2>
-        <Link href="/bisnes" className="text-sm font-semibold flex items-center hover:underline">
-          Lagi Bisnes <span className="ml-1 text-red-600 font-bold">&gt;</span>
+        <Link href="/kinh-te" className="text-sm font-semibold flex items-center hover:underline">
+          Xem thêm mục kinh tế <span className="ml-1 text-red-600 font-bold">&gt;</span>
         </Link>
       </div>
 

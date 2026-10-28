@@ -11,8 +11,8 @@ export default function SihatSection({ data }: { data: any }) {
 
   const {
     title = 'Sihat',
-    moreLink = '/sihat',
-    moreText = 'Lagi Sihat',
+    moreLink = '/suc-khoe',
+    moreText = 'Xem thêm mục Sức khỏe',
     featuredPost,
     subPosts = [],
   } = data

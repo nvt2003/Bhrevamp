@@ -17,8 +17,8 @@ export default function RencanaSection({ data }: { data: any }) {
 
           <div className="w-10 h-1 bg-rose-600 mt-1 rounded"></div>
         </h2>
-        <Link href="/rencana" className="text-sm font-semibold flex items-center hover:underline">
-          Lagi Berita Rencana <span className="ml-1 text-red-600 font-bold">&gt;</span>
+        <Link href="/gan-day" className="text-sm font-semibold flex items-center hover:underline">
+          Xem thêm tin gần đây <span className="ml-1 text-red-600 font-bold">&gt;</span>
         </Link>
       </div>
 

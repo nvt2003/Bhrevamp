@@ -82,13 +82,15 @@ const makeSlug = (text: string) => {
 }
 
 const categoriesToSeed = [
-  { name: 'NASIONAL', slug: 'nasional' },
-  { name: 'WILAYAH', slug: 'wilayah' },
-  { name: 'KES', slug: 'kes' },
-  { name: 'SUKAN', slug: 'sukan' },
-  { name: 'Rias', slug: 'rias' },
-  { name: 'Wanita', slug: 'wanita' },
-  { name: 'Hiburan', slug: 'hiburan' },
+  { name: 'Nổi bật', slug: 'noi-bat' },
+  { name: 'Trong nước', slug: 'trong-nuoc' },
+  { name: 'Thể thao', slug: 'the-thao' },
+  { name: 'Kinh tế', slug: 'kinh-te' },
+  { name: 'Phụ nữ', slug: 'phu-nu' },
+  { name: 'Giải trí', slug: 'giai-tri' },
+  { name: 'Quốc tế', slug: 'quoc-te' },
+  { name: 'Sức khỏe', slug: 'suc-khoe' },
+  { name: 'Phong cách sống', slug: 'phong-cach-song' },
 ]
 export const seedPosts = async (payload: Payload) => {
   // 1. Kiểm tra xem posts đã tồn tại chưa
@@ -109,14 +111,12 @@ export const seedPosts = async (payload: Payload) => {
   const bullet1 = await payload.create({
     collection: 'posts',
     data: {
-      title: "Laporan nahas Air India: Juruterbang 'keliru' cara guna suis enjin",
-      slug: makeSlug('Laporan nahas Air India Juruterbang keliru cara guna suis enjin'),
-      category: categoryMap['nasional'],
+      title: 'Thị trường xe điện Việt Nam tăng trưởng mạnh mẽ',
+      slug: makeSlug('thi-truong-xe-dien-viet-nam-tang-truong-manh-men'),
+      category: categoryMap['kinh-te'],
       status: 'published',
       publishedAt: new Date().toISOString(),
-      content: createDummyContent(
-        "Laporan nahas Air India: Juruterbang 'keliru' cara guna suis enjin",
-      ),
+      content: createDummyContent('Thị trường xe điện Việt Nam tăng trưởng mạnh mẽ'),
     },
     draft: true,
     overrideAccess: true,
@@ -128,13 +128,13 @@ export const seedPosts = async (payload: Payload) => {
   const bullet2 = await payload.create({
     collection: 'posts',
     data: {
-      title: 'Persatuan juruterbang tolak dakwaan kesilapan manusia punca nahas Air India',
-      slug: makeSlug('persatuan-juruterbang-tolak-dakwaan-kesilapan-manusia-punca-nahas-air-india'),
-      category: categoryMap['nasional'],
+      title: 'Công nghệ AI bùng nổ trong năm 2026, nhiều ngành nghề bị ảnh hưởng',
+      slug: makeSlug('cong-nghe-ai-bung-no-trong-nam-2026-nhieu-nganh-nghe-bi-anh-huong'),
+      category: categoryMap['kinh-te'],
       status: 'published',
       publishedAt: new Date().toISOString(),
       content: createDummyContent(
-        'Persatuan juruterbang tolak dakwaan kesilapan manusia punca nahas Air India',
+        'Công nghệ AI bùng nổ trong năm 2026, nhiều ngành nghề bị ảnh hưởng',
       ),
     },
     draft: true,
@@ -147,12 +147,12 @@ export const seedPosts = async (payload: Payload) => {
   const bullet3 = await payload.create({
     collection: 'posts',
     data: {
-      title: 'Remaja dituduh rogol pelajar dalam stor sekolah',
-      slug: makeSlug('remaja-dituduh-rogol-pelajar-dalam-stor-sekolah'),
-      category: categoryMap['nasional'],
+      title: 'Chế độ ăn uống lành mạnh và cân bằng cho người làm văn phòng',
+      slug: makeSlug('che-do-an-uong-lanh-mau-va-can-bang-cho-nguoi-lam-van-phong'),
+      category: categoryMap['suc-khoe'],
       status: 'published',
       publishedAt: new Date().toISOString(),
-      content: createDummyContent('Remaja dituduh rogol pelajar dalam stor sekolah'),
+      content: createDummyContent('Chế độ ăn uống lành mạnh và cân bằng cho người làm văn phòng'),
     },
     draft: true,
     overrideAccess: true,
@@ -172,16 +172,16 @@ export const seedPosts = async (payload: Payload) => {
   const mainPost = await payload.create({
     collection: 'posts',
     data: {
-      title: 'Kapten pesawat Air India matikan suis kawal aliran bahan api ke enjin - WSJ',
-      slug: makeSlug('Kapten pesawat Air India matikan suis kawal aliran bahan api ke enjin WSJ'),
+      title: 'Hội nghị Thượng đỉnh Khí hậu Quốc tế đạt thỏa thuận lịch sử',
+      slug: makeSlug('Hoi-nghi-Thuong-dinh-Khi-hau-Quoc-te-dat-thoa-thuan-luat-su'),
       excerpt:
-        'KUALA LUMPUR: Kerajaan akan tetap melaksanakan rasionalisasi subsidi RON95 seperti yang dirancang pada..',
-      category: categoryMap['nasional'],
+        'Hơn 190 quốc gia cam kết cắt giảm khí thải nhà kính và tăng cường ngân sách chuyển đổi năng lượng xanh.',
+      category: categoryMap['quoc-te'],
       featuredImage: mainImageId,
       status: 'published',
       publishedAt: new Date().toISOString(),
       content: createDummyContent(
-        'Kapten pesawat Air India matikan suis kawal aliran bahan api ke enjin - WSJ',
+        'Hơn 190 quốc gia cam kết cắt giảm khí thải nhà kính và tăng cường ngân sách chuyển đổi năng lượng xanh.',
       ),
     },
     draft: true,
@@ -194,11 +194,14 @@ export const seedPosts = async (payload: Payload) => {
   // 5. Tạo danh sách tin Sidebar bên trái (Dạng ảnh nhỏ xếp dọc)
   console.log('Đang tạo tin Sidebar bên trái...')
   const sidePosts = [
-    { title: 'Perang Israel-Iran tidak mengubah nasib Gaza', imgSeed: 'gaza' },
-    { title: 'Azam Baki mohon maaf kepada keluarga Teoh Beng Hock', imgSeed: 'azam' },
-    { title: 'Projek LRT Laluan Mutiara dijangka beri manfaat 1.8 juta orang', imgSeed: 'lrt' },
     {
-      title: 'Aplikasi Saudi Visa Bio, pencapaian dasar luar negara tumpuan Dewan...',
+      title: 'Liên minh Châu Âu thông qua bộ luật mới về quản lý Trí tuệ Nhân tạo',
+      imgSeed: 'gaza',
+    },
+    { title: 'Kinh tế Đông Nam Á tiếp tục là điểm sáng tăng trưởng toàn cầu', imgSeed: 'azam' },
+    { title: 'Đội tuyển Việt Nam thắng nghẹt thở ở phút bù giờ', imgSeed: 'lrt' },
+    {
+      title: 'Căng thẳng cuộc đua vô địch giải Ngoại hạng Anh',
       imgSeed: 'visa',
     },
   ]
@@ -216,7 +219,7 @@ export const seedPosts = async (payload: Payload) => {
       collection: 'posts',
       data: {
         title: item.title,
-        category: categoryMap['nasional'],
+        category: categoryMap['noi-bat'],
         featuredImage: imgId,
         status: 'published',
         publishedAt: new Date().toISOString(),
@@ -236,50 +239,48 @@ export const seedPosts = async (payload: Payload) => {
   console.log('Đang tạo các bài viết dạng Grid...')
   const gridPosts = [
     {
-      title:
-        'Penyertaan media ASEAN pada program HAWANA buka peluang wartawan tukar pengalaman, kepakaran',
-      catSlug: 'nasional',
+      title: 'Phương pháp giáo dục cá nhân hóa cho học sinh',
+      catSlug: 'trong-nuoc',
       imgSeed: 'asean1',
     },
     {
-      title: 'Dedikasi media ASEAN demi liputan terbaik di sidang kemuncak',
-      catSlug: 'nasional',
+      title: 'Nhật Bản và Hàn Quốc đẩy mạnh hợp tác công nghệ bán dẫn',
+      catSlug: 'quoc-te',
       imgSeed: 'asean2',
     },
     {
-      title: 'Kepusatan, persaudaraan ASEAN penting hadapi cabaran global - PM Anwar',
-      catSlug: 'nasional',
+      title: 'Xu hướng làm việc từ xa lan rộng tại các tập đoàn đa quốc gia',
+      catSlug: 'quoc-te',
       imgSeed: 'asean3',
     },
     {
-      title: 'Pelajar cedera terjatuh di tengah jalan raya selepas dikejar tiga anjing liar',
-      catSlug: 'wilayah',
+      title: 'Tổ chức Y tế Thế giới cảnh báo về đợt dịch cúm mùa tại Châu Âu',
+      catSlug: 'suc-khoe',
       imgSeed: 'accident',
     },
     {
-      title: 'Polis tahan 2 lelaki terbabit kes samun',
-      catSlug: 'kes',
+      title: 'Đội tuyển bóng rổ Mỹ công bố đội hình tham dự giải vô địch thế giới',
+      catSlug: 'the-thao',
       imgSeed: 'police1',
     },
     {
-      title:
-        "'Dua tahun pemilik kedai emas terpaksa bayar duit perlindungan sebelum diculik' - Polis",
-      catSlug: 'nasional',
+      title: 'Giải đua xe Công thức 1 (F1): Chặng đua kịch tính dưới mưa',
+      catSlug: 'the-thao',
       imgSeed: 'police2',
     },
     {
-      title: 'Kerjasama kukuh mantapkan pertumbuhan negara BIMP-EAGA - Presiden Marcos Jr',
-      catSlug: 'nasional',
+      title: 'Chính phủ công bố gói hỗ trợ doanh nghiệp nhỏ và vừa',
+      catSlug: 'kinh-te',
       imgSeed: 'summit',
     },
     {
-      title: 'Lipas di dapur, medan selera diarah tutup 14 hari',
-      catSlug: 'kes',
+      title: 'Thế hệ cầu thủ trẻ Việt Nam sẵn sàng cho các giải đấu châu lục',
+      catSlug: 'the-thao',
       imgSeed: 'food',
     },
     {
-      title: 'Deklarasi Kuala Lumpur 2045 visi strategik pacu komuniti ASEAN',
-      catSlug: 'nasional',
+      title: 'Hội nghị Thượng đỉnh G20 tập trung thảo luận về an ninh lương thực',
+      catSlug: 'quoc-te',
       imgSeed: 'declaration',
     },
   ]
@@ -312,37 +313,36 @@ export const seedPosts = async (payload: Payload) => {
     })
     createdGridPosts.push(Number(post.id))
   }
-  console.log('Đang tạo dữ liệu Terkini và Trending...')
+  console.log('Đang tạo dữ liệu tin mới nhất và treding...')
 
   const terkiniAndTrendingItems = [
     {
-      title: 'Mahkamah sahkan pernikahan Marissa-Aslam, perkahwinan perlu didaftar segera',
-      catSlug: 'kes',
+      title: 'Trào lưu "Flex" thành tích học tập và sự nghiệp tiếp tục phủ sóng MXH',
+      catSlug: 'giai-tri',
       imgSeed: 'police-car',
       isTrending: true,
     },
     {
-      title: "Sarawak mahu 'timba ilmu' Sukan SEA Thailand",
-      catSlug: 'sukan',
+      title: 'Ca khúc indie mới ra mắt bất ngờ leo thẳng lên Top 1 Trending YouTube',
+      catSlug: 'giai-tri',
       imgSeed: 'sea-games',
       isTrending: true,
     },
     {
-      title: 'Isu perselisihan antara Orang Asli, polis di Pekan, Sabtu lalu selesai',
-      catSlug: 'kes',
+      title: 'Cơn sốt món ăn street food mới khiến giới trẻ xếp hàng dài chờ đợi',
+      catSlug: 'giai-tri',
       imgSeed: 'meeting-signing',
       isTrending: true,
     },
     {
-      title:
-        'Mahkamah sahkan pernikahan Marissa-Aslam, perkahwinan perlu didaftaChina sedia perkukuh...',
-      catSlug: 'nasional',
+      title: 'Bộ phim truyền hình mới lên sóng gây bão thảo luận trên các diễn đàn',
+      catSlug: 'giai-tri',
       imgSeed: 'press-conference',
       isTrending: true,
     },
     {
-      title: 'Dana pelaburan RM150 juta rombak landskap hartanah tempatan',
-      catSlug: 'nasional',
+      title: 'Các startup công nghệ Việt Nam gây ấn tượng tại hội nghị quốc tế',
+      catSlug: 'kinh-te',
       imgSeed: 'investment-handshake',
       isTrending: true,
     },
@@ -377,7 +377,7 @@ export const seedPosts = async (payload: Payload) => {
     })
   }
   // --- TẠO BÀI DÙNG CHO DISYORKAN ---
-  console.log('Đang tạo tin cho khối Disyorkan...')
+  console.log('Đang tạo tin cho Phần đề xuất...')
 
   // Bài chính
   const mainDisyorkanImg = await createMediaFromUrl(
@@ -389,12 +389,14 @@ export const seedPosts = async (payload: Payload) => {
   const disyorkanMain = await payload.create({
     collection: 'posts',
     data: {
-      title: 'Gugur janin guna ubat beli di TikTok, pekerja kafe dipenjara 9 bulan',
-      category: categoryMap['nasional'],
+      title: 'Trào lưu sáng tạo video bằng ứng dụng AI độc đáo thu hút hàng triệu lượt view',
+      category: categoryMap['giai-tri'],
       featuredImage: mainDisyorkanImg,
       status: 'published',
       publishedAt: new Date().toISOString(),
-      slug: makeSlug('Gugur janin guna ubat beli di TikTok pekerja kafe dipenjara 9 bulan'),
+      slug: makeSlug(
+        'Trào lưu sáng tạo video bằng ứng dụng AI độc đáo thu hút hàng triệu lượt view',
+      ),
       content: createDummyContent('Gugur janin...'),
     },
     draft: true,
@@ -406,17 +408,20 @@ export const seedPosts = async (payload: Payload) => {
 
   // 6 bài nhỏ
   const disyorkanItems = [
-    { title: 'Suspek kes simbah asid pengusaha spa disambung reman 4 hari', seed: 'acid1' },
-    { title: "'Geng Bob' curi sarung meter air tumpas diserbu polis", seed: 'gengbob' },
+    { title: 'Lễ hội âm nhạc ngoài trời cháy vé chỉ sau vài phút mở bán', seed: 'acid1' },
     {
       title:
-        "'Saya jerit panggil nama mak su, tapi yang kedengaran hanya suara kesakitan' - Anak saudara",
+        'Sự xuất hiện của dàn nghệ sĩ tên tuổi khiến cộng đồng yêu âm nhạc đứng ngồi không yên.',
+      seed: 'gengbob',
+    },
+    {
+      title: 'Bộ ảnh thời trang phong cách Retro thập niên 90 gây sốt giới trẻ',
       seed: 'diplomat',
     },
-    { title: 'MPV terbabas, langgar pembahagi konkrit, 2 maut', seed: 'caraccident' },
-    { title: 'Suspek kedua kes simbah asid pengusaha spa direman tujuh hari', seed: 'acid2' },
+    { title: 'Khám phá vẻ đẹp thiên nhiên và văn hóa Phú Thọ', seed: 'caraccident' },
+    { title: 'Mẹo tối ưu hiệu năng cho ứng dụng Node.js', seed: 'acid2' },
     {
-      title: 'Gugur janin guna ubat beli di TikTok, pekerja kafe dipenjara 9 bulan',
+      title: 'Giá năng lượng thế giới hạ nhiệt sau đợt biến động mạnh',
       seed: 'citaglobal',
     },
   ]
@@ -434,7 +439,7 @@ export const seedPosts = async (payload: Payload) => {
       collection: 'posts',
       data: {
         title: item.title,
-        category: categoryMap['kes'] || categoryMap['nasional'],
+        category: categoryMap['trong-nuoc'] || categoryMap['giai-tri'],
         featuredImage: imgId,
         status: 'published',
         publishedAt: new Date().toISOString(),
@@ -455,11 +460,11 @@ export const seedPosts = async (payload: Payload) => {
   // 1. 2 Bài chính (Trái & Giữa)
   const rencanaFeaturedItems = [
     {
-      title: 'Sekolah Rendah Agama Sungai Udang usang, perlu bangunan baharu - Rais',
+      title: 'Ngành du lịch toàn cầu phục hồi vượt mức trước đại dịch',
       seed: 'school-renovate',
     },
     {
-      title: 'Hari akhir Sidang Kemuncak ASEAN ke-46 tumpu pengukuhan kerjasama',
+      title: 'Thám hiểm không gian: Tàu vũ trụ quốc tế gửi về hình ảnh mới nhất từ Sao Hỏa',
       seed: 'asean-summit',
     },
   ]
@@ -477,7 +482,7 @@ export const seedPosts = async (payload: Payload) => {
       collection: 'posts',
       data: {
         title: item.title,
-        category: categoryMap['nasional'],
+        category: categoryMap['trong-nuoc'],
         featuredImage: imgId,
         status: 'published',
         publishedAt: new Date().toISOString(),
@@ -496,19 +501,19 @@ export const seedPosts = async (payload: Payload) => {
   // 2. 4 Bài danh sách bên phải
   const rencanaSideItems = [
     {
-      title: 'Mahkamah sahkan pernikahan Marissa-Aslam, perkahwinan perlu didaftar segera',
+      title: 'Phim điện ảnh Việt cán mốc doanh thu trăm tỷ sau 1 tuần công chiếu',
       seed: 'court-marissa',
     },
     {
-      title: 'Dewan Rakyat: Isu bekalan beras, akaun media sosial antara tumpuan hari ini',
+      title: 'Đêm đại nhạc hội quy tụ dàn sao V-Pop bùng nổ trước hàng ngàn khán giả',
       seed: 'parliament-news',
     },
     {
-      title: 'Polis kesan sindiket penyeludupan dadah guna khidmat kurier',
+      title: 'Nghệ sĩ tên tuổi bất ngờ tái xuất với album nhạc Jazz ngẫu hứng',
       seed: 'police-investigation',
     },
     {
-      title: 'Pemimpin ASEAN sepakat perkasa kinh doanh và đổi mới sáng tạo khu vực',
+      title: 'Hội nghị thượng đỉnh ASEAN bàn về hợp tác kinh tế và an ninh khu vực',
       seed: 'asean-leaders',
     },
   ]
@@ -526,7 +531,7 @@ export const seedPosts = async (payload: Payload) => {
       collection: 'posts',
       data: {
         title: item.title,
-        category: categoryMap['nasional'],
+        category: categoryMap['trong-nuoc'],
         featuredImage: imgId,
         status: 'published',
         publishedAt: new Date().toISOString(),
@@ -542,16 +547,16 @@ export const seedPosts = async (payload: Payload) => {
     createdRencanaSideIds.push(Number(post.id))
   }
   // --- TẠO BÀI DÙNG CHO SUKAN ---
-  console.log('Đang tạo tin cho khối Sukan...')
+  console.log('Đang tạo tin cho phần thể thao...')
 
   // 1. 2 Bài chính nổi bật
   const sukanFeaturedItems = [
     {
-      title: 'Xabi Alonso tekad bawa Real Madrid kembali cemerlang musim depan',
+      title: 'Kế hoạch nâng cấp và hiện đại hóa hệ thống sân vận động quốc gia',
       seed: 'xabi-alonso',
     },
     {
-      title: 'Beregu lelaki negara mara ke suku akhir Terbuka Jepun',
+      title: 'Giải đua xe Công thức 1 (F1): Chặng đua kịch tính dưới mưa',
       seed: 'badminton-pair',
     },
   ]
@@ -569,7 +574,7 @@ export const seedPosts = async (payload: Payload) => {
       collection: 'posts',
       data: {
         title: item.title,
-        category: categoryMap['sukan'] || categoryMap['nasional'],
+        category: categoryMap['the-thao'] || categoryMap['trong-nuoc'],
         featuredImage: imgId,
         status: 'published',
         publishedAt: new Date().toISOString(),
@@ -588,19 +593,19 @@ export const seedPosts = async (payload: Payload) => {
   // 2. 4 Bài danh sách bên phải
   const sukanSideItems = [
     {
-      title: 'Sidang Khas Parlimen tumpu isu pembangunan sukan tanah air',
+      title: 'Đội tuyển bóng rổ Mỹ công bố đội hình tham dự giải vô địch thế giới',
       seed: 'sukan-parliament',
     },
     {
-      title: 'Kelab peminat Harimau Malaya lancar jersi edisi khas',
+      title: 'Kỷ lục thế giới mới được thiết lập ở cự ly chạy 100m nam',
       seed: 'football-fans',
     },
     {
-      title: 'Pemain badminton wanita negara kejutkan pilihan ketiga kejohanan',
+      title: 'Cầu thủ trẻ Việt Nam ghi bàn quyết định trong trận chung kết U23 Đông Nam Á',
       seed: 'badminton-women',
     },
     {
-      title: 'Jurulatih baharu skuad kebangsaan sasar kelayakan Piala Asia',
+      title: 'Huyền thoại bóng đá châu Âu giải nghệ sau 20 năm thi đấu đỉnh cao',
       seed: 'coach-national',
     },
   ]
@@ -618,7 +623,7 @@ export const seedPosts = async (payload: Payload) => {
       collection: 'posts',
       data: {
         title: item.title,
-        category: categoryMap['sukan'] || categoryMap['nasional'],
+        category: categoryMap['the-thao'] || categoryMap['trong-nuoc'],
         featuredImage: imgId,
         status: 'published',
         publishedAt: new Date().toISOString(),
@@ -634,16 +639,16 @@ export const seedPosts = async (payload: Payload) => {
     createdSukanSideIds.push(Number(post.id))
   }
   // --- TẠO BÀI DÙNG CHO DUNIA ---
-  console.log('Đang tạo tin cho khối Dunia...')
+  console.log('Đang tạo tin cho phần quốc tế...')
 
   // 1. 2 Bài chính nổi bật
   const duniaFeaturedItems = [
     {
-      title: 'Pelampau Israel serang penduduk Palestin Baitulmaqdis',
+      title: 'Xung đột Israel-Palestine leo thang, cộng đồng quốc tế kêu gọi kiềm chế',
       seed: 'israel-palestine',
     },
     {
-      title: 'Kami Rita Sherpa perbaharui rekod dunia daki Everest buat kali ke-31',
+      title: 'Thảm họa sạt lở đất tại Nepal khiến hàng trăm người mất tích',
       seed: 'everest-sherpa',
     },
   ]
@@ -661,7 +666,7 @@ export const seedPosts = async (payload: Payload) => {
       collection: 'posts',
       data: {
         title: item.title,
-        category: categoryMap['dunia'] || categoryMap['nasional'],
+        category: categoryMap['quoc-te'],
         featuredImage: imgId,
         status: 'published',
         publishedAt: new Date().toISOString(),
@@ -680,19 +685,19 @@ export const seedPosts = async (payload: Payload) => {
   // 2. 4 Bài danh sách bên phải
   const duniaSideItems = [
     {
-      title: 'Pegawai tinggi kementerian Indonesia disiasat seleweng berbilion rupiah',
+      title: 'Indonesia hạ lãi suất cơ bản lần đầu tiên trong 3 năm',
       seed: 'indonesia-money',
     },
     {
-      title: 'Arab Saudi kuatkuasa sekatan visa bagi negara tertentu',
+      title: 'Hàng nghìn người hành hương tụ tập tại Mecca trong mùa lễ hội Haji',
       seed: 'mecca-saudi',
     },
     {
-      title: "2 maut, 9 cedera dalam kes tembakan 'Memorial Day' di AS",
+      title: 'Cảnh sát Mỹ điều tra vụ xả súng tại trường học ở Texas',
       seed: 'us-police',
     },
     {
-      title: 'Remaja ditahan sebar ekstremisme dalam talian di Sulawesi',
+      title: 'Căng thẳng chính trị tại Sulawesi, Indonesia dẫn đến nhiều vụ bắt giữ',
       seed: 'sulawesi-arrest',
     },
   ]
@@ -710,7 +715,7 @@ export const seedPosts = async (payload: Payload) => {
       collection: 'posts',
       data: {
         title: item.title,
-        category: categoryMap['dunia'] || categoryMap['nasional'],
+        category: categoryMap['quoc-te'],
         featuredImage: imgId,
         status: 'published',
         publishedAt: new Date().toISOString(),
@@ -726,16 +731,16 @@ export const seedPosts = async (payload: Payload) => {
     createdDuniaSideIds.push(Number(post.id))
   }
   // --- TẠO BÀI DÙNG CHO BISNES ---
-  console.log('Đang tạo tin cho khối Bisnes...')
+  console.log('Đang tạo tin cho phần kinh tế...')
 
   // 1. 2 Bài nổi bật phía trên
   const bisnesFeaturedItems = [
     {
-      title: 'Peugeot 3008: Simfoni keanggunan Eropah di jalanan Malaysia',
+      title: 'Kinh tế số hóa: Doanh nghiệp Việt Nam đẩy mạnh chuyển đổi số để tăng trưởng bền vững',
       seed: 'kwasaland-property',
     },
     {
-      title: 'Titijaya beli dua aset hartanah bernilai RM105 juta di Kota Kinabalu',
+      title: 'Startup công nghệ Việt Nam gây ấn tượng tại hội nghị quốc tế',
       seed: 'titijaya-press',
     },
   ]
@@ -753,7 +758,7 @@ export const seedPosts = async (payload: Payload) => {
       collection: 'posts',
       data: {
         title: item.title,
-        category: categoryMap['bisnes'] || categoryMap['nasional'],
+        category: categoryMap['kinh-te'],
         featuredImage: imgId,
         status: 'published',
         publishedAt: new Date().toISOString(),
@@ -772,19 +777,19 @@ export const seedPosts = async (payload: Payload) => {
   // 2. 4 Bài danh sách phía dưới (Grid 2x2)
   const bisnesSubItems = [
     {
-      title: 'Mahkamah sahkan pernikahan Marissa-Aslam, perkahwinan perlu didaftar segera',
+      title: 'Doanh nghiệp khởi nghiệp Việt Nam nhận đầu tư quốc tế, mở rộng thị trường',
       seed: 'business-ceo-1',
     },
     {
-      title: 'Kadar inflasi Malaysia kekal stabil pada suku kedua tahun ini',
+      title: 'Tăng trưởng kinh tế Việt Nam dự báo đạt mức cao trong năm 2026',
       seed: 'business-man-2',
     },
     {
-      title: 'Syarikat kesihatan tempatan jalin kerjasama strategik peluasan pasaran',
+      title: 'Lĩnh vực công nghệ tài chính (Fintech) tại Việt Nam thu hút nhiều nhà đầu tư',
       seed: 'corporate-signing',
     },
     {
-      title: 'Sektor perbankan dijangka terus kukuh dipacu pertumbuhan domestik',
+      title: 'Xu hướng tiêu dùng bền vững và thân thiện môi trường ngày càng phổ biến tại Việt Nam',
       seed: 'building-corporate',
     },
   ]
@@ -802,7 +807,7 @@ export const seedPosts = async (payload: Payload) => {
       collection: 'posts',
       data: {
         title: item.title,
-        category: categoryMap['bisnes'] || categoryMap['nasional'],
+        category: categoryMap['kinh-te'],
         featuredImage: imgId,
         status: 'published',
         publishedAt: new Date().toISOString(),
@@ -818,16 +823,16 @@ export const seedPosts = async (payload: Payload) => {
     createdBisnesSubIds.push(Number(post.id))
   }
   // --- TẠO BÀI DÙNG CHO HIBURAN ---
-  console.log('Đang tạo tin cho khối Hiburan...')
+  console.log('Đang tạo tin cho phần giải trí...')
 
   // 1. 2 Bài nổi bật phía trên
   const hiburanFeaturedItems = [
     {
-      title: 'Paduan suara anak penyanyi legenda',
+      title: 'Ca sĩ nổi tiếng ra mắt album mới, hứa hẹn gây bão thị trường âm nhạc',
       seed: 'singing-duo',
     },
     {
-      title: 'Amar, Qobin mungkin akhiri kembara berbasikal di Madinah',
+      title: 'Chuyến du lịch mạo hiểm tại vùng núi cao thu hút giới trẻ yêu khám phá',
       seed: 'cyclist-travel',
     },
   ]
@@ -845,7 +850,7 @@ export const seedPosts = async (payload: Payload) => {
       collection: 'posts',
       data: {
         title: item.title,
-        category: categoryMap['hiburan'] || categoryMap['nasional'],
+        category: categoryMap['giai-tri'],
         featuredImage: imgId,
         status: 'published',
         publishedAt: new Date().toISOString(),
@@ -864,19 +869,19 @@ export const seedPosts = async (payload: Payload) => {
   // 2. 4 Bài danh sách phía dưới (Grid 2x2)
   const hiburanSubItems = [
     {
-      title: 'Konsert jelajah artis tempatan mendapat sambutan hangat penyokong',
+      title: 'Concert âm nhạc ngoài trời thu hút hàng nghìn khán giả',
       seed: 'stage-concert',
     },
     {
-      title: 'Pelakon popular impi watak mencabar dalam filem aksi terbaharu',
+      title: 'Diễn viên nổi tiếng tham gia sự kiện thời trang quốc tế, gây chú ý truyền thông',
       seed: 'actor-suit',
     },
     {
-      title: 'Filem animasi tempatan catat kutipan tertinggi di panggung',
+      title: 'Lễ kỉ niệm 10 năm thành lập nhóm nhạc đình đám, fan hâm mộ háo hức chờ đón',
       seed: 'celebrity-family',
     },
     {
-      title: 'Pasangan selebriti berkongsi detik manis sambutan ulang tahun',
+      title: 'Cặp đôi nổi tiếng công bố dự án hợp tác mới, gây tò mò dư luận',
       seed: 'celebrity-couple',
     },
   ]
@@ -894,7 +899,7 @@ export const seedPosts = async (payload: Payload) => {
       collection: 'posts',
       data: {
         title: item.title,
-        category: categoryMap['hiburan'] || categoryMap['nasional'],
+        category: categoryMap['giai-tri'],
         featuredImage: imgId,
         status: 'published',
         publishedAt: new Date().toISOString(),
@@ -910,7 +915,7 @@ export const seedPosts = async (payload: Payload) => {
     createdHiburanSubIds.push(Number(post.id))
   }
   // --- TẠO BÀI DÙNG CHO GAYA HIDUP ---
-  console.log('Đang tạo tin cho khối Gaya Hidup...')
+  console.log('Đang tạo tin cho phần Phong cách sống...')
 
   // 1. Bài chính nổi bật phía trên
   const gayaHidupMainImg = await createMediaFromUrl(
@@ -922,13 +927,15 @@ export const seedPosts = async (payload: Payload) => {
   const gayaHidupMain = await payload.create({
     collection: 'posts',
     data: {
-      title: 'Paduan suara anak penyanyi legenda',
-      category: categoryMap['gaya-hidup'] || categoryMap['nasional'],
+      title: 'Phong cách sống hiện đại: Xu hướng chăm sóc sức khỏe và làm đẹp tự nhiên',
+      category: categoryMap['phong-cach-song'],
       featuredImage: gayaHidupMainImg,
       status: 'published',
       publishedAt: new Date().toISOString(),
-      slug: makeSlug('Paduan suara anak penyanyi legenda gaya hidup'),
-      content: createDummyContent('Paduan suara anak penyanyi legenda...'),
+      slug: makeSlug('Phong cách sống hiện đại: Xu hướng chăm sóc sức khỏe và làm đẹp tự nhiên'),
+      content: createDummyContent(
+        'Phong cách sống hiện đại: Xu hướng chăm sóc sức khỏe và làm đẹp tự nhiên...',
+      ),
     },
     draft: true,
     overrideAccess: true,
@@ -940,19 +947,19 @@ export const seedPosts = async (payload: Payload) => {
   // 2. 4 Bài danh sách phía dưới
   const gayaHidupSubItems = [
     {
-      title: 'Cipta kenangan indah di Lexis Hibiscus Port Dickson',
+      title: 'Khám phá khu nghỉ dưỡng sang trọng tại Bali, Indonesia',
       seed: 'lexis-resort',
     },
     {
-      title: 'Tiram Sungai Merbok',
+      title: 'Món hàu Merbok nổi tiếng với hương vị đặc trưng và giàu dinh dưỡng',
       seed: 'merbok-oyster',
     },
     {
-      title: '5 cara jadikan susu lebih menyeronokkan untuk kanak-kanak',
+      title: 'Trẻ em uống sữa đúng cách để phát triển toàn diện',
       seed: 'child-drinking-milk',
     },
     {
-      title: 'Sabar dan ikhlas laksana tugas jaga warga emas',
+      title: '5 cách chăm sóc người cao tuổi tại nhà hiệu quả và an toàn',
       seed: 'caregiver-elderly',
     },
   ]
@@ -970,7 +977,7 @@ export const seedPosts = async (payload: Payload) => {
       collection: 'posts',
       data: {
         title: item.title,
-        category: categoryMap['gaya-hidup'] || categoryMap['nasional'],
+        category: categoryMap['phong-cach-song'] || categoryMap['nasional'],
         featuredImage: imgId,
         status: 'published',
         publishedAt: new Date().toISOString(),
@@ -991,11 +998,11 @@ export const seedPosts = async (payload: Payload) => {
   // 1. 2 Bài nổi bật phía trên
   const bhPlusFeaturedItems = [
     {
-      title: 'Paduan suara anak penyanyi legenda',
+      title: '2 ca sĩ nổi tiếng hợp tác ra mắt ca khúc mới, hứa hẹn gây bão thị trường âm nhạc',
       seed: 'singers-duo',
     },
     {
-      title: 'Amar, Qobin mungkin akhiri kembara berbasikal di Madinah',
+      title: 'Cuộc đua xe đạp quốc tế tại Madinah thu hút hàng nghìn vận động viên và khán giả',
       seed: 'cyclist-madinah',
     },
   ]
@@ -1013,7 +1020,7 @@ export const seedPosts = async (payload: Payload) => {
       collection: 'posts',
       data: {
         title: item.title,
-        category: categoryMap['nasional'],
+        category: categoryMap['trong-nuoc'],
         featuredImage: imgId,
         status: 'published',
         publishedAt: new Date().toISOString(),
@@ -1032,19 +1039,19 @@ export const seedPosts = async (payload: Payload) => {
   // 2. 4 Bài danh sách phía dưới (Grid 2x2)
   const bhPlusSubItems = [
     {
-      title: 'Gusmao beri pengamal media coklat',
+      title: 'Socola Gusmao ra mắt dòng sản phẩm mới',
       seed: 'gusmao-chocolate',
     },
     {
-      title: "Barisan ASEAN All-Stars tekad 'malukan' United",
+      title: 'ASEAN United: Hợp tác kinh tế và văn hóa giữa các quốc gia Đông Nam Á',
       seed: 'asean-united',
     },
     {
-      title: 'Eksperimen individu Cklamovski',
+      title: 'Kinh nghiệm huấn luyện thể thao từ các huấn luyện viên hàng đầu thế giới',
       seed: 'coach-experiment',
     },
     {
-      title: 'Kerajaan negeri tunggu laporan penuh insiden murid dimarahi guru - Amirudin',
+      title: 'Báo cáo giáo dục: Xu hướng học tập trực tuyến và tác động đến sinh viên',
       seed: 'education-report',
     },
   ]
@@ -1062,7 +1069,7 @@ export const seedPosts = async (payload: Payload) => {
       collection: 'posts',
       data: {
         title: item.title,
-        category: categoryMap['nasional'],
+        category: categoryMap['trong-nuoc'],
         featuredImage: imgId,
         status: 'published',
         publishedAt: new Date().toISOString(),
@@ -1087,7 +1094,7 @@ export const seedPosts = async (payload: Payload) => {
     'ASEAN Handshake Infografik',
   )
   // --- TẠO DỮ LIỆU CHO KHỐI GALERI FOTO ---
-  console.log('Đang tạo dữ liệu cho khối Galeri Foto...')
+  console.log('Đang tạo dữ liệu cho phần bộ sưu tập ảnh...')
 
   // Tạo mảng gồm 32 ảnh ngẫu nhiên tượng trưng cho grid ảnh phong phú
   const galleryItems = []
@@ -1106,7 +1113,7 @@ export const seedPosts = async (payload: Payload) => {
     }
   }
   // --- TẠO DỮ LIỆU CHO KHỐI PODCAST ---
-  console.log('Đang tạo tin cho khối Podcast...')
+  console.log('Đang tạo tin cho phần Podcast...')
 
   // 1. Tạo hoặc lấy logo tạm thời (BH TV Badge)
   const podcastLogoImg = await createMediaFromUrl(
@@ -1119,15 +1126,15 @@ export const seedPosts = async (payload: Payload) => {
   // 2. Tạo 3 video podcast
   const podcastItems = [
     {
-      title: 'Impak positif kenaikan gaji minimum bakal dirasai semua lapisan',
+      title: 'Hình ảnh và câu chuyện đằng sau những bức ảnh nổi tiếng trên mạng xã hội - John Doe',
       seed: 'podcast-guest-1',
     },
     {
-      title: 'Bawa pulang pekerja mahir, hartawan mampu tingkat ekonomi negara - Nazri Khan',
+      title: 'Công nghệ AI và tác động của nó đến cuộc sống hàng ngày - Jane Smith',
       seed: 'podcast-guest-2',
     },
     {
-      title: "Belanjawan 2025 bukan 'hukuman' kepada golongan mahakaya, T15",
+      title: 'Khám phá thế giới ẩm thực đường phố và những món ăn độc đáo - Chef Alex',
       seed: 'podcast-studio-3',
     },
   ]
@@ -1145,7 +1152,7 @@ export const seedPosts = async (payload: Payload) => {
       collection: 'posts',
       data: {
         title: item.title,
-        category: categoryMap['nasional'],
+        category: categoryMap['trong-nuoc'],
         featuredImage: imgId,
         status: 'published',
         publishedAt: new Date().toISOString(),
@@ -1176,18 +1183,21 @@ export const seedPosts = async (payload: Payload) => {
     payload,
     'https://picsum.photos/seed/melaka-court/800/450',
     'bhtv-main-video.jpg',
-    'Gugur janin guna ubat beli di TikTok',
+    'Melaka Court Escort Video',
   )
 
   const createdMainVideo = await payload.create({
     collection: 'posts',
     data: {
-      title: 'Gugur janin guna ubat beli di TikTok, pekerja kafe dipenjara 9 bulan',
-      category: categoryMap['kes'] || categoryMap['nasional'],
+      title:
+        'Video chi tiết về vụ án: Hại đồng nghiệp bằng thuốc mua trên TikTok, nhân viên quán cà phê bị kết án 9 tháng tù',
+      category: categoryMap['trong-nuoc'],
       featuredImage: mainVideoImg,
       status: 'published',
       publishedAt: new Date().toISOString(),
-      slug: makeSlug('Gugur janin guna ubat beli di TikTok pekerja kafe dipenjara 9 bulan'),
+      slug: makeSlug(
+        'Hại đồng nghiệp bằng thuốc mua trên TikTok, nhân viên quán cà phê bị kết án 9 tháng tù',
+      ),
       content: createDummyContent('Video chi tiết vụ án...'),
     },
     draft: true,
@@ -1200,28 +1210,30 @@ export const seedPosts = async (payload: Payload) => {
   // 3. 6 Video nhỏ bên phải
   const bhTvSubItems = [
     {
-      title: 'Suspek kes simbah asid pengusaha spa disambung reman 4 hari',
+      title: 'Vụ sạt lở tại Madinah: Cảnh sát và lực lượng cứu hộ nỗ lực tìm kiếm nạn nhân',
       seed: 'police-arrest-1',
     },
     {
-      title: "'Geng Bob' curi sarung meter air tumpas diserbu polis",
+      title:
+        'Lũ lụt tại Jakarta: Hàng nghìn người phải sơ tán, chính quyền địa phương kêu gọi hỗ trợ',
       seed: 'police-conference-2',
     },
     {
       title:
-        "'Saya jerit panggil nama mak su, tapi yang kedengaran hanya suara kesakitan' - Anak saudara",
+        "Phỏng vấn nhân chứng vụ tai nạn giao thông nghiêm trọng tại Kuala Lumpur: 'Tôi không kịp phản ứng, mọi thứ diễn ra quá nhanh'",
       seed: 'accident-witness-3',
     },
     {
-      title: 'MPV terbabas, langgar pembahagi konkrit, 2 maut',
+      title:
+        'Mẫu xe mới nhất ra mắt tại triển lãm ô tô quốc tế, thu hút sự chú ý của giới truyền thông và người hâm mộ',
       seed: 'car-accident-4',
     },
     {
-      title: 'Suspek kedua kes simbah asid pengusaha spa direman tujuh hari',
+      title: 'Cảnh sát điều tra vụ án mạng tại Penang: Nghi phạm bị bắt giữ sau 48 giờ truy tìm',
       seed: 'suspect-face-5',
     },
     {
-      title: 'Gugur janin guna ubat beli di TikTok, pekerja kafe dipenjara 9 bulan',
+      title: 'Những hình ảnh ấn tượng từ buổi lễ trao giải thưởng điện ảnh quốc tế tại Singapore',
       seed: 'court-escort-6',
     },
   ]
@@ -1239,7 +1251,7 @@ export const seedPosts = async (payload: Payload) => {
       collection: 'posts',
       data: {
         title: item.title,
-        category: categoryMap['kes'] || categoryMap['nasional'],
+        category: categoryMap['giai-tri'],
         featuredImage: imgId,
         status: 'published',
         publishedAt: new Date().toISOString(),
@@ -1268,32 +1280,32 @@ export const seedPosts = async (payload: Payload) => {
   // 2. Danh sách 5 video ngắn
   const videoTerkiniItems = [
     {
-      title: 'Letupan lori tangki minyak ragut 147 nyawa di Nigeria',
+      title: 'Video: Rừng bốc cháy dữ dội, lính cứu hỏa nỗ lực dập lửa',
       duration: '1:10',
       seed: 'tanker-explosion-1',
     },
     {
-      title: "Mesir gesa tindakan 'segera dan tegas' hentikan serangan...",
+      title: 'Video: Cảnh sát điều tra vụ án mạng tại Cairo, Ai Cập',
       duration: '1:10',
       seed: 'egypt-news-2',
     },
     {
-      title: 'Kanak-kanak tidak sempat terima dos kedua vaksin polio, maut kena...',
+      title: 'Video: Trẻ em không kịp nhận liều vắc xin polio thứ hai, tử vong do nhiễm bệnh',
       duration: '1:10',
       seed: 'rubble-child-3',
     },
     {
-      title: 'Hampir 100 terbunuh akibat letupan lori tangki di Nigeria',
+      title: 'Video: Cháy nổ tại nhà máy hóa chất, lính cứu hỏa nỗ lực dập lửa',
       duration: '1:10',
       seed: 'fire-explosion-4',
     },
     {
-      title: "Iran berikrar balas 'tindakan' menyerang...",
+      title: 'Video: Căng thẳng chính trị tại Tehran, Iran, biểu tình phản đối chính phủ',
       duration: '1:10',
       seed: 'iran-official-5',
     },
     {
-      title: "Iran berikrar balas 'tindakan' abcdef swiper...",
+      title: 'Video: Tình hình chiến sự tại Tehran, Iran',
       duration: '1:10',
       seed: 'iran-official-6',
     },
@@ -1312,7 +1324,7 @@ export const seedPosts = async (payload: Payload) => {
       collection: 'posts',
       data: {
         title: item.title,
-        category: categoryMap['rias'],
+        category: categoryMap['quoc-te'],
         featuredImage: imgId,
         status: 'published',
         publishedAt: new Date().toISOString(),
@@ -1333,24 +1345,26 @@ export const seedPosts = async (payload: Payload) => {
 
   const sihatItems = [
     {
-      title: 'Amar, Qobin mungkin akhiri kembara berbasikal di Madinah',
+      title:
+        'Cảnh báo sức khỏe: Tác hại của việc sử dụng điện thoại quá nhiều đối với mắt và não bộ',
       seed: 'sihat-featured-1',
       isMain: true,
     },
     {
-      title: 'Penampilan beridentitikan batik, lambang cinta warisan Wan Zakaria',
+      title: 'Món ăn truyền thống giúp tăng cường hệ miễn dịch và sức khỏe tim mạch',
       seed: 'sihat-sub-1',
     },
     {
-      title: 'Yogurt, tempe, kimchi sumber makanan probiotik baik untuk usus',
+      title:
+        'Khám phá các bài tập thể dục đơn giản tại nhà giúp giảm căng thẳng và cải thiện tinh thần',
       seed: 'sihat-sub-2',
     },
     {
-      title: 'Nankai Trough, amaran bencana abad ini',
+      title: 'Dịch cúm mùa đông: Cách phòng ngừa và chăm sóc sức khỏe cho cả gia đình',
       seed: 'sihat-sub-3',
     },
     {
-      title: "Aroma kopi makin harum di Pu'er",
+      title: 'Rủi ro sức khỏe khi sử dụng mạng xã hội quá mức',
       seed: 'sihat-sub-4',
     },
   ]
@@ -1371,7 +1385,7 @@ export const seedPosts = async (payload: Payload) => {
       collection: 'posts',
       data: {
         title: item.title,
-        category: categoryMap['sihat'] || categoryMap['wanita'],
+        category: categoryMap['suc-khoe'],
         featuredImage: imgId,
         status: 'published',
         publishedAt: new Date().toISOString(),
@@ -1394,7 +1408,7 @@ export const seedPosts = async (payload: Payload) => {
 
   // --- Chuẩn bị danh sách Trending Keywords---
   console.log('Chuẩn bị danh sách Trending Keywords...')
-  const trendingKeywords = ['Accounts', '1MDB scandal', 'Election 2024', 'Floods', 'New year 2025']
+  const trendingKeywords = ['Giá xăng', 'scandal', 'Cúm A', 'Lũ lụt', 'Gió mùa đông bắc']
 
   const processedTrending = trendingKeywords.map((keyword, index) => ({
     keyword,
@@ -1410,7 +1424,7 @@ export const seedPosts = async (payload: Payload) => {
         thumbnail: bhTvLogoImg,
       },
       utamaSection: {
-        title: 'Utama',
+        title: 'Nổi bật',
         featuredMain: mainPost.id,
         featuredSide: createdSidePosts,
         featuredBullet: [bullet1.id, bullet2.id, bullet3.id],
@@ -1419,37 +1433,37 @@ export const seedPosts = async (payload: Payload) => {
         trendingLimit: 5,
       },
       disyorkanSection: {
-        title: 'Disyorkan',
+        title: 'Đề xuất',
         mainPost: disyorkanMain.id,
         subPosts: createdDisyorkanSubIds,
       },
       rencanaSection: {
-        title: 'Rencana',
+        title: 'Gần đây',
         featuredPosts: createdRencanaFeaturedIds,
         sidePosts: createdRencanaSideIds,
       },
       sukanSection: {
-        title: 'Sukan',
+        title: 'Thể thao',
         featuredPosts: createdSukanFeaturedIds,
         sidePosts: createdSukanSideIds,
       },
       duniaSection: {
-        title: 'Dunia',
+        title: 'Quốc tế',
         featuredPosts: createdDuniaFeaturedIds,
         sidePosts: createdDuniaSideIds,
       },
       bisnesSection: {
-        title: 'Bisnes',
+        title: 'Kinh tế',
         featuredPosts: createdBisnesFeaturedIds,
         subPosts: createdBisnesSubIds,
       },
       hiburanSection: {
-        title: 'Hiburan',
+        title: 'Giải trí',
         featuredPosts: createdHiburanFeaturedIds,
         subPosts: createdHiburanSubIds,
       },
       gayaHidupSection: {
-        title: 'Gaya Hidup',
+        title: 'Phong cách sống',
         featuredPost: gayaHidupMain.id,
         subPosts: createdGayaHidupSubIds,
       },
@@ -1464,7 +1478,7 @@ export const seedPosts = async (payload: Payload) => {
         linkUrl: '/infografik/asean-handshake',
       },
       galeriFotoSection: {
-        title: 'Galeri Foto',
+        title: 'Bộ sưu tập ảnh',
         galleryImages: galleryItems,
       },
       podcastSection: {
@@ -1479,12 +1493,12 @@ export const seedPosts = async (payload: Payload) => {
         subVideos: createdSubVideoIds,
       },
       videoTerkiniSection: {
-        title: 'Video Terkini',
+        title: 'Video mới nhất',
         channelLogo: videoTerkiniLogoImg,
         videos: createdVideoTerkiniIds,
       },
       sihatSection: {
-        title: 'Sihat',
+        title: 'Sức khoẻ',
         featuredPost: sihatMainId,
         subPosts: createdSihatSubIds,
       },
@@ -1519,19 +1533,19 @@ export async function seedFooter(payload: Payload, logoId: any) {
         {
           title: '',
           links: [
-            { label: 'Berita', url: '/berita' },
+            { label: 'Tin tức', url: '/tin-tuc' },
             { label: 'BHPLUS', url: '/bhplus' },
-            { label: 'Nasional', url: '/nasional' },
-            { label: 'Kes', url: '/kes' },
+            { label: 'Tin trong nước', url: '/trong-nuoc' },
+            { label: 'Tin kinh tế', url: '/kinh-te' },
           ],
         },
         {
           title: '',
           links: [
-            { label: 'Sukan', url: '/sukan' },
-            { label: 'Dunia', url: '/dunia' },
-            { label: 'Hiburan', url: '/hiburan' },
-            { label: 'Bisnes', url: '/bisnes' },
+            { label: 'Thể thao', url: '/the-thao' },
+            { label: 'Quốc tế', url: '/quoc-te' },
+            { label: 'Giải trí', url: '/giai-tri' },
+            { label: 'Kinh tế', url: '/kinh-te' },
           ],
         },
         {
@@ -1543,11 +1557,11 @@ export async function seedFooter(payload: Payload, logoId: any) {
           ],
         },
       ],
-      copyrightText: '2026 © BH, New Straits Times Press (M) Bhd. All rights reserved.',
+      copyrightText: '2026 ©. All rights reserved.',
       bottomLinks: [
-        { label: 'Redaksi', url: '/redaksi' },
-        { label: 'Disclaimer', url: '/disclaimer' },
-        { label: 'Notis Perlindungan Data Peribadi', url: '/privacy-policy' },
+        { label: 'abc', url: '/abc' },
+        { label: 'def', url: '/def' },
+        { label: 'Chính sách bảo mật', url: '/privacy-policy' },
       ],
     },
   })
@@ -1563,23 +1577,23 @@ export async function seedHeader(payload: Payload, logoId: any) {
   // 2. Danh sách dữ liệu mẫu cho Slider
   const slidersData = [
     {
-      title: "Stacy 'terbang' di Sabah",
-      categorySlug: 'hiburan',
+      title: "Ca khúc top trending: 'Hành trình âm nhạc của nhóm",
+      categorySlug: 'giai-tri',
       imgSeed: 'stacy-sabah',
     },
     {
-      title: 'Komputer riba serba pintar permudah sambungan iPhone, Windows',
-      categorySlug: 'bisnes',
+      title: 'Doanh số bán hàng trực tuyến tăng mạnh trong quý 2, đạt mức kỷ lục',
+      categorySlug: 'kinh-te',
       imgSeed: 'laptop-phone',
     },
     {
-      title: 'Khelif perlu pulangkan pingat - Kremlin',
-      categorySlug: 'sukan',
+      title: 'Đội tuyển chiến thắng giải AFC Cup 2024',
+      categorySlug: 'the-thao',
       imgSeed: 'khelif-boxer',
     },
     {
-      title: 'Perang Israel-Iran tidak mengubah nasib Gaza',
-      categorySlug: 'dunia', // hoặc 'nasional'
+      title: 'Cuộc xung đột tại Gaza: Tình hình căng thẳng leo thang và những diễn biến mới nhất',
+      categorySlug: 'quoc-te',
       imgSeed: 'gaza-war',
     },
   ]
@@ -1657,12 +1671,12 @@ export async function seedHeader(payload: Payload, logoId: any) {
   <div class="flex flex-col">
     <div class="flex items-center gap-2">
       <span class="font-sans font-black text-xl md:text-2xl uppercase tracking-tight text-[#D81B50]">
-        MEDIA RUJUKAN MASSA
+        MEDIA
       </span>
     </div>
 
     <p class="text-xs font-bold text-gray-600 mt-0.5">
-      Portal berita dan akhbar No. 1 di Malaysia
+      Trang báo top 2 cả nước
     </p>
   </div>
 </a>
@@ -1682,30 +1696,7 @@ export async function seedHeader(payload: Payload, logoId: any) {
       skipRevalidation: true,
     },
   })
-  // TRƯỜNG HỢP A: Nếu sliders trong Header Config là Relationship `hasMany: true`
-  // await payload.updateGlobal({
-  //   slug: 'header',
-  //   data: {
-  //     sliders: createdPostIds,
-  //   },
-  //   overrideAccess: true,
-  // })
 
-  /* 
-  // TRƯỜNG HỢP B: Nếu sliders trong Header Config là `array` chứa field `post` (và `order`)
-  const slidersArray = createdPostIds.map((postId, index) => ({
-    post: postId,
-    order: index,
-  }))
-
-  await payload.updateGlobal({
-    slug: 'header',
-    data: {
-      sliders: slidersArray,
-    },
-    overrideAccess: true,
-  })
-  */
   console.log('Cập nhật dữ liệu Header Global thành công!')
 }
 export async function seedAdsConfig(payload: Payload) {

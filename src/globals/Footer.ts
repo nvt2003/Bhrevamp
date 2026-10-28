@@ -2,7 +2,7 @@ import { GlobalConfig } from 'payload'
 
 export const Footer: GlobalConfig = {
   slug: 'footer',
-  label: 'Footer Settings',
+  label: 'Cài đặt footer',
   access: {
     read: () => true,
   },
@@ -13,21 +13,23 @@ export const Footer: GlobalConfig = {
       type: 'upload',
       relationTo: 'media',
       required: true,
-      label: 'Brand Logo',
+      label: 'Logo',
     },
     {
       name: 'socialLinks',
       type: 'array',
-      label: 'Social Media Links',
+      label: 'Đường dẫn mạng xã hội',
       fields: [
         {
           name: 'platform',
+          label: 'Nền tảng',
           type: 'select',
           options: ['facebook', 'twitter', 'whatsapp', 'youtube', 'tiktok', 'linkedin'],
           required: true,
         },
         {
           name: 'url',
+          label: 'URL',
           type: 'text',
           required: true,
         },
@@ -36,7 +38,7 @@ export const Footer: GlobalConfig = {
     {
       name: 'appStoreLinks',
       type: 'group',
-      label: 'App Mobile Links',
+      label: 'Đường dẫn tải ứng dụng',
       fields: [
         { name: 'appStoreUrl', type: 'text', label: 'App Store URL' },
         { name: 'googlePlayUrl', type: 'text', label: 'Google Play URL' },
@@ -47,23 +49,23 @@ export const Footer: GlobalConfig = {
     {
       name: 'columns',
       type: 'array',
-      label: 'Footer Columns',
+      label: 'Nội dung cột điều hướng',
       minRows: 1,
       maxRows: 6,
       fields: [
         {
           name: 'title',
           type: 'text',
-          label: 'Column Title (optional)',
+          label: 'Tiêu đề (Không bắt buộc)',
         },
         {
           name: 'links',
           type: 'array',
-          label: 'Column Links',
+          label: 'Nội dung cột',
           fields: [
-            { name: 'label', type: 'text', required: true },
-            { name: 'url', type: 'text', required: true },
-            { name: 'newTab', type: 'checkbox', defaultValue: false },
+            { name: 'label', label: 'Nhãn', type: 'text', required: true },
+            { name: 'url', label: 'URL', type: 'text', required: true },
+            { name: 'newTab', label: 'Mở trong tab mới', type: 'checkbox', defaultValue: false },
           ],
         },
       ],
@@ -74,12 +76,12 @@ export const Footer: GlobalConfig = {
       name: 'copyrightText',
       type: 'text',
       label: 'Copyright Notice',
-      defaultValue: '2025 © BH, New Straits Times Press (M) Bhd. All rights reserved.',
+      defaultValue: '2025 ©, New Straits Times Press (M) Bhd. All rights reserved.',
     },
     {
       name: 'bottomLinks',
       type: 'array',
-      label: 'Bottom Policy Links',
+      label: 'Liên kết ở cuối trang',
       fields: [
         { name: 'label', type: 'text', required: true },
         { name: 'url', type: 'text', required: true },

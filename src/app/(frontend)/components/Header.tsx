@@ -50,28 +50,28 @@ export default function Header({ data }: { data: any }) {
   useEffect(() => {
     const formatDate = () => {
       const now = new Date()
-      // const options: Intl.DateTimeFormatOptions = {
-      //   weekday: 'long',
-      //   day: 'numeric',
-      //   month: 'long',
-      //   year: 'numeric',
-      //   hour: '2-digit',
-      //   minute: '2-digit',
-      // }
-      // setCurrentDate(now.toLocaleDateString('vi-VN', options))
-      const formattedDate = now
-        .toLocaleString('id-ID', {
-          weekday: 'short',
-          day: '2-digit',
-          month: 'short',
-          year: 'numeric',
-          hour: 'numeric',
-          minute: '2-digit',
-          hour12: true,
-        })
-        .replace(/\s([AP]M)/, '$1')
+      const options: Intl.DateTimeFormatOptions = {
+        weekday: 'long',
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+      }
+      setCurrentDate(now.toLocaleDateString('vi-VN', options))
+      // const formattedDate = now
+      //   .toLocaleString('id-ID', {
+      //     weekday: 'short',
+      //     day: '2-digit',
+      //     month: 'short',
+      //     year: 'numeric',
+      //     hour: 'numeric',
+      //     minute: '2-digit',
+      //     hour12: true,
+      //   })
+      //   .replace(/\s([AP]M)/, '$1')
 
-      setCurrentDate(formattedDate)
+      // setCurrentDate(formattedDate)
     }
 
     formatDate()
@@ -93,24 +93,6 @@ export default function Header({ data }: { data: any }) {
   return (
     <header className="w-full border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-[#444] transition-colors duration-200">
       <div className="max-w-7xl mx-auto px-4 py-3 flex flex-col md:flex-row items-center justify-between gap-4">
-        {/* LOGO PLACEHOLDER */}
-        {/* <Link href="/" className="flex items-center gap-3 group">
-          <div className="w-12 h-12 bg-gray-100 dark:bg-gray-800 border border-dashed border-gray-400 dark:border-gray-600 rounded flex flex-col items-center justify-center text-gray-400 group-hover:border-red-600 transition-colors">
-            <ImageIcon className="w-5 h-5" />
-            <span className="text-[9px] font-mono leading-none mt-1">LOGO</span>
-          </div>
-
-          <div className="flex flex-col">
-            <div className="flex items-center gap-2">
-              <span className="font-sans font-black text-xl md:text-2xl uppercase tracking-tight text-[#D81B50]">
-                MEDIA RUJUKAN MASSA
-              </span>
-            </div>
-            <p className="text-xs font-bold text-gray-60 mt-0.5">
-              Portal berita dan akhbar No. 1 di Malaysia
-            </p>
-          </div>
-        </Link> */}
         {titleImageUrl ? (
           <Link href="/" className="flex items-center gap-3 group">
             {logoUrl && (

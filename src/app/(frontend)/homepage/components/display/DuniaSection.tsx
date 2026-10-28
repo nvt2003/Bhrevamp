@@ -14,8 +14,8 @@ export default function DuniaSection({ data }: { data: any }) {
           {title}
           <div className="w-10 h-1 bg-rose-600 mt-1 rounded"></div>
         </h2>
-        <Link href="/dunia" className="text-sm font-semibold flex items-center hover:underline">
-          Lagi Berita Dunia <span className="ml-1 text-red-600 font-bold">&gt;</span>
+        <Link href="/quoc-te" className="text-sm font-semibold flex items-center hover:underline">
+          Xem thêm tin quốc tế <span className="ml-1 text-red-600 font-bold">&gt;</span>
         </Link>
       </div>
 

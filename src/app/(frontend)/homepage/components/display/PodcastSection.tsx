@@ -17,7 +17,7 @@ export default function PodcastSection({ data }: { data: any }) {
           <div className="w-10 h-1 bg-rose-600 mt-1 rounded"></div>
         </h2>
         <Link href="/podcast" className="text-sm font-semibold flex items-center hover:underline">
-          Lagi BH TV <span className="ml-1 text-red-600 font-bold">&gt;</span>
+          Xem thêm Podcast <span className="ml-1 text-red-600 font-bold">&gt;</span>
         </Link>
       </div>
 

@@ -17,10 +17,10 @@ export default function GayaHidupSection({ data }: { data: any }) {
           <div className="w-10 h-1 bg-rose-600 mt-1 rounded"></div>
         </h2>
         <Link
-          href="/gaya-hidup"
+          href="/phong-cach-song"
           className="text-sm font-semibold text-gray-900 dark:text-white hover:text-red-600 flex items-center transition-colors"
         >
-          Lagi Gaya Hidup <span className="ml-1 text-red-600 font-bold">&gt;</span>
+          Xem thêm Phong cách sống <span className="ml-1 text-red-600 font-bold">&gt;</span>
         </Link>
       </div>
 

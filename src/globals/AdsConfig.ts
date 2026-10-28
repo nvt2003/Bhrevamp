@@ -16,19 +16,23 @@ const adSizeOptions = [
 const createAdFields = (defaultSizeValue: string): Field[] => [
   {
     name: 'active',
+    label: 'Hiển thị quảng cáo',
     type: 'checkbox',
     defaultValue: false,
   },
   {
     name: 'imageUrl',
+    label: 'URL hình ảnh (Đường dẫn hình ảnh của quảng cáo)',
     type: 'text',
   },
   {
     name: 'link',
+    label: 'URL liên kết (Đường dẫn đến trang web của quảng cáo)',
     type: 'text',
   },
   {
     name: 'code html',
+    label: 'Code HTML quảng cáo (Nếu có)',
     type: 'code',
     admin: {
       language: 'html',
@@ -36,6 +40,7 @@ const createAdFields = (defaultSizeValue: string): Field[] => [
   },
   {
     name: 'sizePreset',
+    label: 'Kích thước quảng cáo',
     type: 'select',
     defaultValue: defaultSizeValue,
     options: adSizeOptions,
@@ -48,11 +53,13 @@ const createAdFields = (defaultSizeValue: string): Field[] => [
     fields: [
       {
         name: 'customWidth',
+        label: 'Chiều rộng tùy chỉnh',
         type: 'number',
         min: 1,
       },
       {
         name: 'customHeight',
+        label: 'Chiều cao tùy chỉnh',
         type: 'number',
         min: 1,
       },
@@ -61,7 +68,7 @@ const createAdFields = (defaultSizeValue: string): Field[] => [
 ]
 export const AdsConfig: GlobalConfig = {
   slug: 'ads-config',
-  label: 'Ads Settings',
+  label: 'Cài đặt quảng cáo',
   access: {
     read: () => true,
   },
@@ -71,24 +78,24 @@ export const AdsConfig: GlobalConfig = {
       tabs: [
         // TAB 1: QC DESKTOP
         {
-          label: 'Homepage Desktop Ads',
+          label: 'Quảng cáo Desktop',
           fields: [
             {
               name: 'BH_Web_Billboard_Homepage_970x250',
               type: 'group',
-              label: 'BH_Web_Billboard_Homepage_970x250',
+              label: 'Web Billboard Homepage 970x250',
               fields: createAdFields('max-w-[970px] aspect-[970/90]'),
             },
             {
               name: 'BH_300x250',
               type: 'group',
-              label: 'BH_300x250',
+              label: 'BH 300x250',
               fields: createAdFields('max-w-[300px] aspect-[300/250]'),
             },
             {
               name: 'BH_300x250_b',
               type: 'group',
-              label: 'BH_300x250_b',
+              label: '300x250 B',
               fields: createAdFields('max-w-[300px] aspect-[300/250]'),
             },
           ],
@@ -96,18 +103,18 @@ export const AdsConfig: GlobalConfig = {
 
         // TAB 2: QC MOBILE
         {
-          label: 'Homepage Mobile Ads',
+          label: 'Quảng cáo Mobile',
           fields: [
             {
               name: 'BH_320x50',
               type: 'group',
-              label: 'BH_320x50',
+              label: '320x50',
               fields: createAdFields('max-w-[320px] aspect-[320/50]'),
             },
             {
               name: 'BH_300x250_Mobile',
               type: 'group',
-              label: 'BH_300x250_Mobile',
+              label: '300x250 Mobile',
               fields: createAdFields('max-w-[320px] aspect-[320/50]'),
             },
 
@@ -132,7 +139,7 @@ export const AdsConfig: GlobalConfig = {
             {
               name: 'BH_Multisize_HouseAds',
               type: 'group',
-              label: 'BH_Multisize_HouseAds',
+              label: 'Multisize HouseAds',
               fields: createAdFields('max-w-[970px] aspect-[970/90]'),
             },
           ],

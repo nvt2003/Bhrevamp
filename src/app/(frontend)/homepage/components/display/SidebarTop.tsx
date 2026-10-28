@@ -25,7 +25,7 @@ export default function SidebarTop({
       <div ref={sidebarRef} className="relative">
         <div className="mb-4">
           <h2 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-            Terkini
+            Mới nhất
           </h2>
           <div className="w-10 h-1 bg-rose-600 mt-1 rounded"></div>
         </div>

@@ -6,16 +6,15 @@ import { useRouter, usePathname } from 'next/navigation'
 import { Search } from 'lucide-react'
 
 // Danh sách các danh mục mặc định (hoặc truyền qua props từ PayloadCMS Categories)
+
 const defaultCategories = [
-  { name: 'Berita', slug: 'berita' },
-  { name: 'Sukan', slug: 'sukan' },
-  { name: 'Hiburan', slug: 'hiburan' },
-  { name: 'Dunia', slug: 'dunia' },
-  { name: 'Bisnes', slug: 'bisnes' },
-  { name: 'Rencana', slug: 'rencana' },
-  { name: 'Gaya Hidup', slug: 'gaya-hidup' },
-  { name: '#Marilokal', slug: 'marilokal' },
-  { name: '1Klassifieds', slug: '1klassifieds' },
+  { name: 'Tin tức', slug: 'tin-tuc', hasSub: true },
+  { name: 'Thể thao', slug: 'the-thao', hasSub: true },
+  { name: 'Giải trí', slug: 'giai-tri', hasSub: true },
+  { name: 'Quốc tế', slug: 'quoc-te', hasSub: true },
+  { name: 'Kinh doanh', slug: 'kinh-doanh', hasSub: true },
+  { name: 'Gần đây', slug: 'gan-day', hasSub: true },
+  { name: 'Phong cách sống', slug: 'phong-cach-song', hasSub: true },
 ]
 
 export default function Navbar({
@@ -64,7 +63,7 @@ export default function Navbar({
         <form onSubmit={handleSearch} className="relative flex items-center shrink-0">
           <input
             type="text"
-            placeholder="Cari kata kunci"
+            placeholder="Tìm kiếm..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-48 md:w-60 bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 text-xs rounded-md pl-3 pr-8 py-1.5 border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-red-600"

@@ -28,7 +28,7 @@ export default function VideoTerkiniSection({ data }: { data: any }) {
           <div className="w-10 h-1 bg-rose-600 mt-1 rounded"></div>
         </h2>
         <Link href="/video" className="text-sm font-semibold flex items-center hover:underline">
-          Lagi Video <span className="ml-1 text-red-600 font-bold">&gt;</span>
+          Xem thêm Video <span className="ml-1 text-red-600 font-bold">&gt;</span>
         </Link>
       </div>
 

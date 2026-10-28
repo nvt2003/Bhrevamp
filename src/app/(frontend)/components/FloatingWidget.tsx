@@ -87,14 +87,11 @@ export default function FloatingWidget({ data }: { data: any }) {
           </button>
 
           {/* Nút Đỏ Capsule Bo Tròn */}
-          <button
-            // onClick={() => (alert('Mở Ringkasan Berita!'))}
-            className="flex max-w-full items-center justify-between gap-3 rounded-full border-2 border-white bg-red-600 py-1.5 pl-5 pr-1.5 text-white shadow-xl transition-transform hover:bg-red-700 active:scale-95"
-          >
+          <button className="flex max-w-full items-center justify-between gap-3 rounded-full border-2 border-white bg-red-600 py-1.5 pl-5 pr-1.5 text-white shadow-xl transition-transform hover:bg-red-700 active:scale-95">
             {/* Chữ Ringkasan Berita */}
             <div className="flex shrink-0 flex-col items-center text-left text-xs font-black uppercase leading-tight tracking-wide sm:text-sm">
-              <span>RINGKASAN</span>
-              <span>BERITA</span>
+              <span>Tin tức</span>
+              <span>mới</span>
             </div>
 
             {/* Icon Tròn Tím/Hồng Sáng bên phải */}

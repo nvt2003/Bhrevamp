@@ -43,15 +43,13 @@ const TikTokIcon = ({ className = 'w-3.5 h-3.5' }: { className?: string }) => (
 
 // DANH SÁCH DANH MỤC
 const defaultCategories = [
-  { name: 'Berita', slug: 'berita', hasSub: true },
-  { name: 'Sukan', slug: 'sukan', hasSub: true },
-  { name: 'Hiburan', slug: 'hiburan', hasSub: true },
-  { name: 'Dunia', slug: 'dunia', hasSub: true },
-  { name: 'Bisnes', slug: 'bisnes', hasSub: true },
-  { name: 'Rencana', slug: 'rencana', hasSub: true },
-  { name: 'Gaya Hidup', slug: 'gaya-hidup', hasSub: true },
-  { name: '#Marilokal', slug: 'marilokal', hasSub: false },
-  { name: '1Klassifieds', slug: '1klassifieds', hasSub: false },
+  { name: 'Tin tức', slug: 'tin-tuc', hasSub: true },
+  { name: 'Thể thao', slug: 'the-thao', hasSub: true },
+  { name: 'Giải trí', slug: 'giai-tri', hasSub: true },
+  { name: 'Quốc tế', slug: 'quoc-te', hasSub: true },
+  { name: 'Kinh doanh', slug: 'kinh-doanh', hasSub: true },
+  { name: 'Gần đây', slug: 'gan-day', hasSub: true },
+  { name: 'Phong cách sống', slug: 'phong-cach-song', hasSub: true },
 ]
 
 export default function MobileHeader({
@@ -96,10 +94,10 @@ export default function MobileHeader({
           </div>
           <div className="flex flex-col">
             <span className="font-sans font-black text-sm text-[#D81B50] dark:text-red-500 uppercase tracking-tight leading-none">
-              MEDIA RUJUKAN MASSA
+              MEDIA
             </span>
             <span className="text-[10px] text-gray-600 dark:text-gray-400 font-medium leading-tight mt-0.5">
-              Portal berita dan akhbar BM No. 1 di Malaysia
+              Trang báo top 2 cả nước
             </span>
           </div>
         </Link>
