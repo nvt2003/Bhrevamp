@@ -1,5 +1,6 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import fs from 'node:fs'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
@@ -35,7 +36,8 @@ export default buildConfig({
     pool: {
       connectionString: process.env.DATABASE_URI || '',
       ssl: {
-        rejectUnauthorized: false,
+        ca: fs.readFileSync(path.resolve(process.cwd(), 'certs/supabase-ca.crt'), 'utf8'),
+        rejectUnauthorized: true,
       },
     },
   }),
