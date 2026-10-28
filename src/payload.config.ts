@@ -1,10 +1,10 @@
-import { sqliteAdapter } from '@payloadcms/db-sqlite'
+import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
-
+import { payloadCloudinaryPlugin } from '@jhb.software/payload-cloudinary-plugin'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Categories } from './collections/Categories'
@@ -31,11 +31,23 @@ export default buildConfig({
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
-  db: sqliteAdapter({
-    client: {
-      url: process.env.DATABASE_URL || '',
+  db: postgresAdapter({
+    pool: {
+      connectionString: process.env.DATABASE_URI || '',
     },
   }),
   sharp,
-  plugins: [],
+  plugins: [
+    payloadCloudinaryPlugin({
+      cloudName: process.env.CLOUDINARY_CLOUD_NAME!,
+      credentials: {
+        apiKey: process.env.CLOUDINARY_API_KEY!,
+        apiSecret: process.env.CLOUDINARY_API_SECRET!,
+      },
+      collections: {
+        media: true, // Kích hoạt Cloudinary cho collection 'media'
+      },
+      folder: 'payload-media', // Thư mục lưu trên Cloudinary
+    }),
+  ],
 })
